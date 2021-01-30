@@ -9,7 +9,7 @@
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
      <meta charset="UTF-8" />
-    <title>KARWAN FILLING STATION, SINAWAN</title>
+    <title>Mopetro fueling Station</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
@@ -19,7 +19,7 @@
 </head>
 <body>
     <div class="container">
-    <div class="text-center"><h1 style="font-weight:600; text-shadow: 2px 2px #ff0000;">KARWAN FILLING STATION, SINAWAN</h1></div>
+    <div class="text-center"><h1 style="font-weight:600; text-shadow: 2px 2px #ff0000;">Mopetro fueling Station</h1></div>
     <div class="tab-content">
         
         <div id="login" class="tab-pane active">

@@ -1,9 +1,10 @@
+
 <div id="left">
             <div class="media user-media well-small">
                
 
                 <div class="media-body">
-                    <h5 class="media-heading">Logged in as <span style="color:red">admin</span></h5>
+                    <h5 class="media-heading">Logged in as <span style="color:red"> ADMIN</span></h5>
                 </div>
                 <br>
             </div>
@@ -45,8 +46,8 @@
                     </a>
                     <ul class="collapse" id="sale">
                         <li><a href="sale.php"><i class="icon-angle-right"></i> Fuel Sale </a></li>
-                        <li><a href="customer_sale.php"><i class="icon-angle-right"></i> Customers Sale </a></li>
-                         <li><a href="invt_sale.php"><i class="icon-angle-right"></i> Lubricants Sale </a></li>
+                        <!--<li><a href="customer_sale.php"><i class="icon-angle-right"></i> Customers Sale </a></li>
+                         <li><a href="invt_sale.php"><i class="icon-angle-right"></i> Lubricants Sale </a></li>-->
                         
                     
                        
@@ -57,10 +58,13 @@
                 </li>
                  
                
-                <!-- <li><a href="maintenance"><i class="icon-tasks"> </i>Maintenance</a></li>-->
+               <li><a href="currentprice.php"><i class="icon-tasks"> </i>Current Price</a></li>
+                <li><a href="rtt.php"><i class="icon-tasks"> </i>R.T.T</a></li>
+                <li><a href="dipp.php"><i class="icon-tasks"> </i>Daily Dipp Reading</a></li>
+                <li><a href="purchase.php"><i class="icon-tasks"> </i>Purchase</a></li>
              
                  
-                 <li class="panel">
+                 <!--<li class="panel">
                     <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#invent">
                         <i class="icon-table"></i> Purchase
 	   
@@ -76,7 +80,7 @@
                    
                    
                     </ul>
-                </li>
+                </li>-->
                 
                 
                  <li class="panel">

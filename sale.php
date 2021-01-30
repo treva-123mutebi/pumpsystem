@@ -17,6 +17,30 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <style>
+    fieldset {
+      overflow: hidden
+    }
+    
+    .some-class {
+      float: left;
+      clear: none;
+    }
+    
+    label {
+      float: left;
+      clear: none;
+      display: block;
+      padding: 0px 1em 0px 8px;
+    }
+    
+    input[type=radio],
+    input.radio {
+      float: left;
+      clear: none;
+      margin: 2px 0 0 2px;
+    }
+    </style>
     
 </head>
     <!-- END HEAD -->
@@ -88,8 +112,8 @@ include('dist/includes/left.php');
                                     
 
                                      
-                                       <td>  
-                                     <div class="col-md-9 col-sm-9 col-xs-9"> 
+                                       <tr><td>  
+                                     <div class="col-md-12 col-sm-12 col-xs-9"> 
                                         <label>Select Nosal</label><br />
                                        <select  style="max-width:650px;" id="store" class="form-control" name="nosalnumber" required>
                                             <option class="hidden" value="" selected disabled>Nosal Number</option>
@@ -102,10 +126,12 @@ include('dist/includes/left.php');
                                                                                        
                                      </select> 
                                         </div>    
-                                       </td>
+                                        <br/><br/>
+                                       </td></tr>
+                                       <tr><br/><br/></tr>
                                        <td> 
                                      <div class="form-group">
-							<label style="font-size: small;" for="date">Select Fuel Type</label>
+							<br/><p></p><label style="font-size: small;" for="date">Select Fuel Type</label>
 							 
 								<select class="form-control select2" name="prod_id" tabindex="1" autofocus required>
 								<?php	
@@ -132,20 +158,20 @@ include('dist/includes/left.php');
                                        </td>
                                        
                                       
-                                         <td>
+                                         <!--<td>
                                             <label>R.T.T</label>
                                             <input type="text" class="form-control" name="rtt" id="desc"> 
-                                      </td>
+                                      </td>-->
                                       
-                                      <td>
+                                      <!--<td>
                                             <label>litres sold</label>
                                             <input type="number" min="1" step="any" class="form-control" name="litressold" id="desc"> 
-                                      </td>
+                                      </td>-->
                                       
-                                      <td>
+                                     <!-- <td>
                                             <label>Unit price</label>
                                             <input type="number" min="1" step="any" class="form-control" name="unitprice" id="desc"> 
-                                      </td>
+                                      </td>-->
                                      
                                       
                                      
@@ -153,24 +179,32 @@ include('dist/includes/left.php');
                                       </tr>
                                       <tr>
                                       <tr>
-                                      <td>
-                                      <label>Price Change</label>
+                                      <!--<td>
+                                      <br/><br/>
+                                      
                                       <div class="form-group">
-                                            <div class="maxl">
-                                                <label class="radio inline"> 
-                                                    <input type="radio" name="pricechange" value="no" checked>
+                                      <fieldset>
+                                      <label>Price Change</label>
+                                            <div class="some-class">
+                                                <!--<label class="radio inline"> 
+                                                    <input type="radio" class="radio" name="pricechange" value="no" checked>
                                                     <span> No </span> 
                                                 </label>
                                                 <label class="radio inline"> 
                                                     <input type="radio" name="pricechange" value="yes">
                                                     <span>Yes</span> 
-                                                </label>
+                                                </label>-->
+                                                <!--<input type="radio" class="radio" name="pricechange" value="no" id="y" checked />
+        <label for="y">No</label>
+        <input type="radio" class="radio" name="pricechange" value="yes" id="z" />
+        <label for="z">Yes</label>
                                             </div>
+                                            </fieldset>    
                                         </div>
                                     </div>
-                                      </td>
+                                      </td>-->
                                       </tr>
-                                      <td>
+                                     <!-- <td>
                                             <label>Open meter</label>
                                   <input type="number" min="1" step="any" class="form-control"  name="pcopenmeter" id="price">
                                        </td>
@@ -196,12 +230,12 @@ include('dist/includes/left.php');
                                       </td>
                                      
 
-                                      </tr></table>  
+                                      </tr>--></table>  
                                        
                          
                                         
                                        
-                         <input class="btn btn-primary btn-lg " type="submit" name="submit" value="submit" >
+                         <br/><input class="btn btn-primary btn-lg " type="submit" name="submit" value="submit" >
                                         
                                        
                                    
@@ -221,12 +255,12 @@ include('dist/includes/left.php');
                                             <th>Fuel type</th>
                                             <th>Open Meter</th>
                                             <th>Close Meter</th>
-                                            <th>R.T.T</th>
+                                            <!--<th>R.T.T</th>-->
                                             <th>Litre Sold</th>
                                             <th>Unit Price</th>
                                             
                                             <th>Payment</th>
-                                            <th><b>Price Change</b></th>
+                                            <!--<th><b>Price Change</b></th>
                                             <th>Open Meter</th>
                                             <th>Close Meter</th>
                                             <th>R.T.T</th>
@@ -234,7 +268,7 @@ include('dist/includes/left.php');
                                             <th>Unit Price</th>
                                             <th>Payment</th>
                                             <th>Edit</th>
-                                            <th>Delete</th>
+                                            <th>Delete</th>-->
                                         </tr>
                                        
                                     </thead>
@@ -253,13 +287,13 @@ include('dist/includes/left.php');
                                             <td><?php echo $row1['stationprod_name'];?></td>
                                             <td><?php echo $row1['openmeter'];?></td>
                                             <td><?php echo $row1['closemeter'];?></td>
-                                            <td><?php echo $row1['rtt'];?></td>
+                                           <!--<td><?php echo $row1['rtt'];?></td>-->
                                             <td><?php echo $row1['litressold'];?></td>
                                             <td><?php echo $row1['unitprice'];?></td>
                                            
 
                                             <td><?php echo $row1['total'];?></td>
-                                            <td></td>
+                                            <!--<td></td>
                                             <td><?php echo $row1['pcopenmeter'];?></td>
                                             <td><?php echo $row1['pcclosemeter'];?></td>
                                             <td><?php echo $row1['pcrtt'];?></td>
@@ -273,7 +307,7 @@ include('dist/includes/left.php');
 <td><a href="">
     <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>
 <td><a href="">
-    <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>
+    <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>-->
                                         </tr>   
                                         <?php }?>                                
                                 </table>
@@ -290,12 +324,12 @@ include('dist/includes/left.php');
                                             <th>Fuel type</th>
                                             <th>Open Meter</th>
                                             <th>Close Meter</th>
-                                            <th>R.T.T</th>
+                                            <!--<th>R.T.T</th>-->
                                             <th>Litre Sold</th>
                                             <th>Unit Price</th>
                                             
                                             <th>Payment</th>
-                                            <th><b>Price Change</b></th>
+                                            <!--<th><b>Price Change</b></th>
                                             <th>Open Meter</th>
                                             <th>Close Meter</th>
                                             <th>R.T.T</th>
@@ -303,7 +337,7 @@ include('dist/includes/left.php');
                                             <th>Unit Price</th>
                                             <th>Payment</th>
                                             <th>Edit</th>
-                                            <th>Delete</th>
+                                            <th>Delete</th>-->
                                         </tr>
                                        
                                     </thead>
@@ -322,13 +356,13 @@ include('dist/includes/left.php');
                                             <td><?php echo $row1['stationprod_name'];?></td>
                                             <td><?php echo $row1['openmeter'];?></td>
                                             <td><?php echo $row1['closemeter'];?></td>
-                                            <td><?php echo $row1['rtt'];?></td>
+                                            <!--<td><?php echo $row1['rtt'];?></td>-->
                                             <td><?php echo $row1['litressold'];?></td>
                                             <td><?php echo $row1['unitprice'];?></td>
                                            
 
                                             <td><?php echo $row1['total'];?></td>
-                                            <td></td>
+                                            <!--<td></td>
                                             <td><?php echo $row1['pcopenmeter'];?></td>
                                             <td><?php echo $row1['pcclosemeter'];?></td>
                                             <td><?php echo $row1['pcrtt'];?></td>
@@ -342,7 +376,7 @@ include('dist/includes/left.php');
 <td><a href="">
     <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>
 <td><a href="">
-    <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>
+    <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>-->
                                         </tr>   
                                         <?php }?>                                
                                 </table>
