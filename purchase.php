@@ -71,29 +71,34 @@ include('dist/includes/left.php');
 <hr style="border-top: 1px dotted #f00;color: #fff;background-color: #fff;height: 1px;width:100%;">
                  <div class="row">
                  <div class="col-lg-12">
-<form role="form" method="post" action="sales_add_new.php">
+<form role="form" method="post" action="purchasesadd.php">
                                      <table style="width: 60% "><tr>
+                                     
                                      <td> 
                                      <div class="form-group">
-							<label style="font-size: small;" for="date">Select Fuel type</label>
+							<label style="font-size: small;" for="date">Select Supplier</label>
 							 
-								<select class="form-control select2" name="shift_id" tabindex="1" autofocus required>
+								<select class="form-control select2" name="supplier_id" tabindex="1" autofocus required>
 								<?php	
 									include 'dist/includes/dbcon.php';								
-										$query1=mysqli_query($con,"select * from shifts ORDER BY shift_id ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from supplier ORDER BY supplier_id ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
-											$id=$row1['shift_id'];
+											$id=$row1['supplier_id'];
 							?>
-										<option value="<?php echo $row1['shift_id'];?>"><?php echo $row1['shift_details'];?></option>
+										<option value="<?php echo $row1['supplier_id'];?>"><?php echo $row1['supplier_name'];?></option>
 								  <?php }?>
 								</select>
                                 <span class="fa form-control-feedback right" aria-hidden="true"></span>
 						  </div><!-- /.form group --> 
                                        
                                      </td>
-                                     <td> 
-                                     <div class="form-group">
-							<label style="font-size: small;" for="date">Select Supplier</label>
+                                    
+
+                                     
+                                       
+                                       <tr>
+                                       <div class="form-group">
+							<label style="font-size: small;" for="date">Select Tank</label>
 							 
 								<select class="form-control select2" name="pumpid" tabindex="1" autofocus required>
 								<?php	
@@ -107,13 +112,7 @@ include('dist/includes/left.php');
 								</select>
                                 <span class="fa form-control-feedback right" aria-hidden="true"></span>
 						  </div><!-- /.form group --> 
-                                       
-                                     </td>
-                                    
-
-                                     
-                                       
-                                       <tr></tr>
+                                       </tr>
 
                                       
                                        
@@ -123,7 +122,7 @@ include('dist/includes/left.php');
                                       </td>
                                       <td>
                                             <label>Litres Bought in</label>
-                                            <input type="number" min="1" step="any" class="form-control" name="unitprice" id="desc"> 
+                                            <input type="number" min="1" step="any" class="form-control" name="litresin" id="desc"> 
                                       </td>
                                      
                                       
@@ -157,7 +156,7 @@ include('dist/includes/left.php');
                                             <th>Date</th>
                                             <th>Supplier</th>
                                             <!--<th>Nosal Number</th>-->
-                                            <th>Fuel type</th>
+                                            <th>Tank</th>
                                             <!--<th>Open Meter</th>
                                             <th>Close Meter</th>-->
                                             <!--<th>R.T.T</th>-->
@@ -171,19 +170,19 @@ include('dist/includes/left.php');
                                     </thead>
                                     <?php	
 									include 'dbcon.php';								
-										$query1=mysqli_query($con,"select * from dailysales natural join pumps natural join stationproducts natural join shifts where shift_id='1'  ORDER BY date ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from purchase natural join pumps natural join stationproducts natural join supplier ORDER BY date ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
-											$id=$row1['dailysales_id'];
+											$id=$row1['purchase_id'];
 											
 									?>  
                                     <tr style="font-size: 10px;">
 
                                             <td><?php echo $row1['date'];?></td> 
+                                            <td><?php echo $row1['supplier_name'];?></td>
                                             <td><?php echo $row1['pumpnumber'];?></td>
-                                            <td><?php echo $row1['nosalnumber'];?></td>
-                                            <td><?php echo $row1['stationprod_name'];?></td>
-                                            <td><?php echo $row1['openmeter'];?></td>
-                                            <td><?php echo $row1['closemeter'];?></td>
+                                            <td><?php echo $row1['litresin'];?></td>
+                                            <td><?php echo $row1['unitprice'];?></td>
+                                            <td><?php echo $row1['payment'];?></td>
                                             <!--<td><?php echo $row1['rtt'];?></td>
                                             <td><?php echo $row1['litressold'];?></td>
                                             <td><?php echo $row1['unitprice'];?></td>

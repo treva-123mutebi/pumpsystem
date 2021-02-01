@@ -71,7 +71,7 @@ include('dist/includes/left.php');
 <hr style="border-top: 1px dotted #f00;color: #fff;background-color: #fff;height: 1px;width:100%;">
                  <div class="row">
                  <div class="col-lg-12">
-<form role="form" method="post" action="sales_add_new.php">
+<form role="form" method="post" action="rttadd.php">
                                      <table style="width: 60% "><tr>
                                     
                                      
@@ -81,16 +81,16 @@ include('dist/includes/left.php');
                                       
                                        <td> 
                                      <div class="form-group">
-							<label style="font-size: small;" for="date">Select Pump</label>
+							<label style="font-size: small;" for="date">Select Tank</label>
 							 
-								<select class="form-control select2" name="prod_id" tabindex="1" autofocus required>
+								<select class="form-control select2" name="pumpid" tabindex="1" autofocus required>
 								<?php	
 									include 'dist/includes/dbcon.php';								
-										$query1=mysqli_query($con,"select * from stationproducts ORDER BY prod_id ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from pumps ORDER BY pumpid ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
-											$id=$row1['prod_id'];
+											$id=$row1['pumpid'];
 							?>
-										<option value="<?php echo $row1['prod_id'];?>"><?php echo $row1['stationprod_name'];?></option>
+										<option value="<?php echo $row1['pumpid'];?>"><?php echo $row1['pumpnumber'];?></option>
 								  <?php }?>
 								</select>
                                 <span class="fa form-control-feedback right" aria-hidden="true"></span>
@@ -106,7 +106,7 @@ include('dist/includes/left.php');
                                       
                                       <td>
                                             <label>RTT</label>
-                                            <input type="number" min="1" step="any" class="form-control" name="unitprice" id="desc"> 
+                                            <input required type="number" min="1" step="any" class="form-control" name="rtt" id="desc"> 
                                       </td>
                                      
                                       
@@ -133,7 +133,7 @@ include('dist/includes/left.php');
                                     
                                     <div style="margin-top:40px" class="panel panel-default">
                         
-                        <h2>Product Prices</h2>
+                        <h2>RTT history</h2>
                            
                         <table class="table table-striped table-bordered table-hover">
                                     <thead>
@@ -143,8 +143,8 @@ include('dist/includes/left.php');
                                            <!-- <th>Pump Number</th>
                                             <th>Nosal Number</th>-->
                                             <th>Pump Number</th>
-                                            <th>Nosal Number</th>
-                                            <th>Fuel type</th>
+                                            <!--<th>Nosal Number</th>
+                                            <th>Fuel type</th>-->
                                             <!--<th>Open Meter</th>
                                             <th>Close Meter</th>
                                             <th>R.T.T</th>
@@ -166,21 +166,21 @@ include('dist/includes/left.php');
                                     </thead>
                                     <?php	
 									include 'dbcon.php';								
-										$query1=mysqli_query($con,"select * from dailysales natural join pumps natural join stationproducts natural join shifts where shift_id='1'  ORDER BY date ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from rtt natural join pumps     ORDER BY date ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
-											$id=$row1['dailysales_id'];
+											$id=$row1['rtt_id'];
 											
 									?>  
                                     <tr style="font-size: 10px;">
 
                                             <td><?php echo $row1['date'];?></td> 
                                             <td><?php echo $row1['pumpnumber'];?></td>
-                                            <td><?php echo $row1['nosalnumber'];?></td>
+                                            <!--<td><?php echo $row1['nosalnumber'];?></td>
                                             <td><?php echo $row1['stationprod_name'];?></td>
-                                            <td><?php echo $row1['openmeter'];?></td>
-                                            <!--<td><?php echo $row1['closemeter'];?></td>
+                                            <td><?php echo $row1['openmeter'];?></td>-->
+                                            <!--<td><?php echo $row1['closemeter'];?></td>-->
                                             <td><?php echo $row1['rtt'];?></td>
-                                            <td><?php echo $row1['litressold'];?></td>
+                                            <!--<td><?php echo $row1['litressold'];?></td>
                                             <td><?php echo $row1['unitprice'];?></td>
                                            
 

@@ -71,12 +71,12 @@ include('dist/includes/left.php');
 <hr style="border-top: 1px dotted #f00;color: #fff;background-color: #fff;height: 1px;width:100%;">
                  <div class="row">
                  <div class="col-lg-12">
-<form role="form" method="post" action="sales_add_new.php">
+<form role="form" method="post" action="dippadd.php">
                                      <table style="width: 60% ">
                                      <tr>
                                      <td> 
                                      <div class="form-group">
-							<label style="font-size: small;" for="date">Select Product</label>
+							<label style="font-size: small;" for="date">Select Pump</label>
 							 
 								<select class="form-control select2" name="pumpid" tabindex="1" autofocus required>
 								<?php	
@@ -96,22 +96,22 @@ include('dist/includes/left.php');
 
                                        <td>
                                             <label>Open Invoice</label>
-                                  <input type="number" min="1" step="any" class="form-control" required name="openmeter" id="price">
+                                  <input type="number" min="1" step="any" class="form-control" required name="openinvoice" id="price">
                                        </td>
                                        <td>
                                             <label>Dipp Morn</label>
-                                  <input type="number" min="1" step="any" class="form-control" required name="closemeter" id="price">
+                                  <input type="number" min="1" step="any" class="form-control" required name="dippmorn" id="price">
                                        </td>
                                        
                                       
                                          <td>
                                             <label>Dipp Evening</label>
-                                            <input type="text" class="form-control" name="rtt" id="desc"> 
+                                            <input type="text" class="form-control" name="dippeven" id="desc"> 
                                       </td>
                                       
                                       <td>
                                             <label>Close Invoice</label>
-                                            <input type="number" min="1" step="any" class="form-control" name="litressold" id="desc"> 
+                                            <input type="number" min="1" step="any" class="form-control" name="closeinvoice" id="desc"> 
                                       </td>
                                       
                                       
@@ -141,13 +141,13 @@ include('dist/includes/left.php');
                                         <tr>
                                             <th>Date</th>
                                             <th>Pump Number</th>
-                                            <th>Nosal Number</th>
-                                            <th>Fuel type</th>
-                                            <th>Open Meter</th>
-                                            <th>Close Meter</th>
-                                            <th>R.T.T</th>
-                                            <th>Litre Sold</th>
-                                            <th>Unit Price</th>
+                                            <!--<th>Nosal Number</th>-->
+                                            <!--<th>Fuel type</th>-->
+                                            <th>Open Invoice</th>
+                                            <th>Dipp Morn</th>
+                                            <th>Dipp Evening</th>
+                                            <th>Closing Invoice</th>
+                                           <!-- <th>Unit Price</th>
                                             
                                             <th>Payment</th>
                                             <th><b>Price Change</b></th>
@@ -158,28 +158,28 @@ include('dist/includes/left.php');
                                             <th>Unit Price</th>
                                             <th>Payment</th>
                                             <th>Edit</th>
-                                            <th>Delete</th>
+                                            <th>Delete</th>-->
                                         </tr>
                                        
                                     </thead>
                                     <?php	
 									include 'dbcon.php';								
-										$query1=mysqli_query($con,"select * from dailysales natural join pumps natural join stationproducts natural join shifts where shift_id='1'  ORDER BY date ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from dailydipp natural join pumps natural join stationproducts natural join shifts where shift_id='1'  ORDER BY date ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
-											$id=$row1['dailysales_id'];
+											$id=$row1['dailydipp_id'];
 											
 									?>  
                                     <tr style="font-size: 10px;">
 
                                             <td><?php echo $row1['date'];?></td> 
                                             <td><?php echo $row1['pumpnumber'];?></td>
-                                            <td><?php echo $row1['nosalnumber'];?></td>
-                                            <td><?php echo $row1['stationprod_name'];?></td>
-                                            <td><?php echo $row1['openmeter'];?></td>
-                                            <td><?php echo $row1['closemeter'];?></td>
-                                            <td><?php echo $row1['rtt'];?></td>
-                                            <td><?php echo $row1['litressold'];?></td>
-                                            <td><?php echo $row1['unitprice'];?></td>
+                                            <!--td><?php echo $row1['nosalnumber'];?></td>-->
+                                            <!--<td><?php echo $row1['stationprod_name'];?></td>-->
+                                            <td><?php echo $row1['openinv'];?></td>
+                                            <td><?php echo $row1['dippmorn'];?></td>
+                                            <td><?php echo $row1['dippenv'];?></td>
+                                            <td><?php echo $row1['closeinv'];?></td>
+                                          <!--  <td><?php echo $row1['unitprice'];?></td>
                                            
 
                                             <td><?php echo $row1['total'];?></td>
@@ -197,7 +197,7 @@ include('dist/includes/left.php');
 <td><a href="">
     <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>
 <td><a href="">
-    <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>
+    <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>-->
                                         </tr>   
                                         <?php }?>                                
                                 </table>

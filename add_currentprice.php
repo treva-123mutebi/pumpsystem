@@ -1,16 +1,16 @@
 <?php 
 include 'dbcon.php';
 $date = date("Y-m-d H:i:s");
-	$shift_id = $_POST['shift_id'];
+	/*  $shift_id = $_POST['shift_id'];
     $nosalnumber = $_POST['nosalnumber'];
-    $pumpid = $_POST['pumpid'];
+    $pumpid = $_POST['pumpid']; */
     $prod_id=$_POST['prod_id'];
-    $openmeter =$_POST['openmeter'];
+    /*$openmeter =$_POST['openmeter'];
     $closemeter =$_POST['closemeter'];
     $rtt =$_POST['rtt'];
-    $litressold =$_POST['litressold'];
-    $unitprice =$_POST['unitprice'];
-    $total = ($unitprice) * ($litressold);
+    $litressold =$_POST['litressold'];*/
+    $currentprice = $_POST['currentprice'];
+    /* $total = ($unitprice) * ($litressold);
     $pricechange=$_POST['pricechange'];
 
 
@@ -21,13 +21,13 @@ $date = date("Y-m-d H:i:s");
         $pcrtt=$_POST['pcrtt'];
         $pclitressold=$_POST['litressold'];
         $pcunitprice=$_POST['unitprice'];
-        $pctotal = ($pcunitprice) * ($pclitressold);
+        $pctotal = ($pcunitprice) * ($pclitressold); */
 
 
-        mysqli_query($con,"INSERT INTO dailysales(date,shift_id,pumpid,nosalnumber,prod_id,openmeter,closemeter,rtt,litressold,unitprice,total,pricechange,pcopenmeter,pcclosemeter,pcrtt,pclitressold,pcunitprice,pctotalpayment)  
-        VALUES('$date','$shift_id','$pumpid','$nosalnumber','$prod_id','$openmeter','$closemeter','$rtt','$litressold','$unitprice','$total','$pricechange','$pcopenmeter','$pcclosemeter','$pcrtt','$pclitressold','$pcunitprice','$pctotal')")or die(mysqli_error($con));  
+        mysqli_query($con,"INSERT INTO currentprice(date,prod_id,currentprice)  
+        VALUES('$date','$prod_id','$currentprice')")or die(mysqli_error($con));  
         
-        echo "<script>window.location='sale.php'</script>";   
+        echo "<script>window.location='currentprice.php'</script>";   
     
 
 	

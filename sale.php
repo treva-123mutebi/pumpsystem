@@ -136,11 +136,14 @@ include('dist/includes/left.php');
 								<select class="form-control select2" name="prod_id" tabindex="1" autofocus required>
 								<?php	
 									include 'dist/includes/dbcon.php';								
-										$query1=mysqli_query($con,"select * from stationproducts ORDER BY prod_id ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from stationproducts natural join currentprice ORDER BY prod_id ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
-											$id=$row1['prod_id'];
+                                            $id=$row1['prod_id'];
+                                            $currentprice= $row1['currentprice']
+                                            
 							?>
 										<option value="<?php echo $row1['prod_id'];?>"><?php echo $row1['stationprod_name'];?></option>
+                                        <input  type="hidden" class="form-control" name = "currentprice" value="<?php echo $currentprice?>" required/>
 								  <?php }?>
 								</select>
                                 <span class="fa form-control-feedback right" aria-hidden="true"></span>
@@ -274,9 +277,10 @@ include('dist/includes/left.php');
                                     </thead>
                                     <?php	
 									include 'dbcon.php';								
-										$query1=mysqli_query($con,"select * from dailysales natural join pumps natural join stationproducts natural join shifts where shift_id='1'  ORDER BY date ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from dailysales natural join pumps  natural join stationproducts natural join shifts where shift_id='1'  ORDER BY date ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
-											$id=$row1['dailysales_id'];
+                                            $id=$row1['dailysales_id'];
+                                            
 											
 									?>  
                                     <tr style="font-size: 10px;">
@@ -290,6 +294,7 @@ include('dist/includes/left.php');
                                            <!--<td><?php echo $row1['rtt'];?></td>-->
                                             <td><?php echo $row1['litressold'];?></td>
                                             <td><?php echo $row1['unitprice'];?></td>
+                                            
                                            
 
                                             <td><?php echo $row1['total'];?></td>
@@ -312,9 +317,9 @@ include('dist/includes/left.php');
                                         <?php }?>                                
                                 </table>
                                 <br/><br/>
-                                <h2>Night  Shift</h2>
+                                <h2>Night Shift</h2>
                            
-                                <table class="table table-striped table-bordered table-hover">
+                        <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                    
                                         <tr>
@@ -343,9 +348,10 @@ include('dist/includes/left.php');
                                     </thead>
                                     <?php	
 									include 'dbcon.php';								
-										$query1=mysqli_query($con,"select * from dailysales natural join pumps natural join stationproducts natural join shifts where shift_id='2'  ORDER BY date ASC  ")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from dailysales natural join pumps  natural join stationproducts natural join shifts where shift_id='2'  ORDER BY date ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
-											$id=$row1['dailysales_id'];
+                                            $id=$row1['dailysales_id'];
+                                            
 											
 									?>  
                                     <tr style="font-size: 10px;">
@@ -356,9 +362,10 @@ include('dist/includes/left.php');
                                             <td><?php echo $row1['stationprod_name'];?></td>
                                             <td><?php echo $row1['openmeter'];?></td>
                                             <td><?php echo $row1['closemeter'];?></td>
-                                            <!--<td><?php echo $row1['rtt'];?></td>-->
+                                           <!--<td><?php echo $row1['rtt'];?></td>-->
                                             <td><?php echo $row1['litressold'];?></td>
                                             <td><?php echo $row1['unitprice'];?></td>
+                                            
                                            
 
                                             <td><?php echo $row1['total'];?></td>
@@ -380,7 +387,7 @@ include('dist/includes/left.php');
                                         </tr>   
                                         <?php }?>                                
                                 </table>
-                            
+                                
                        
                     </div>
                                 </div>

@@ -71,7 +71,7 @@ include('dist/includes/left.php');
 <hr style="border-top: 1px dotted #f00;color: #fff;background-color: #fff;height: 1px;width:100%;">
                  <div class="row">
                  <div class="col-lg-12">
-<form role="form" method="post" action="sales_add_new.php">
+<form role="form" method="post" action="add_currentprice.php">
                                      <table style="width: 60% "><tr>
                                     
                                      
@@ -104,9 +104,9 @@ include('dist/includes/left.php');
                                       
                                         
                                       
-                                      <td>
+                                     <td>
                                             <label>Current price</label>
-                                            <input type="number" min="1" step="any" class="form-control" name="unitprice" id="desc"> 
+                                            <input type="number" min="1" step="any" class="form-control" name="currentprice" id="desc"> 
                                       </td>
                                      
                                       
@@ -164,16 +164,16 @@ include('dist/includes/left.php');
                                     </thead>
                                     <?php	
 									include 'dbcon.php';								
-										$query1=mysqli_query($con,"select * from dailysales natural join pumps natural join stationproducts natural join shifts where shift_id='1'  ORDER BY date ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from currentprice natural join stationproducts  ORDER BY date ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
-											$id=$row1['dailysales_id'];
+											$id=$row1['currentprice_id'];
 											
 									?>  
                                     <tr style="font-size: 10px;">
 
                                             <td><?php echo $row1['date'];?></td> 
-                                            <td><?php echo $row1['pumpnumber'];?></td>
-                                            <td><?php echo $row1['nosalnumber'];?></td>
+                                            <td><?php echo $row1['stationprod_name'];?></td>
+                                            <td><?php echo $row1['currentprice'];?></td>
                                             <!--<td><?php echo $row1['stationprod_name'];?></td>
                                             <td><?php echo $row1['openmeter'];?></td>
                                             <td><?php echo $row1['closemeter'];?></td>
