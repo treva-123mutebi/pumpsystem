@@ -76,7 +76,7 @@ include('dist/includes/left.php');
                                      <tr>
                                      <td> 
                                      <div class="form-group">
-							<label style="font-size: small;" for="date">Select Pump</label>
+							<label style="font-size: small;" for="date">Select Tank</label>
 							 
 								<select class="form-control select2" name="pumpid" tabindex="1" autofocus required>
 								<?php	
@@ -140,7 +140,7 @@ include('dist/includes/left.php');
                                    
                                         <tr>
                                             <th>Date</th>
-                                            <th>Pump Number</th>
+                                            <th>tank</th>
                                             <!--<th>Nosal Number</th>-->
                                             <!--<th>Fuel type</th>-->
                                             <th>Open Invoice</th>

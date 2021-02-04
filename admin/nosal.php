@@ -22,7 +22,9 @@
 							 <thead>
 								<tr>
 									<th>Pump Number</th>
+									
 									<th>Nosal Number</th>
+									<th>Product Name</th>
 									<th>Update</th>
 																	
 								</tr>
@@ -30,7 +32,7 @@
 							 <tbody>
 									<?php	
 									include 'dbcon.php';								
-										$query1=mysqli_query($con,"select * from pumps natural join nosals ORDER BY pumpid ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from pumps natural join nosals natural join stationproducts ORDER BY pumpid ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
 											$id=$row1['pumpid'];
 											
@@ -38,6 +40,7 @@
 								<tr>
 								    <td><?php echo $row1['pumpnumber'];?></td>
 									<td><?php echo $row1['nosalnumber'];?></td>
+									<td><?php echo $row1['stationprod_name'];?></td>
 									
 									<td>
 										<a href="#update<?php echo $id;?>" class="btn btn-success btn-xs" data-toggle = "modal" data-target="#update<?php echo $id;?>"><i class = "fa fa-pencil"></i> Edit</a>

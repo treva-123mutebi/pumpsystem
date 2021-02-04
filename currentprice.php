@@ -133,7 +133,7 @@ include('dist/includes/left.php');
                                     
                                     <div style="margin-top:40px" class="panel panel-default">
                         
-                        <h2>Product Prices</h2>
+                        <h2>Fuel Prices History</h2>
                            
                         <table class="table table-striped table-bordered table-hover">
                                     <thead>
@@ -164,9 +164,9 @@ include('dist/includes/left.php');
                                     </thead>
                                     <?php	
 									include 'dbcon.php';								
-										$query1=mysqli_query($con,"select * from currentprice natural join stationproducts  ORDER BY date ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from tempcurrentprice natural join stationproducts  ORDER BY date ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
-											$id=$row1['currentprice_id'];
+											$id=$row1['tempcurrentprice_id'];
 											
 									?>  
                                     <tr style="font-size: 10px;">

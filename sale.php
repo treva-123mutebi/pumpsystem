@@ -1,3 +1,4 @@
+<?php error_reporting (E_ALL ^ E_NOTICE); ?>
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8" />
@@ -74,7 +75,7 @@ include('dist/includes/left.php');
 <form role="form" method="post" action="sales_add_new.php">
                                      <table style="width: 60% "><tr>
                                      <td> 
-                                     <div class="form-group">
+                                     <!--<div class="form-group">
 							<label style="font-size: small;" for="date">Select Shift</label>
 							 
 								<select class="form-control select2" name="shift_id" tabindex="1" autofocus required>
@@ -88,31 +89,11 @@ include('dist/includes/left.php');
 								  <?php }?>
 								</select>
                                 <span class="fa form-control-feedback right" aria-hidden="true"></span>
-						  </div><!-- /.form group --> 
+						  </div>--><!-- /.form group --> 
                                        
-                                     </td>
-                                     <td> 
-                                     <div class="form-group">
-							<label style="font-size: small;" for="date">Select Pumps</label>
-							 
-								<select class="form-control select2" name="pumpid" tabindex="1" autofocus required>
-								<?php	
-									include 'dist/includes/dbcon.php';								
-										$query1=mysqli_query($con,"select * from pumps ORDER BY pumpid ASC")or die(mysqli_error($con));
-										while ($row1=mysqli_fetch_array($query1)){
-											$id=$row1['pumpid'];
-							?>
-										<option value="<?php echo $row1['pumpid'];?>"><?php echo $row1['pumpnumber'];?></option>
-								  <?php }?>
-								</select>
-                                <span class="fa form-control-feedback right" aria-hidden="true"></span>
-						  </div><!-- /.form group --> 
-                                       
-                                     </td>
-                                    
-
-                                     
-                                       <tr><td>  
+                                     </td></tr>
+                                     <!--<tr>
+                                     <td>  
                                      <div class="col-md-12 col-sm-12 col-xs-9"> 
                                         <label>Select Nosal</label><br />
                                        <select  style="max-width:650px;" id="store" class="form-control" name="nosalnumber" required>
@@ -127,9 +108,20 @@ include('dist/includes/left.php');
                                      </select> 
                                         </div>    
                                         <br/><br/>
-                                       </td></tr>
-                                       <tr><br/><br/></tr>
-                                       <td> 
+                                       </td></tr>-->
+                                    <tr><?php
+                                $shift_id=$_REQUEST['shift_id'];
+                                $nosal_id = $_REQUEST['nosal_id'];
+                                $prod_id = $_REQUEST['prod_id'];
+                                $date = date("Y-m-d H:i:s"); ?>
+                                <input type="hidden" class="form-control" name="shift_id" value="<?php echo $shift_id;?>" required> 
+                                <input type="hidden" class="form-control" name="nosal_id" value="<?php echo $nosal_id;?>" required> 
+                                <input type="hidden" class="form-control" name="prod_id" value="<?php echo $prod_id;?>" required> 
+                                <?php ?>
+                                       </tr>
+
+                                       <tr>
+                                       <!--<td> 
                                      <div class="form-group">
 							<br/><p></p><label style="font-size: small;" for="date">Select Fuel Type</label>
 							 
@@ -147,13 +139,22 @@ include('dist/includes/left.php');
 								  <?php }?>
 								</select>
                                 <span class="fa form-control-feedback right" aria-hidden="true"></span>
-						  </div><!-- /.form group --> 
+                                
+						  </div>
                                        
-                                     </td><tr></tr>
+                                     </td>--></tr><tr></tr>
 
                                        <td>
                                             <label>Open meter</label>
-                                  <input type="number" min="1" step="any" class="form-control" required name="openmeter" id="price">
+                                            <?php	
+									include 'dist/includes/dbcon.php';								
+										$query1=mysqli_query($con,"select * from dailysales where nosal_id ORDER BY prod_id ASC")or die(mysqli_error($con));
+                                 
+
+                                  ?>
+                                   <input type="number" min="1" step="any" class="form-control" required name="openmeter" id="price">
+                                   <?php ?>
+
                                        </td>
                                        <td>
                                             <label>Close meter</label>
@@ -277,7 +278,7 @@ include('dist/includes/left.php');
                                     </thead>
                                     <?php	
 									include 'dbcon.php';								
-										$query1=mysqli_query($con,"select * from dailysales natural join pumps  natural join stationproducts natural join shifts where shift_id='1'  ORDER BY date ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from dailysales natural join pumps natural join nosals  natural join stationproducts natural join shifts where shift_id='1'  ORDER BY date ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
                                             $id=$row1['dailysales_id'];
                                             
@@ -348,7 +349,7 @@ include('dist/includes/left.php');
                                     </thead>
                                     <?php	
 									include 'dbcon.php';								
-										$query1=mysqli_query($con,"select * from dailysales natural join pumps  natural join stationproducts natural join shifts where shift_id='2'  ORDER BY date ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from dailysales natural join pumps natural join nosals  natural join stationproducts natural join shifts where shift_id='2'  ORDER BY date ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
                                             $id=$row1['dailysales_id'];
                                             

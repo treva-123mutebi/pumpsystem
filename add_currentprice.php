@@ -22,10 +22,27 @@ $date = date("Y-m-d H:i:s");
         $pclitressold=$_POST['litressold'];
         $pcunitprice=$_POST['unitprice'];
         $pctotal = ($pcunitprice) * ($pclitressold); */
+        $query1=mysqli_query($con,"select * from currentprice where prod_id='$prod_id'")or die(mysqli_error());
+		$count=mysqli_num_rows($query1);
 
 
-        mysqli_query($con,"INSERT INTO currentprice(date,prod_id,currentprice)  
+        if ($count>0){
+            mysqli_query($con,"update currentprice set currentprice='$currentprice' where prod_id='$prod_id'")or die(mysqli_error());
+            mysqli_query($con,"INSERT INTO tempcurrentprice(date,prod_id,currentprice)  
+        VALUES('$date','$prod_id','$currentprice')")or die(mysqli_error($con)); 
+	
+		}
+		else{
+            mysqli_query($con,"INSERT INTO currentprice(date,prod_id,currentprice)  
         VALUES('$date','$prod_id','$currentprice')")or die(mysqli_error($con));  
+        mysqli_query($con,"INSERT INTO tempcurrentprice(date,prod_id,currentprice)  
+        VALUES('$date','$prod_id','$currentprice')")or die(mysqli_error($con)); 
+
+        }
+    
+
+
+        
         
         echo "<script>window.location='currentprice.php'</script>";   
     
