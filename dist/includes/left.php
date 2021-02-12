@@ -10,7 +10,7 @@
             </div>
             <ul id="menu" class="collapse">
                
-                 <li class="panel active"><a href="home.php"><i class="icon-table"></i> Home </a> </li>
+                 <li class="panel active"><a href="home.php"> Home </a> </li>
                
                <!--  <li><a href="income_head.php"><i class="icon-tasks"> </i> Create Accounts</a></li>-->
            
@@ -36,17 +36,17 @@
                 
                 
                <li class="panel">
-                    <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#sale">
-                        <i class="icon-table"></i> Sale
+                    <a href="selectshift.php" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#sale">
+                         Fuel Sale
 	   
                         <span class="pull-right">
-                            <i class="icon-angle-left"></i>
+                            
                         </span>
                           
                     </a>
                     <ul class="collapse" id="sale">
-                        <li><a href="selectshift.php"><i class="icon-angle-right"></i> Fuel Sale </a></li>
-                        <!--<li><a href="customer_sale.php"><i class="icon-angle-right"></i> Customers Sale </a></li>
+                        <!--<li><a href="selectshift.php"><i class="icon-angle-right"></i> Fuel Sale </a></li>
+                        <li><a href="customer_sale.php"><i class="icon-angle-right"></i> Customers Sale </a></li>
                          <li><a href="invt_sale.php"><i class="icon-angle-right"></i> Lubricants Sale </a></li>-->
                         
                     
@@ -58,10 +58,10 @@
                 </li>
                  
                
-               <li><a href="currentprice.php"><i class="icon-tasks"> </i>Current Price</a></li>
-                <li><a href="rtt.php"><i class="icon-tasks"> </i>R.T.T</a></li>
-                <li><a href="dipp.php"><i class="icon-tasks"> </i>Daily Dipp Reading</a></li>
-                <li><a href="purchase.php"><i class="icon-tasks"> </i>Purchase</a></li>
+               <!--<li><a href="currentprice.php"><i class="icon-tasks"> </i>Current Price</a></li>
+                <li><a href="rtt.php"><i class="icon-tasks"> </i>R.T.T</a></li>-->
+                <li><a href="selecttank.php">Daily Tank Reading</a></li>
+                <li><a href="purchase.php">Purchase</a></li>
              
                  
                  <!--<li class="panel">
@@ -83,7 +83,7 @@
                 </li>-->
                 
                 
-                 <li class="panel">
+                 <!--<li class="panel">
                     <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#exp">
                         <i class="icon-table"></i> Expences
 	   
@@ -97,7 +97,7 @@
                     
                    
                     </ul>
-                </li>
+                </li>-->
                 
                   
              
@@ -106,10 +106,10 @@
                                 
                  <li class="panel">
                     <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#dash">
-                        <i class="icon-table"></i> Dashboard
+                         Dashboard
 	   
                         <span class="pull-right">
-                            <i class="icon-angle-left"></i>
+                            
                         </span>
                           
                     </a>

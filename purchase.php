@@ -72,7 +72,20 @@ include('dist/includes/left.php');
                  <div class="row">
                  <div class="col-lg-12">
 <form role="form" method="post" action="purchasesadd.php">
-                                     <table style="width: 60% "><tr>
+                                     <table style="width: 60% ">
+                                     <tr>
+                                     <td>
+                                     <div class="form-group">
+							<label style="font-size: small;" for="date">Select date</label>
+                            <input class="form-control" type="date" name="date" placeholder="dd.mm.yyyy" tabindex="2" required/>
+                            </div>
+                                     
+                                     </td>
+                                     </tr>
+                                     
+                                     
+                                     <tr>
+
                                      
                                      <td> 
                                      <div class="form-group">
@@ -96,25 +109,26 @@ include('dist/includes/left.php');
 
                                      
                                        
+                                       </tr>
                                        <tr>
                                        <div class="form-group">
 							<label style="font-size: small;" for="date">Select Tank</label>
 							 
-								<select class="form-control select2" name="pumpid" tabindex="1" autofocus required>
+								<select class="form-control select2" name="stunit_id" tabindex="1" autofocus required>
 								<?php	
 									include 'dist/includes/dbcon.php';								
-										$query1=mysqli_query($con,"select * from pumps ORDER BY pumpid ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from storageunits ORDER BY stunit_id ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
-											$id=$row1['pumpid'];
+											$id=$row1['stunit_id'];
 							?>
-										<option value="<?php echo $row1['pumpid'];?>"><?php echo $row1['pumpnumber'];?></option>
+										<option value="<?php echo $row1['stunit_id'];?>"><?php echo $row1['storageunitname'];?></option>
 								  <?php }?>
 								</select>
                                 <span class="fa form-control-feedback right" aria-hidden="true"></span>
 						  </div><!-- /.form group --> 
                                        </tr>
 
-                                      
+                                      <tr>
                                        
                                       <td>
                                             <label>Unit price</label>
@@ -170,7 +184,7 @@ include('dist/includes/left.php');
                                     </thead>
                                     <?php	
 									include 'dbcon.php';								
-										$query1=mysqli_query($con,"select * from purchase natural join pumps natural join stationproducts natural join supplier ORDER BY date ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from purchase natural join storageunits natural join stationproducts natural join supplier ORDER BY date ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
 											$id=$row1['purchase_id'];
 											
@@ -179,7 +193,7 @@ include('dist/includes/left.php');
 
                                             <td><?php echo $row1['date'];?></td> 
                                             <td><?php echo $row1['supplier_name'];?></td>
-                                            <td><?php echo $row1['pumpnumber'];?></td>
+                                            <td><?php echo $row1['storageunitname'];?></td>
                                             <td><?php echo $row1['litresin'];?></td>
                                             <td><?php echo $row1['unitprice'];?></td>
                                             <td><?php echo $row1['payment'];?></td>

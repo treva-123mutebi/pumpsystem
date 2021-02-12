@@ -1,56 +1,56 @@
   <div class="x_panel">
                   <div class="x_title">
-                    <h2>Add Station Tank <i class = "fa fa-building"></i></h2>
+                    <h2>Enter Initial Meter reading <i class = "fa fa-building"></i></h2>
                     <ul class="nav navbar-right panel_toolbox"> 
                     </ul>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
                     <br />
-                    <form class="form-horizontal form-label-left" action = "add_storageunit.php" method = "POST" enctype = "multipart/form-data">
+                    <form class="form-horizontal form-label-left" action = "add_initialm.php" method = "POST" enctype = "multipart/form-data">
                       <div class="form-group">
                        
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                        <label> Tank Name</label><br/>
+                        <label>Enter Date</label><br/>
                         </div>
                       </div>
                       <div class="form-group">
                         
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                          <input type="text" class="form-control" name = "storageunitname" required>
+                          <input type="date" class="form-control"  required>
                           <span class="fa fa-building form-control-feedback right" aria-hidden="true"required ></span>
                         </div>
                       </div>
                       <div class="form-group">
                        
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                        <label> Capacity (litres) </label><br/>
+                        <label>Enter Initial Meter Reading </label><br/>
                         </div>
                       </div>
                       <div class="form-group">
                         
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                          <input type="number" step="any" class="form-control" name = "capacity" required>
+                          <input  name="closemeter" type="number" step="any" min="0" class="form-control"  required>
                           <span class="fa fa-building form-control-feedback right" aria-hidden="true"required ></span>
                         </div>
                       </div>
-
-                      <div class="form-group">
-                        <label class="col-md-3 col-sm-3 col-xs-3">Fuel Type</label>
-                        <div class="col-md-9 col-sm-9 col-xs-9">
-                         <select  name = "prod_id" class = "form-control">
+					   <div class="col-md-9 col-sm-9 col-xs-9">
+                        <label>Select Pump Nosal</label><br/>
+						<select  name = "nosal_id" class = "form-control">
 						 	<?php	
 									include 'dbcon.php';								
-										$query1=mysqli_query($con,"select * from stationproducts ORDER BY prod_id ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from nosals ORDER BY nosal_id ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
-											$id=$row1['prod_id'];
+											$id=$row1['nosal_id'];
 							?>
-							<option value = "<?php echo $row1['prod_id'];?>"><?php echo $row1['stationprod_name'];?></option>	
+							<option value = "<?php echo $row1['nosal_id'];?>"><?php echo $row1['nosalnumber'];?></option>	
 							<?php } ?>																 
 						 </select>
                           <span class="fa form-control-feedback right" aria-hidden="true"></span>
                         </div>
-                      </div>
+                        
+                     
+                     
                      
                       
                       
@@ -58,12 +58,12 @@
                      
                       <div class="ln_solid"></div>
 
-                      <div class="form-group">
+                      <tr><div class="form-group">
                         <div class="col-md-9 col-md-offset-3">
                         
-                          <button name = "" class="btn btn-block btn-success"><i class = "fa fa-save"></i> Save</button>
+                          <br/><br/><button name = "" class="btn btn-block btn-success"><i class = "fa fa-save"></i> Save</button>
                         </div>
-                      </div>
+                      </div></tr>
 
                     </form>
                   </div>

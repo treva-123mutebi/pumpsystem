@@ -1,8 +1,8 @@
 <?php 
 include 'dbcon.php';
-$date = date("Y-m-d H:i:s");
+$date = $_POST['date'];
     $supplier_id = $_POST['supplier_id'];
-    $pumpid = $_POST['pumpid'];
+    $stunit_id = $_POST['stunit_id'];
     $litresin =$_POST['litresin'];
     $unitprice =$_POST['unitprice'];
     $total = ($unitprice) * ($litresin);
@@ -28,8 +28,8 @@ $date = date("Y-m-d H:i:s");
 
     
 
-        mysqli_query($con,"INSERT INTO purchase(date,supplier_id,pumpid,litresin,unitprice,payment) 
-			VALUES('$date','$supplier_id','$pumpid','$litresin','$unitprice','$total')")or die(mysqli_error($con));  
+        mysqli_query($con,"INSERT INTO purchase(date,supplier_id,stunit_id,litresin,unitprice,payment) 
+			VALUES('$date','$supplier_id','$stunit_id','$litresin','$unitprice','$total')")or die(mysqli_error($con));  
 			
 			echo "<script>window.location='purchase.php'</script>";   
 

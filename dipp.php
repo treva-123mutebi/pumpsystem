@@ -62,7 +62,7 @@ include('dist/includes/left.php');
             <div class="inner" style="min-height: 700px;">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Record Daily Dipp Readings</h1>
+                        <h1>Record Daily Tank Readings</h1>
                     </div>
                 </div>                
                 <!--BLOCK-SECTION -->
@@ -76,43 +76,89 @@ include('dist/includes/left.php');
                                      <tr>
                                      <td> 
                                      <div class="form-group">
-							<label style="font-size: small;" for="date">Select Tank</label>
-							 
-								<select class="form-control select2" name="pumpid" tabindex="1" autofocus required>
-								<?php	
-									include 'dist/includes/dbcon.php';								
-										$query1=mysqli_query($con,"select * from pumps ORDER BY pumpid ASC")or die(mysqli_error($con));
-										while ($row1=mysqli_fetch_array($query1)){
-											$id=$row1['pumpid'];
-							?>
-										<option value="<?php echo $row1['pumpid'];?>"><?php echo $row1['pumpnumber'];?></option>
-								  <?php }?>
-								</select>
-                                <span class="fa form-control-feedback right" aria-hidden="true"></span>
-						  </div><!-- /.form group --> 
+
+                                     <?php
+                                $stunit_id=$_REQUEST['stunit_id'];
+                                
+                                
+                                $date = $_REQUEST['date'];
+                                $start= strtotime($date);
+                                $mysqldate = date( 'Y-m-d H:i:s', $start );
+                                
+                                
+                                ?>
+                                <input type="hidden" class="form-control" name="stunit_id" value="<?php echo $stunit_id;?>" required> 
+                                
+                                
+                                <input type="hidden" class="form-control" name="date" value="<?php echo $date;?>" required> 
+                                <?php ?>
+							
+						             </div><!-- /.form group --> 
                                        
                                      </td>
                                      </tr>
+                                     <?php
+                                    include 'dbcon.php'; 
+                                    $query=mysqli_query($con,"select closinginvoice,lastdipp from lastclosinginvoice  where stunit_id='$stunit_id' ORDER BY stunit_id DESC LIMIT 1,1")or die(mysqli_error());
+                                    $row=mysqli_fetch_array($query);
+                                    //$price=$row['prod_price'];
+                                    //$lastcummdiff=$row['cummdiff'];
+
+                                    $closinginvoice=$row['closinginvoice'];
+                                    $lastdipp=$row['lastdipp'];
+                                    
+                                    
+                                    
+                                    
+                                    ?>
+                                     
 
                                        <td>
                                             <label>Open Invoice</label>
-                                  <input type="number" min="1" step="any" class="form-control" required name="openinvoice" id="price">
+                                    <input readonly value="<?php echo $closinginvoice ?>" type="number" min="1" step="any" class="form-control" required name="openinvoice" id="price">
                                        </td>
                                        <td>
                                             <label>Dipp Morn</label>
-                                  <input type="number" min="1" step="any" class="form-control" required name="dippmorn" id="price">
+                                  <input readonly value="<?php echo $lastdipp ?>" type="number" min="1" step="any" class="form-control" required name="dippmorn" id="price">
                                        </td>
                                        
                                       
                                          <td>
                                             <label>Dipp Evening</label>
-                                            <input type="text" class="form-control" name="dippeven" id="desc"> 
+                                            <input required type="number" min="1" step="any" class="form-control" name="dippeven" id="desc"> 
                                       </td>
+                                      <?php
+                                      include 'dbcon.php';
+
+                                      //totallitressold
+                                      $query2=mysqli_query($con,"select prod_id from storageunits  where stunit_id='$stunit_id' ")or die(mysqli_error());
+                                      $row2=mysqli_fetch_array($query2);
+                                      $prod_id = $row2['prod_id'];
+
+                                      $query3=mysqli_query($con,"select SUM(litressold) as totallitressold from dailysales where prod_id='$prod_id' and date='$mysqldate' ")or die(mysqli_error());
+                                      $row3=mysqli_fetch_array($query3);
+                                      $totallitressold=$row3['totallitressold'];
+
+                                      $query4=mysqli_query($con,"select SUM(litresin) as totalpurchases from purchase where stunit_id='$stunit_id' and date='$mysqldate' ")or die(mysqli_error());
+                                      $row4=mysqli_fetch_array($query4);
+                                      $purchases=$row4['totalpurchases'];
+
+
+
+
+
+                                      $p = ($closinginvoice)-($totallitressold);
+                                      $cp = $p + $purchases;
+                                      ?>
                                       
                                       <td>
-                                            <label>Close Invoice</label>
-                                            <input type="number" min="1" step="any" class="form-control" name="closeinvoice" id="desc"> 
+                                            <label>Closing Invoice</label>
+                                            <input required readonly value="<?php echo $cp ?>" type="number" min="1" step="any" class="form-control" name="closeinvoice" id="desc"> 
                                       </td>
+                                      <!--<td>
+                                            <label>Total litres sold</label>
+                                            <input required readonly value="<?php echo $totallitressold ?>" type="number" min="1" step="any" class="form-control" name="closeinvoice" id="desc"> 
+                                      </td>-->
                                       
                                       
                                      
@@ -133,7 +179,7 @@ include('dist/includes/left.php');
                                     
                                     <div style="margin-top:40px" class="panel panel-default">
                         
-                        <h2>Daily Dipp Readings</h2>
+                        <h2>Daily  Tank PMS  Readings history </h2>
                            
                         <table class="table table-striped table-bordered table-hover">
                                     <thead>
@@ -142,11 +188,15 @@ include('dist/includes/left.php');
                                             <th>Date</th>
                                             <th>tank</th>
                                             <!--<th>Nosal Number</th>-->
-                                            <!--<th>Fuel type</th>-->
+                                            <th>Fuel type</th>
                                             <th>Open Invoice</th>
                                             <th>Dipp Morn</th>
+                                            <th>Diff</th>
                                             <th>Dipp Evening</th>
                                             <th>Closing Invoice</th>
+                                            <th>Cumm Diff</th>
+                                            <th>Daily Diff</th>
+                                            <th>Reorder Level</th>
                                            <!-- <th>Unit Price</th>
                                             
                                             <th>Payment</th>
@@ -164,44 +214,161 @@ include('dist/includes/left.php');
                                     </thead>
                                     <?php	
 									include 'dbcon.php';								
-										$query1=mysqli_query($con,"select * from dailydipp natural join pumps natural join stationproducts natural join shifts where shift_id='1'  ORDER BY date ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from tankreadings natural join storageunits natural join stationproducts where stunit_id='2' ORDER BY date ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
-											$id=$row1['dailydipp_id'];
+											$id=$row1['tankreading_id'];
 											
 									?>  
                                     <tr style="font-size: 10px;">
 
-                                            <td><?php echo $row1['date'];?></td> 
-                                            <td><?php echo $row1['pumpnumber'];?></td>
-                                            <!--td><?php echo $row1['nosalnumber'];?></td>-->
-                                            <!--<td><?php echo $row1['stationprod_name'];?></td>-->
-                                            <td><?php echo $row1['openinv'];?></td>
+                                            <td><?php echo date("M d, Y",strtotime($row1['date']));?></td> 
+                                            <td><?php echo $row1['storageunitname'];?></td>
+                                            <td><?php echo $row1['stationprod_name'];?></td>
+                                            <td><?php echo $row1['openinvoice'];?></td>
                                             <td><?php echo $row1['dippmorn'];?></td>
-                                            <td><?php echo $row1['dippenv'];?></td>
-                                            <td><?php echo $row1['closeinv'];?></td>
-                                          <!--  <td><?php echo $row1['unitprice'];?></td>
-                                           
-
-                                            <td><?php echo $row1['total'];?></td>
-                                            <td></td>
-                                            <td><?php echo $row1['pcopenmeter'];?></td>
-                                            <td><?php echo $row1['pcclosemeter'];?></td>
-                                            <td><?php echo $row1['pcrtt'];?></td>
-                                            <td><?php echo $row1['pclitressold'];?></td>
-                                            <td><?php echo $row1['pcunitprice'];?></td>
-                                           
-
-                                            <td><?php echo $row1['pctotalpayment'];?></td>
+                                            <td><?php echo $row1['morndiff'];?></td>
+                                            <td><?php echo $row1['dippeven'];?></td>
+                                            <td><?php echo $row1['closinginvoice'];?></td>
+                                            <td><?php echo $row1['cummdiff'];?></td>
+                                            <td><?php echo $row1['dailydiff'];?></td>
+                                            <td><?php echo $row1['reorderlevel'];?></td>
+                                          
                                            
 
 <td><a href="">
     <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>
 <td><a href="">
-    <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>-->
+    <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>
                                         </tr>   
                                         <?php }?>                                
                                 </table>
                                 <br/><br/>
+                                <h2>Daily  Tank AGO  Readings history </h2>
+                           
+                        <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                   
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>tank</th>
+                                            <!--<th>Nosal Number</th>-->
+                                            <th>Fuel type</th>
+                                            <th>Open Invoice</th>
+                                            <th>Dipp Morn</th>
+                                            <th>Diff</th>
+                                            <th>Dipp Evening</th>
+                                            <th>Closing Invoice</th>
+                                            <th>Cumm Diff</th>
+                                            <th>Daily Diff</th>
+                                            <th>Reorder Level</th>
+                                           <!-- <th>Unit Price</th>
+                                            
+                                            <th>Payment</th>
+                                            <th><b>Price Change</b></th>
+                                            <th>Open Meter</th>
+                                            <th>Close Meter</th>
+                                            <th>R.T.T</th>
+                                            <th>Litre Sold</th>
+                                            <th>Unit Price</th>
+                                            <th>Payment</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>-->
+                                        </tr>
+                                       
+                                    </thead>
+                                    <?php	
+									include 'dbcon.php';								
+										$query1=mysqli_query($con,"select * from tankreadings natural join storageunits natural join stationproducts where stunit_id='3' ORDER BY date ASC")or die(mysqli_error($con));
+										while ($row1=mysqli_fetch_array($query1)){
+											$id=$row1['tankreading_id'];
+											
+									?>  
+                                    <tr style="font-size: 10px;">
+
+                                            <td><?php echo date("M d, Y",strtotime($row1['date']));?></td> 
+                                            <td><?php echo $row1['storageunitname'];?></td>
+                                            <td><?php echo $row1['stationprod_name'];?></td>
+                                            <td><?php echo $row1['openinvoice'];?></td>
+                                            <td><?php echo $row1['dippmorn'];?></td>
+                                            <td><?php echo $row1['morndiff'];?></td>
+                                            <td><?php echo $row1['dippeven'];?></td>
+                                            <td><?php echo $row1['closinginvoice'];?></td>
+                                            <td><?php echo $row1['cummdiff'];?></td>
+                                            <td><?php echo $row1['dailydiff'];?></td>
+                                            <td><?php echo $row1['reorderlevel'];?></td>
+                                          
+                                           
+
+<td><a href="">
+    <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>
+<td><a href="">
+    <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>
+                                        </tr>   
+                                        <?php }?>                                
+                                </table><br/>
+                                <h2>Daily  Tank BIK  Readings history </h2>
+                           
+                        <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                   
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>tank</th>
+                                            <!--<th>Nosal Number</th>-->
+                                            <th>Fuel type</th>
+                                            <th>Open Invoice</th>
+                                            <th>Dipp Morn</th>
+                                            <th>Diff</th>
+                                            <th>Dipp Evening</th>
+                                            <th>Closing Invoice</th>
+                                            <th>Cumm Diff</th>
+                                            <th>Daily Diff</th>
+                                            <th>Reorder Level</th>
+                                           <!-- <th>Unit Price</th>
+                                            
+                                            <th>Payment</th>
+                                            <th><b>Price Change</b></th>
+                                            <th>Open Meter</th>
+                                            <th>Close Meter</th>
+                                            <th>R.T.T</th>
+                                            <th>Litre Sold</th>
+                                            <th>Unit Price</th>
+                                            <th>Payment</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>-->
+                                        </tr>
+                                       
+                                    </thead>
+                                    <?php	
+									include 'dbcon.php';								
+										$query1=mysqli_query($con,"select * from tankreadings natural join storageunits natural join stationproducts where stunit_id='4' ORDER BY date ASC")or die(mysqli_error($con));
+										while ($row1=mysqli_fetch_array($query1)){
+											$id=$row1['tankreading_id'];
+											
+									?>  
+                                    <tr style="font-size: 10px;">
+
+                                            <td><?php echo date("M d, Y",strtotime($row1['date']));?></td> 
+                                            <td><?php echo $row1['storageunitname'];?></td>
+                                            <td><?php echo $row1['stationprod_name'];?></td>
+                                            <td><?php echo $row1['openinvoice'];?></td>
+                                            <td><?php echo $row1['dippmorn'];?></td>
+                                            <td><?php echo $row1['morndiff'];?></td>
+                                            <td><?php echo $row1['dippeven'];?></td>
+                                            <td><?php echo $row1['closinginvoice'];?></td>
+                                            <td><?php echo $row1['cummdiff'];?></td>
+                                            <td><?php echo $row1['dailydiff'];?></td>
+                                            <td><?php echo $row1['reorderlevel'];?></td>
+                                          
+                                           
+
+<td><a href="">
+    <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>
+<td><a href="">
+    <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>
+                                        </tr>   
+                                        <?php }?>                                
+                                </table>
                                
                        
                     </div>

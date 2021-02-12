@@ -21,7 +21,9 @@
 						 <table id="datatable" class="table table-striped table-bordered">
 							 <thead>
 								<tr>
-									<th>Storage Unit Name</th>
+									<th>Tank  Name</th>
+									<th>Capacity</th>
+									<th>Fuel Type</th>
 									<th> Update </th>
 																	
 								</tr>
@@ -29,13 +31,15 @@
 							 <tbody>
 									<?php	
 									include 'dbcon.php';								
-										$query1=mysqli_query($con,"select * from storageunits ORDER BY stunit_id ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from storageunits natural join stationproducts ORDER BY stunit_id ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
 											$id=$row1['stunit_id'];
 											
 									?>  
 								<tr>
 									<td><?php echo $row1['storageunitname'];?></td>
+									<td><?php echo $row1['capacity'];?></td>
+									<td><?php echo $row1['stationprod_name'];?></td>
 									
 									<td>
 										<a href="#update<?php echo $id;?>" class="btn btn-success btn-xs" data-toggle = "modal" data-target="#update<?php echo $id;?>"><i class = "fa fa-pencil"></i> Edit</a>

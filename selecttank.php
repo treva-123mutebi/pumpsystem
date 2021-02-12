@@ -62,7 +62,7 @@ include('dist/includes/left.php');
             <div class="inner" style="min-height: 700px;">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Record Daily Sales</h1>
+                        <h1>Record Daily Tank Reading</h1>
                     </div>
                 </div>                
                 <!--BLOCK-SECTION -->
@@ -71,14 +71,9 @@ include('dist/includes/left.php');
 <hr style="border-top: 1px dotted #f00;color: #fff;background-color: #fff;height: 1px;width:100%;">
                  <div class="row">
                  <div class="col-lg-12">
-<form role="form" method="post" action="sale.php">
-                                     <table style="width: 60% ">
-                                     <tr>
-                                     <td><label>Select Date</label>
-                                    <input required type="date"  class="form-control" required name="date" id="price"><br/><br/>
-                                    </td> </tr>
-                                     <tr>
-                                     <td> 
+<form role="form" method="post" action="dipp.php">
+                                     <table style="width: 60% "><tr>
+                                     <!--<td> 
                                      <div class="form-group">
 							<label style="font-size: small;" for="date">Select Shift</label>
 							 
@@ -93,30 +88,35 @@ include('dist/includes/left.php');
 								  <?php }?>
 								</select>
                                 <span class="fa form-control-feedback right" aria-hidden="true"></span>
-						  </div><!-- /.form group --> 
+						  </div>
                                        
-                                     </td>
+                                     </td>-->
                                      
-                                    
+                                     <tr>
+                                     <td>
+                                     <label>Select Date</label>
+                                    <input required type="date"  class="form-control" required name="date" id="price"><br/><br/>
+                                     </td>
+                                     </tr>
 
                                      
                                        <tr>
                                        <tr>
                                      <td> 
                                      <div class="form-group">
-							<label style="font-size: small;" for="date">Select Pump Nosal</label>
+							<label style="font-size: small;" for="date">Select Tank</label>
 							 
-								<select class="form-control select2" name="nosal_id" tabindex="1" autofocus required>
+								<select class="form-control select2" name="stunit_id" tabindex="1" autofocus required>
                                 <?php	
 
                                 
 									include 'dist/includes/dbcon.php';								
-										$query1=mysqli_query($con,"select * from nosals ORDER BY nosal_id ASC")or die(mysqli_error($con));
+										$query1=mysqli_query($con,"select * from storageunits ORDER BY stunit_id ASC")or die(mysqli_error($con));
 										while ($row1=mysqli_fetch_array($query1)){
-                      $id=$row1['nosal_id'];
+                      $id=$row1['stunit_id'];
                       $prod_id=$row1['prod_id'];
 							?>
-										<option value="<?php echo $row1['nosal_id'];?>"><?php echo $row1['nosalnumber'];?></option>
+										<option value="<?php echo $row1['stunit_id'];?>"><?php echo $row1['storageunitname'];?></option>
                     
 								  <?php }?>
 								</select>

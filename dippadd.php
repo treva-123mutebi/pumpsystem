@@ -1,11 +1,28 @@
 <?php 
 include 'dbcon.php';
-$date = date("Y-m-d H:i:s");
+$date = $_POST['date'];
 $dippmorn = $_POST['dippmorn'];
 $openinvoice = $_POST['openinvoice'];
 $dippeven =$_POST['dippeven'];
 $closeinvoice = $_POST['closeinvoice'];
-$pumpid = $_POST['pumpid'];
+
+$stunit_id = $_POST['stunit_id'];
+$cummdiff = ($dippeven)-($closeinvoice);
+$morndiff = ($dippmorn)-($openinvoice);
+$reorderlevel= ($dippeven)-(23600.00);
+
+$query=mysqli_query($con,"select cummdiff from lastclosinginvoice  where stunit_id='$stunit_id' ORDER BY stunit_id DESC LIMIT 1,1")or die(mysqli_error());
+$row=mysqli_fetch_array($query);
+//$price=$row['prod_price'];
+$lastcummdiff=$row['cummdiff'];
+
+if($lastcummdiff != 0){
+    $dailydiff = ($cummdiff) - ($lastcummdiff);
+}
+else {
+    $dailydiff = ($cummdiff) - ($lastcummdiff);;
+}
+
 	/* $shift_id = $_POST['shift_id'];
     $nosalnumber = $_POST['nosalnumber'];
     $pumpid = $_POST['pumpid'];
@@ -30,10 +47,13 @@ $pumpid = $_POST['pumpid'];
 
     
 
-        mysqli_query($con,"INSERT INTO dailydipp(date,openinv,dippmorn,closeinv,dippenv,pumpid) 
-			VALUES('$date','$openinvoice','$dippmorn','$closeinvoice','$dippeven','$pumpid')")or die(mysqli_error($con));  
+        mysqli_query($con,"INSERT INTO tankreadings(date,openinvoice,dippmorn,morndiff,closinginvoice,dippeven,cummdiff,dailydiff,reorderlevel,stunit_id) 
+            VALUES('$date','$openinvoice','$dippmorn','$morndiff','$closeinvoice','$dippeven','$cummdiff','$dailydiff','$reorderlevel','$stunit_id')")or die(mysqli_error($con));
+
+        mysqli_query($con,"INSERT INTO lastclosinginvoice(stunit_id,closinginvoice,cummdiff,lastdipp) 
+        VALUES('$stunit_id','$closeinvoice','$cummdiff','$dippeven')")or die(mysqli_error($con));      
 			
-			echo "<script>window.location='dipp.php'</script>";   
+			echo "<script>window.location='dipp.php?stunit_id=$stunit_id&date=$date'</script>";   
 
     
     

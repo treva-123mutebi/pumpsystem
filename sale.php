@@ -112,47 +112,51 @@ include('dist/includes/left.php');
                                     <tr><?php
                                 $shift_id=$_REQUEST['shift_id'];
                                 $nosal_id = $_REQUEST['nosal_id'];
-                                $prod_id = $_REQUEST['prod_id'];
-                                $date = date("Y-m-d H:i:s"); ?>
+                                //$prod_id = $_REQUEST['prod_id'];
+                                $date = $_REQUEST['date'];
+                                //$yesterday = date('Y-m-d', strtotime('-1 day'));
+                                
+                                ?>
                                 <input type="hidden" class="form-control" name="shift_id" value="<?php echo $shift_id;?>" required> 
                                 <input type="hidden" class="form-control" name="nosal_id" value="<?php echo $nosal_id;?>" required> 
-                                <input type="hidden" class="form-control" name="prod_id" value="<?php echo $prod_id;?>" required> 
+                                
+                                <input type="hidden" class="form-control" name="date" value="<?php echo $date;?>" required> 
                                 <?php ?>
                                        </tr>
 
                                        <tr>
-                                       <!--<td> 
-                                     <div class="form-group">
-							<br/><p></p><label style="font-size: small;" for="date">Select Fuel Type</label>
-							 
-								<select class="form-control select2" name="prod_id" tabindex="1" autofocus required>
-								<?php	
-									include 'dist/includes/dbcon.php';								
-										$query1=mysqli_query($con,"select * from stationproducts natural join currentprice ORDER BY prod_id ASC")or die(mysqli_error($con));
-										while ($row1=mysqli_fetch_array($query1)){
-                                            $id=$row1['prod_id'];
-                                            $currentprice= $row1['currentprice']
-                                            
-							?>
-										<option value="<?php echo $row1['prod_id'];?>"><?php echo $row1['stationprod_name'];?></option>
-                                        <input  type="hidden" class="form-control" name = "currentprice" value="<?php echo $currentprice?>" required/>
-								  <?php }?>
-								</select>
-                                <span class="fa form-control-feedback right" aria-hidden="true"></span>
-                                
-						  </div>
-                                       
-                                     </td>--></tr><tr></tr>
+                                       </tr><tr></tr>
 
                                        <td>
-                                            <label>Open meter</label>
-                                            <?php	
-									include 'dist/includes/dbcon.php';								
-										$query1=mysqli_query($con,"select * from dailysales where nosal_id ORDER BY prod_id ASC")or die(mysqli_error($con));
-                                 
+                                    <label>Open meter</label>
+                                    <?php
+                                    $year1 = date("Y");
+                                    $month = date("m");
+                                    $today = date("d");
+                                    $yesto = date("d")-1;
 
-                                  ?>
-                                   <input type="number" min="1" step="any" class="form-control" required name="openmeter" id="price">
+
+
+                                    
+                                        include 'dbcon.php';
+                                        $query2=mysqli_query($con,"select closemeter from  lastclosingmeter where  nosal_id='$nosal_id'  ORDER BY closemeter DESC LIMIT 0,1  ")or die(mysqli_error($con));
+                                        $result = mysqli_fetch_array($query2);
+
+                                        //$row2=mysqli_fetch_array($query2) and MONTH(date)='$month' and YEAR(date)='$year1' and DAY(date)='$yesto';
+
+
+                                        $op1 = $result['closemeter'];
+                                    
+
+                                        
+                                    
+                                    
+                                    
+                                    
+                                    ?>
+                                            
+                                            
+                                   <input readonly value="<?php echo $op1; ?>"  type="number" min="1" step="any" class="form-control" required name="openmeter" id="price">
                                    <?php ?>
 
                                        </td>
@@ -162,20 +166,20 @@ include('dist/includes/left.php');
                                        </td>
                                        
                                       
-                                         <!--<td>
+                                         <td>
                                             <label>R.T.T</label>
-                                            <input type="text" class="form-control" name="rtt" id="desc"> 
-                                      </td>-->
+                                            <input type="number" value="0" step="any" class="form-control" name="rtt" id="desc"> 
+                                      </td>
                                       
                                       <!--<td>
                                             <label>litres sold</label>
                                             <input type="number" min="1" step="any" class="form-control" name="litressold" id="desc"> 
                                       </td>-->
                                       
-                                     <!-- <td>
-                                            <label>Unit price</label>
+                                      <td>
+                                            <label>Current price</label>
                                             <input type="number" min="1" step="any" class="form-control" name="unitprice" id="desc"> 
-                                      </td>-->
+                                      </td>
                                      
                                       
                                      
@@ -259,7 +263,7 @@ include('dist/includes/left.php');
                                             <th>Fuel type</th>
                                             <th>Open Meter</th>
                                             <th>Close Meter</th>
-                                            <!--<th>R.T.T</th>-->
+                                            <th>R.T.T</th>
                                             <th>Litre Sold</th>
                                             <th>Unit Price</th>
                                             
@@ -286,13 +290,13 @@ include('dist/includes/left.php');
 									?>  
                                     <tr style="font-size: 10px;">
 
-                                            <td><?php echo $row1['date'];?></td> 
+                                            <td><?php echo date("M d, Y",strtotime($row1['date']));?></td> 
                                             <td><?php echo $row1['pumpnumber'];?></td>
                                             <td><?php echo $row1['nosalnumber'];?></td>
                                             <td><?php echo $row1['stationprod_name'];?></td>
                                             <td><?php echo $row1['openmeter'];?></td>
                                             <td><?php echo $row1['closemeter'];?></td>
-                                           <!--<td><?php echo $row1['rtt'];?></td>-->
+                                           <td><?php echo $row1['rtt'];?></td>
                                             <td><?php echo $row1['litressold'];?></td>
                                             <td><?php echo $row1['unitprice'];?></td>
                                             
@@ -330,7 +334,7 @@ include('dist/includes/left.php');
                                             <th>Fuel type</th>
                                             <th>Open Meter</th>
                                             <th>Close Meter</th>
-                                            <!--<th>R.T.T</th>-->
+                                            <th>R.T.T</th>
                                             <th>Litre Sold</th>
                                             <th>Unit Price</th>
                                             
@@ -357,13 +361,13 @@ include('dist/includes/left.php');
 									?>  
                                     <tr style="font-size: 10px;">
 
-                                            <td><?php echo $row1['date'];?></td> 
+                                            <td><?php echo date("M d, Y",strtotime($row1['date']));?></td> 
                                             <td><?php echo $row1['pumpnumber'];?></td>
                                             <td><?php echo $row1['nosalnumber'];?></td>
                                             <td><?php echo $row1['stationprod_name'];?></td>
                                             <td><?php echo $row1['openmeter'];?></td>
                                             <td><?php echo $row1['closemeter'];?></td>
-                                           <!--<td><?php echo $row1['rtt'];?></td>-->
+                                           <td><?php echo $row1['rtt'];?></td>
                                             <td><?php echo $row1['litressold'];?></td>
                                             <td><?php echo $row1['unitprice'];?></td>
                                             
