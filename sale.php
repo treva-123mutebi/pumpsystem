@@ -14,6 +14,11 @@
     <link rel="stylesheet" href="assets/css/MoneAdmin.css" />
     <link rel="stylesheet" href="assets/plugins/Font-Awesome/css/font-awesome.css" />
     <link href="assets/css/layout2.css" rel="stylesheet" />
+    
+    
+    
+    <!-- bootstrap-daterangepicker -->
+    <link href="admin/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
    
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -253,7 +258,7 @@ include('dist/includes/left.php');
                         
                         <h2>Morning Shift</h2>
                            
-                        <table class="table table-striped table-bordered table-hover">
+                        <table id="datatable" class="table table-striped table-bordered">
                                     <thead>
                                    
                                         <tr>
@@ -274,9 +279,9 @@ include('dist/includes/left.php');
                                             <th>R.T.T</th>
                                             <th>Litre Sold</th>
                                             <th>Unit Price</th>
-                                            <th>Payment</th>
+                                            <th>Payment</th>-->
                                             <th>Edit</th>
-                                            <th>Delete</th>-->
+                                            <th>Delete</th>
                                         </tr>
                                        
                                     </thead>
@@ -311,20 +316,20 @@ include('dist/includes/left.php');
                                             <td><?php echo $row1['pcunitprice'];?></td>
                                            
 
-                                            <td><?php echo $row1['pctotalpayment'];?></td>
+                                            <td><?php echo $row1['pctotalpayment'];?></td>-->
                                            
 
-<td><a href="">
+                                            <td><a href="editsale.php?id=<?php echo $id ?>">
     <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>
-<td><a href="">
-    <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>-->
+<td><a href="deletesale.php?id=<?php echo $id ?>">
+    <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>
                                         </tr>   
                                         <?php }?>                                
                                 </table>
                                 <br/><br/>
                                 <h2>Night Shift</h2>
                            
-                        <table class="table table-striped table-bordered table-hover">
+                                <table id="datatable" class="table table-striped table-bordered">
                                     <thead>
                                    
                                         <tr>
@@ -345,9 +350,9 @@ include('dist/includes/left.php');
                                             <th>R.T.T</th>
                                             <th>Litre Sold</th>
                                             <th>Unit Price</th>
-                                            <th>Payment</th>
+                                            <th>Payment</th>-->
                                             <th>Edit</th>
-                                            <th>Delete</th>-->
+                                            <th>Delete</th>
                                         </tr>
                                        
                                     </thead>
@@ -382,13 +387,13 @@ include('dist/includes/left.php');
                                             <td><?php echo $row1['pcunitprice'];?></td>
                                            
 
-                                            <td><?php echo $row1['pctotalpayment'];?></td>
+                                            <td><?php echo $row1['pctotalpayment'];?></td>-->
                                            
 
-<td><a href="">
+<td><a href="editsale.php?id=<?php echo $id ?>">
     <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>
-<td><a href="">
-    <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>-->
+    <td><a href="deletesale.php?id=<?php echo $id ?>">
+    <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>
                                         </tr>   
                                         <?php }?>                                
                                 </table>
@@ -430,10 +435,25 @@ include('dist/includes/right.php');
     </div>   
     <!--END FOOTER -->
 
+    <script>
+    $('.addAttr').click(function() {
+    var id = $(this).data('id');      
+    var name = $(this).data('name');  
+       
+
+    $('#id').val(id);  
+    $('#name').val(name);  
+    
+    } );
+ </script>
+ 
+
 
 
    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script type="text/javascript" src="tayyab/js/bottom_scripts.js"></script>
+    <?php include 'admin/datatable_script.php';?>
+    
 </body>
 </html>
