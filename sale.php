@@ -280,7 +280,7 @@ include('dist/includes/left.php');
                                             <th>Litre Sold</th>
                                             <th>Unit Price</th>
                                             <th>Payment</th>-->
-                                            <th>Edit</th>
+                                            <!--<th>Edit</th>-->
                                             <th>Delete</th>
                                         </tr>
                                        
@@ -319,8 +319,8 @@ include('dist/includes/left.php');
                                             <td><?php echo $row1['pctotalpayment'];?></td>-->
                                            
 
-                                            <td><a href="editsale.php?id=<?php echo $id ?>">
-    <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>
+                                            <!--<td><a href="editsale.php?id=<?php echo $id ?>">
+    <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>-->
 <td><a href="deletesale.php?id=<?php echo $id ?>">
     <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>
                                         </tr>   
@@ -351,7 +351,7 @@ include('dist/includes/left.php');
                                             <th>Litre Sold</th>
                                             <th>Unit Price</th>
                                             <th>Payment</th>-->
-                                            <th>Edit</th>
+                                            <!--<th>Edit</th>-->
                                             <th>Delete</th>
                                         </tr>
                                        
@@ -390,8 +390,8 @@ include('dist/includes/left.php');
                                             <td><?php echo $row1['pctotalpayment'];?></td>-->
                                            
 
-<td><a href="editsale.php?id=<?php echo $id ?>">
-    <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>
+<!--<td><a href="editsale.php?id=<?php echo $id ?>">
+    <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>-->
     <td><a href="deletesale.php?id=<?php echo $id ?>">
     <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>
                                         </tr>   

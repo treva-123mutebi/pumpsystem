@@ -15,6 +15,7 @@ $row = mysqli_fetch_array($query2);;
 
 <tr>
 <td><input type="hidden" name="id" value="<? echo "$row[dailysales_id]" ?>"></td>
+<input type="hidden" type="text" name="rtt" value="<? echo "$row[nosal_id]"  ?>">
 </tr>
 <tr>
 <td><h2>Delete record</h2></td>

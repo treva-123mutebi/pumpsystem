@@ -99,13 +99,19 @@ include('dist/includes/left.php');
                                      </tr>
                                      <?php
                                     include 'dbcon.php'; 
-                                    $query=mysqli_query($con,"select closinginvoice,lastdipp from lastclosinginvoice  where stunit_id='$stunit_id' ORDER BY stunit_id DESC LIMIT 1,1")or die(mysqli_error());
+                                    $query=mysqli_query($con,"select  closinginvoice from lastclosinginvoice  where stunit_id='$stunit_id' ORDER BY lastclosinginvoice_id DESC LIMIT 1")or die(mysqli_error());
                                     $row=mysqli_fetch_array($query);
                                     //$price=$row['prod_price'];
                                     //$lastcummdiff=$row['cummdiff'];
 
                                     $closinginvoice=$row['closinginvoice'];
-                                    $lastdipp=$row['lastdipp'];
+
+                                    $query2=mysqli_query($con,"select  lastdipp from lastclosinginvoice  where stunit_id='$stunit_id' ORDER BY lastclosinginvoice_id DESC LIMIT 1")or die(mysqli_error());
+                                    $row2=mysqli_fetch_array($query2);
+
+
+                                    $lastdipp=$row2['lastdipp'];
+                                    
                                     
                                     
                                     
@@ -207,8 +213,8 @@ include('dist/includes/left.php');
                                             <th>Litre Sold</th>
                                             <th>Unit Price</th>
                                             <th>Payment</th>
-                                            <th>Edit</th>
-                                            <th>Delete</th>-->
+                                            <th>Edit</th>-->
+                                            <th>Delete</th>
                                         </tr>
                                        
                                     </thead>
@@ -235,9 +241,9 @@ include('dist/includes/left.php');
                                           
                                            
 
-<td><a href="">
-    <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>
-<td><a href="">
+<!--<td><a href="">
+    <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>-->
+    <td><a href="deletedipp.php?id=<?php echo $id ?>">
     <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>
                                         </tr>   
                                         <?php }?>                                
@@ -299,9 +305,9 @@ include('dist/includes/left.php');
                                           
                                            
 
-<td><a href="">
-    <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>
-<td><a href="">
+<!--<td><a href="">
+    <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>-->
+<td><a href="deletedipp.php?id=<?php echo $id ?>">
     <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>
                                         </tr>   
                                         <?php }?>                                
@@ -362,9 +368,9 @@ include('dist/includes/left.php');
                                           
                                            
 
-<td><a href="">
-    <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>
-<td><a href="">
+<!--<td><a href="">
+    <span style="font-size: 1.5em" class="glyphicon glyphicon-edit"></span></a></td>-->
+    <td><a href="deletedipp.php?id=<?php echo $id ?>">
     <span  style="font-size: 1.5em" class="glyphicon glyphicon-remove-circle"></span></a></td>
                                         </tr>   
                                         <?php }?>                                

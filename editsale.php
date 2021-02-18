@@ -5,7 +5,7 @@ include 'dbcon.php';
 $dailysales_id = $_REQUEST['id']; 
 $query2=mysqli_query($con,"SELECT * FROM dailysales WHERE dailysales_id = '$dailysales_id'")or die(mysqli_error($con));
 
-$row = mysqli_fetch_array($query2);;
+$row = mysqli_fetch_array($query2);
 
 ?>
 
