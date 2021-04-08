@@ -200,7 +200,7 @@ $branch=$_SESSION['branch'];
                         <th>Prepared by:</th>
                         <th></th>
                         <th></th>
-                        <th>_________________________</th>
+                        <th>__________________________________________________</th>
                       </tr> 
 <?php
     $query=mysqli_query($con,"select * from user where user_id='$id'")or die(mysqli_error($con));
@@ -208,7 +208,7 @@ $branch=$_SESSION['branch'];
  
 ?>                      
                       <tr>
-                        <th><?php echo $row['name'];?></th>
+                        <!--<th><?php echo $row['name'];?></th>-->
                         <th></th>
                         <th></th>
                         <th>Signature</th>

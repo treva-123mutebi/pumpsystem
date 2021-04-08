@@ -124,7 +124,7 @@ endif;
                           <div class="icon" style="margin-top:0px">
                             <i class="glyphicon glyphicon-shopping-cart"></i>
                           </div>
-                          <a href="#" class="small-box-footer">
+                          <a href="stocktaking.php" class="small-box-footer">
                             Go <i class="fa fa-arrow-circle-right"></i>
                           </a>
                         </div>

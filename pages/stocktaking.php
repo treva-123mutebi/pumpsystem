@@ -52,16 +52,16 @@ endif;
 	      <div class="col-md-4">
               <div class="box box-primary">
                 <div class="box-header">
-                  <h3 class="box-title">Stocking Products</h3>
+                  <h3 class="box-title">Stock Taking</h3>
                 </div>
                 <div class="box-body">
                   <!-- Date range -->
-                  <form method="post" action="stockin_add.php" enctype="multipart/form-data">
+                  <form method="post" action="stocktaking_add.php" enctype="multipart/form-data">
   
                   <div class="form-group">
                     <label for="date">Select Item</label>
                     <div class="input-group col-md-12">
-                    <select class="form-control select2" name="pc_code" tabindex="1" autofocus required>
+                    <select style="font-size:12px" class="form-control select2" name="pc_code" tabindex="1" autofocus required>
 								<?php
                   $branch=$_SESSION['branch'];
                   
@@ -70,16 +70,16 @@ endif;
 									 $query2=mysqli_query($con,"select * from productcode natural join pdsubcat natural join stproducts   order by pc_id")or die(mysqli_error());
 									    while($row=mysqli_fetch_array($query2)){
 								?>
-										<option style="font-size:12px;" value="<?php echo $row['pc_id'];?>"><?php echo $row['product_name']."(".$row['sc_name'].")"."(".$row['pc_code'].")";?></option>
+										<option  value="<?php echo $row['pc_id'];?>"><?php echo $row['product_name']." ".$row['sc_name'].""." ".$row['pc_code']." "." Qty Available(".$row['prod_qty'].")";?></option>
                       <?php }?>
 								</select>
                     </div><!-- /.input group -->
                   </div><!-- /.form group -->
 		  
                   <div class="form-group">
-                    <label for="date">Quantity</label>
+                    <label for="date">Quantity Counted</label>
                     <div class="input-group col-md-12">
-                      <input type="number" step="any" class="form-control pull-right" id="date" name="qty" placeholder="Quantity" required>
+                      <input type="number" step="any" class="form-control pull-right" id="date" name="qtycounted" placeholder="Quantity" required>
                     </div><!-- /.input group -->
                   </div><!-- /.form group -->
                   <div class="form-group">
@@ -108,7 +108,7 @@ endif;
               <div class="box box-primary">
     
                 <div class="box-header">
-                  <h3 class="box-title">Product Stocking History</h3>
+                  <h3 class="box-title">Stock Taking History</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="example1" class="table table-bordered table-striped">
@@ -116,19 +116,19 @@ endif;
                       <tr>
                         <th>Product Code</th>
                         <th>Product</th>
-                        <th>Unit Price (UGX)</th>
-                        <th>Quantity</th>
-                        <th>Amount Paid (UGX)</th>
-				               <th>Supplier</th>
-				                <th>Date Delivered</th>
+                        <th>Quantity Counted</th>
+                        <th>Quantity Available</th>
+                        <th>Difference</th>
+                        
+				        <th>Date </th>
                       </tr>
                     </thead>
                     <tbody>
 <?php
 		$branch=$_SESSION['branch'];
-		$query=mysqli_query($con,"select * from stockin natural join productcode natural join pdsubcat natural join stproducts natural join supplier  order by date desc ")or die(mysqli_error());
+		$query=mysqli_query($con,"select * from stocktaking natural join productcode natural join pdsubcat natural join stproducts natural join supplier  order by date desc ")or die(mysqli_error());
 		while($row=mysqli_fetch_array($query)){
-      $id=$row['stockin_id'];
+      $id=$row['stocktaking_id'];
       //$total= $row['qty']*$row['price'];
       //$grand=$grand+$total;
 		
@@ -136,11 +136,11 @@ endif;
                       <tr>
                         <td><?php echo $row['pc_code'];?></td>
                         <td><?php echo $row['product_name'];?> <?php echo $row['sc_name'];?></td>
-                        <td><?php echo $row['unitprice'];?></td>
+                        <td><?php echo $row['qty_counted'];?></td>
                         
-                       <td><?php echo $row['qty'];?></td>
-                       <td><?php echo $row['total'];?></td>
-            						<td><?php echo $row['supplier_name'];?></td>
+                       <td><?php echo $row['qty_available'];?></td>
+                       <td><?php echo $row['difference'];?></td>
+                       
                         <td><?php echo date("M d, Y",strtotime($row['date']));?></td>
                       
                       </tr>
