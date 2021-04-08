@@ -94,7 +94,7 @@ $branch=$_SESSION['branch'];
                    <table class="table">
                     <thead>
                       <tr>
-                        <th colspan="3"><h5><b><?php echo $rowb['branch_name'];?></b></h5></th>
+                        <th colspan="3"><h5><b>MOPETRO ZZANA SERVICE STATION</b></h5></th>
                         
                       </tr>
                       <tr>
