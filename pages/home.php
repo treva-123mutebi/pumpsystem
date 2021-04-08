@@ -139,7 +139,7 @@ endif;
                           <div class="icon" style="margin-top:0px">
                             <i class="glyphicon glyphicon-share"></i>
                           </div>
-                          <a href="#" class="small-box-footer">
+                          <a href="fuelpurchases.php" class="small-box-footer">
                             Go <i class="fa fa-arrow-circle-right"></i>
                           </a>
                         </div>
