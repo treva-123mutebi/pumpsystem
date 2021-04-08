@@ -339,7 +339,7 @@ $query=mysqli_query($con,"select * from user natural join branch where username=
          
  		}                
 
-		 echo "<script type='text/javascript'>document.location='home.php'</script>";
+		 echo "<script type='text/javascript'>document.location='pages/home.php'</script>";
 	  }
 }	 
 ?>

@@ -1,3 +1,3 @@
 <?php 
-	echo "Medicine Warehouse Portal";
+	echo "Mopetrol fuel Station";
 ?>

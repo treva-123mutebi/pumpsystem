@@ -8,15 +8,27 @@
                 <li><a href = "pump.php"><i class="fa fa-building"></i>Station Pumps<span class="fa fa-chevron-right"></span></a>
                 <li><a href = "nosal.php"><i class="fa fa-building"></i>Pump Nosals<span class="fa fa-chevron-right"></span></a>
                 <li><a href = "storage.php"><i class="fa fa-building"></i>Station Tanks<span class="fa fa-chevron-right"></span></a>
-                <li><a href = "stationproducts.php"><i class="fa fa-building"></i>Station Products<span class="fa fa-chevron-right"></span></a>
+                <li><a href = "stationproducts.php"><i class="fa fa-building"></i>Station fuel<span class="fa fa-chevron-right"></span></a>
+                <li><a><i class="fa fa-building"></i>Station Products<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+					
+                      <li><a href="products.php">Products</a></li>
+                      <li><a href="subcategories.php">Sub Categories</a></li> 
+                      <li><a href="productcodes.php">Product Codes</a></li> 
+					
+                    </ul>
+                  </li>
+                <!--<li><a href = "products.php"><i class="fa fa-building"></i>Station Products<span class="fa fa-chevron-right"></span></a>-->
                 <li><a href = "shifts.php"><i class="fa fa-users"></i> Station Work Shifts <span class="fa fa-chevron-right"></span></a></li>
            <!--<li><a href = "application.php"><i class="fa fa-file"></i> Application<span class="fa fa-chevron-right"></span></a>-->     
           <!-- <li><a href = "reports.php"><i class="fa fa-file"></i> Report<span class="fa fa-chevron-right"></span></a>-->
+
            <li><a><i class="fa fa-building"></i>Inital Readings<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
 					
                       <li><a href="initialnosalmeter.php">Initial Pump Nosal Meter Reading</a></li>
                       <li><a href="initialtankmeter.php">Initial tank Meter reading</a></li> 
+                      <!--<li><a href="initialproductquantity.php">Initial Product stock</a></li> -->
 					
                     </ul>
                   </li>
