@@ -59,17 +59,20 @@ endif;
                   <form method="post" action="stockin_add.php" enctype="multipart/form-data">
   
                   <div class="form-group">
-                    <label for="date">Item Description---Batch Number</label>
+                    <label for="date">Select Item</label>
                     <div class="input-group col-md-12">
-                      <select class="form-control select2" name="prod_name" required>
-                      <?php
-			 include('../dist/includes/dbcon.php');
-				$query2=mysqli_query($con,"select * from product natural join category where branch_id='$branch' order by prod_name desc LIMIT 0,1")or die(mysqli_error());
-				  while($row=mysqli_fetch_array($query2)){
-		      ?>
-				    <option value="<?php echo $row['prod_id'];?>"><?php echo $row['cat_name'];?>---<?php echo $row['prod_name'];?></option>
-		      <?php }?>
-                    </select>
+                    <select class="form-control select2" name="pc_code" tabindex="1" autofocus required>
+								<?php
+                  $branch=$_SESSION['branch'];
+                  
+                 
+								  include('../dist/includes/dbcon.php');
+									 $query2=mysqli_query($con,"select * from productcode natural join pdsubcat natural join stproducts   order by pc_id")or die(mysqli_error());
+									    while($row=mysqli_fetch_array($query2)){
+								?>
+										<option style="font-size:12px;" value="<?php echo $row['pc_id'];?>"><?php echo $row['product_name']."(".$row['sc_name'].")"."(".$row['pc_code'].")";?></option>
+                      <?php }?>
+								</select>
                     </div><!-- /.input group -->
                   </div><!-- /.form group -->
 		  
@@ -79,15 +82,26 @@ endif;
                       <input type="text" class="form-control pull-right" id="date" name="qty" placeholder="Quantity" required>
                     </div><!-- /.input group -->
                   </div><!-- /.form group -->
+                  <div class="form-group">
+                    <label for="date">Date</label>
+                    <div class="input-group col-md-12">
+                      <input type="date" class="form-control pull-right" id="date" name="date" placeholder="Quantity" required>
+                    </div><!-- /.input group -->
+                  </div><!-- /.form group -->
+                  <div class="form-group">
+                    <label for="date">Unit Price</label>
+                    <div class="input-group col-md-12">
+                      <input type="number" class="form-control pull-right" id="date" name="unitprice" placeholder="Unit Price" required>
+                    </div><!-- /.input group -->
+                  </div><!-- /.form group -->
                 
                   <div class="form-group">
                     <div class="input-group">
                       <button class="btn btn-primary" id="daterange-btn" name="">
                         Save
                       </button>
-					  <button class="btn" id="daterange-btn">
-                        Clear
-                      </button>
+					  <div><br/></div><input type="reset" class="btn" id="daterange-btn" value="clear"/>
+                        
                     </div>
                   </div><!-- /.form group -->
 				</form>	
@@ -99,16 +113,16 @@ endif;
               <div class="box box-primary">
     
                 <div class="box-header">
-                  <h3 class="box-title">Product Stocking List</h3>
+                  <h3 class="box-title">Product Stocking History</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                        <th>Item Description</th>
-                        <th>Batch Number</th>
-                        <th>Expiry Date</th>
-                        <th>Qty</th>
+                        <th>Product Code</th>
+                        <th>Product</th>
+                        <th>Unit Price</th>
+                        <th>Quantity</th>
 				               <th>Supplier</th>
 				                <th>Date Delivered</th>
                       </tr>
@@ -116,16 +130,16 @@ endif;
                     <tbody>
 <?php
 		$branch=$_SESSION['branch'];
-		$query=mysqli_query($con,"select * from stockin natural join category natural join product natural join supplier where branch_id='$branch' order by date desc")or die(mysqli_error());
+		$query=mysqli_query($con,"select * from stockin natural join productcode natural join pdsubcat natural join stproducts natural join supplier  order by stockin_id desc")or die(mysqli_error());
 		while($row=mysqli_fetch_array($query)){
 		
 ?>
                       <tr>
-                        <td><?php echo $row['cat_name'];?></td>
-                        <td><?php echo $row['prod_name'];?></td>
-                        <td><?php echo $row['expirydate'];?></td>
+                        <td><?php echo $row['pc_code'];?></td>
+                        <td><?php echo $row['product_name'];?> <?php echo $row['sc_name'];?></td>
+                        <td><?php echo $row['unitprice'];?></td>
                         
-                        <td><?php echo $row['qty'];?></td>
+                       <td><?php echo $row['qty'];?></td>
             						<td><?php echo $row['supplier_name'];?></td>
             						<td><?php echo $row['date'];?></td>
                       
