@@ -85,6 +85,7 @@ $branch=$_SESSION['branch'];
         $change=$row['cash_change'];
         $modeofpayment=$row['modeofpayment'];
         $date_added=$row['date_added'];
+        $cust_name=$row['cust_name'];
 
         $query1=mysqli_query($con,"select * from payment where sales_id='$sales_id'")or die(mysqli_error($con));
       
@@ -121,8 +122,8 @@ $branch=$_SESSION['branch'];
                       </tr>
                       <tr>
                        
-                        <th>TIN</th>
-                        <th>________________________</th>
+                        <th>Customer Name</th>
+                        <th><?php echo $cust_name;?></th>
                       </tr>
                       <tr>
 

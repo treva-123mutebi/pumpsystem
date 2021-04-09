@@ -34,6 +34,7 @@ $query=mysqli_query($con,"select * from branch where branch_id='$branch'")or die
                       History Log
                     </a>
                   </li>
+                  
                   <!-- Notifications Menu -->
                   <li class="dropdown notifications-menu">
                     <!-- Menu toggle button -->

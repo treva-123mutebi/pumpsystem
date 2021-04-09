@@ -9,8 +9,9 @@ include('../dist/includes/dbcon.php');
 	
 	date_default_timezone_set("Asia/Manila"); 
 	$date = $_REQUEST['date'];
+	$cid = $_REQUEST['cid'];
 	$remark = $_POST['remark'];
-	$cid=$_REQUEST['cid'];
+	$cust_name = $_POST['cust_name'];
 	$branch=$_SESSION['branch'];
 	
 	$total=$amount_due;
@@ -20,8 +21,8 @@ include('../dist/includes/dbcon.php');
 		//$tendered = $_POST['tendered'];
 		//$change = $_POST['change'];
 
-		mysqli_query($con,"INSERT INTO reviewsales(shift_id,user_id,amount_due,total,date_added,modeofpayment,branch_id,reviewstatus) 
-    VALUES('$cid','$id','$amount_due','$total','$date','$remark','$branch','approved')")or die(mysqli_error($con));
+		mysqli_query($con,"INSERT INTO reviewsales(shift_id,user_id,amount_due,total,date_added,modeofpayment,cust_name,branch_id,reviewstatus) 
+    VALUES('$cid','$id','$amount_due','$total','$date','$remark','$cust_name','$branch','approved')")or die(mysqli_error($con));
     
 	$reviewsales_id=mysqli_insert_id($con);
 	$_SESSION['sid']=$reviewsales_id;
@@ -52,9 +53,9 @@ include('../dist/includes/dbcon.php');
 					$or=$or+1;
 				}
 
-				mysqli_query($con,"INSERT INTO reviewpayment(shift_id,user_id,payment,payment_date,branch_id,payment_for,due,status,reviewsales_id,or_no) 
-	VALUES('$cid','$id','$total','$date','$branch','$date','$total','$remark','$reviewsales_id','$or')")or die(mysqli_error($con));
-				echo "<script>document.location='review.php?cid=$cid&date=$date&remark=$remark'</script>";	
+				mysqli_query($con,"INSERT INTO reviewpayment(shift_id,user_id,payment,payment_date,branch_id,payment_for,due,status,cust_name,reviewsales_id,or_no) 
+	VALUES('$cid','$id','$total','$date','$branch','$date','$total','$remark','$cust_name','$reviewsales_id','$or')")or die(mysqli_error($con));
+				echo "<script>document.location='review.php?cid=$cid&date=$date&remark=$remark&cust_name=$cust_name'</script>";	
 		
 		$result=mysqli_query($con,"DELETE FROM temp_trans where branch_id='$branch'")	or die(mysqli_error($con));
 		//echo "<script>document.location='receipt.php?cid=$cid'</script>";  	

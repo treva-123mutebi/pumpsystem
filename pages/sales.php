@@ -6,6 +6,8 @@ if(empty($_SESSION['branch'])):
 header('Location:../index.php');
 endif;
 ?>
+<?php error_reporting(0); ?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -89,7 +91,24 @@ endif;
 				  <!-- /.form group -->
 				  <form method="post">
 					<div class="form-group col-md-6">
-						<label>Date range:</label>
+                    <div class="form-group">
+							<label for="date">Select Fuel type</label>
+							 <select class="form-control select2" style="width: 100%;" name="stationprod_name" required>
+              
+                <?php
+            
+              $queryc=mysqli_query($con,"select * from stationproducts order by stationprod_name")or die(mysqli_error());
+                while($rowc=mysqli_fetch_array($queryc)){
+                ?>
+                  <option value="<?php echo $rowc['prod_id'];?>"><?php echo $rowc['stationprod_name'];?></option>
+                <?php }?>
+              </select>
+								 
+						  </div>
+
+						<label>Enter Date range:</label>
+            <br/>
+            <small>mm/dd/yyyy-mm/dd/yyyy</small><br/>
 
 						<div class="input-group">
 						  <div class="input-group-addon">
@@ -112,6 +131,7 @@ endif;
 		if (isset($_POST['display']))
 	{
 		$date=$_POST['date'];
+        $prod_id=$_POST['stationprod_name'];
 		$date=explode('-',$date);
 		$branch=$_SESSION['branch'];		
 			$start=date("Y/m/d",strtotime($date[0]));
@@ -128,62 +148,91 @@ $branch=$_SESSION['branch'];
         $row=mysqli_fetch_array($query);
         
 ?>      
-                  <h5><b><?php echo $row['branch_name'];?></b> </h5>  
-                  <h6>Address: <?php echo $row['branch_address'];?></h6>
-                  <h6>Contact #: <?php echo $row['branch_contact'];?></h6>
                   
-				  <h5><b>Stock-Out Report as of <?php echo date("M d, Y",strtotime($start))." to ".date("M d, Y",strtotime($end));?></b></h5>
+                  
+				  <h5><b>Fuel Sale   Report as of <?php echo date("M d, Y",strtotime($start))." to ".date("M d, Y",strtotime($end));?></b></h5>
                   
 				  <a class = "btn btn-success btn-print" href = "" onclick = "window.print()"><i class ="glyphicon glyphicon-print"></i> Print</a>
 							<a class = "btn btn-primary btn-print" href = "home.php"><i class ="glyphicon glyphicon-arrow-left"></i> Back to Homepage</a>   
 						
 		
 			<table id="example1" class="table table-bordered table-striped">
+      <thead>
+                      
+                      <th><h5> </th>
+                    
+                  </thead>
                     <thead>
                       <tr>
-                        <th>No.</th>
-                        <th>Department</th>
-                        <th>Item Description</th>
-                        <th>Batch Number</th>
-                        <th>Expiry Date</th>
-                        <th>Qty</th>
-            					  <th>Price</th>
+                        
+                        <th>Pump Nosal</th>
+                        <th>Open Meter</th>
+                        <th>Close Meter</th>
+                        <th>R.T.T</th>
+                        <th>Litres Sold</th>
+                        <th>Unit Price</th>
+            			      <th>Total</th>
                         <!--<th>Discount</th>-->
                         <!--<th>Amount Paid</th>-->
+                        <th>Shift</th>
                         <th>Date </th>
                       </tr>
                     </thead>
                     <tbody>
 <?php
-	$query=mysqli_query($con,"select * from sales natural join sales_details natural join product natural join category natural join customer where date(date_added)>='$start' and date(date_added)<='$end' and branch_id='$branch' and modeofpayment='cash'")or die(mysqli_error($con));
+	$query=mysqli_query($con,"select * from dailysales natural join stationproducts natural join nosals natural join pumps natural join shifts  where date(date)>='$start' and date(date)<='$end'  and prod_id='$prod_id' order by nosal_id asc")or die(mysqli_error($con));
 		$qty=0;$grand=0;$discount=0;
+    $query1 = mysqli_query($con,"select SUM(litressold) as totallitressold from dailysales natural join stationproducts natural join nosals natural join pumps natural join shifts  where date(date)>='$start' and date(date)<='$end'  and prod_id='$prod_id' ") or die(mysqli_error($con));
+		$row1=mysqli_fetch_array($query1);
 								while($row=mysqli_fetch_array($query)){
-                $total=$row['sales_qty']*$row['price'];
-								$grand=$grand+$total-$row['discount'];
-                $discount=$discount+$row['discount'];
+                $total=$row['litressold']*$row['unitprice'];
+								$grand=$grand+$total;
+               // $discount=$discount+$row['discount'];
 ?>
             <tr>
-            <td><?php echo $row['sales_id'];;?></td>
-            <td><?php echo $row['cust_last'];?></td>
-            <td><?php echo $row['cat_name'];?></td>
-            <td><?php echo $row['prod_name'];?></td>
-            <td><?php echo $row['expirydate'];?></td>
-            <td><?php echo $row['sales_qty'];?></td>
-						<td><?php echo $row['price'];?></td>
-            <!--<td><?php echo $row['discount'];?></td>
-            <td style="text-align:right"><?php echo number_format($row['total'],2);
+            
+            <td><?php echo $row['nosalnumber'];?></td>
+            <td><?php echo $row['openmeter'];;?></td>
+            <td><?php echo $row['closemeter'];?></td>
+            <td><?php echo $row['rtt'];?></td>
+            <td><?php echo $row['litressold'];?></td>
+            <td><?php echo $row['unitprice'];?></td>
+						<td><?php echo $row['total'];?></td>
+            <td><?php echo $row['shift_details'];?></td>
+            <!--<td><?php echo $row['discount'];?></td-->
+            <!--<td style="text-align:right"><?php echo number_format($row['total'],2);
 								?></td>-->
-            <td><?php echo date("M d, Y h:i a",strtotime($row['date_added']));?></td>    
+            <td><?php echo date("M d, Y",strtotime($row['date']));?></td>    
 			
 		
  <?php }?>                       
                       </tr>
+                      <tr>
+            <th colspan="4">Total Sales (UGX)</th>
+            <th style="text-align:right;"><h4><b><?php echo  number_format($grand,0);?></b></h4></th>
+          </tr>    
+          <tr>
+            <th colspan="4">Total Litres Sold</th>
+            <th style="text-align:right;"><h4><b><?php echo $row1['totallitressold'];?></b></h4></th>
+          </tr>    
 		
                     </tbody>
-                    <tfoot>
+
+                    
+                   
+                    
+                    
+                   
+                    
+
+                    
+                     
+
+                      
+                  <tfoot>
           <tr>
-            <th colspan="8">Total</th>
-            <th style="text-align:right;"><h4>ugx.<b><?php echo  number_format($grand,2);?></b></h4></th>
+            <!--<th colspan="8">Quantity Balance</th>
+            <th style="text-align:right;"><h4><b><?php echo  number_format($qtybal,0);?></b></h4></th>-->
           </tr>             
 					<!--<tr>
             <th colspan="8">Less: Total Discount</th>
@@ -191,8 +240,8 @@ $branch=$_SESSION['branch'];
           </tr> -->  
           
           <tr>
-            <th colspan="8">Total Stock-Out</th>
-            <th style="text-align:right;"><h4>ugx.<b><?php echo  number_format(($grand-$discount),2);}?></b></h4></th>
+            <th colspan="8"></th>
+            <!--<th style="text-align:right;"><h4>Item Quantity Balance: <br/><a href="#" class="btn btn-primary"><?php echo  number_format(($qtybal),0);}?></a></h4></th>-->
 			    </tr>		
           <tr>
                         <th></th>
@@ -255,14 +304,7 @@ $branch=$_SESSION['branch'];
 	<!-- AdminLTE App -->
 	<script src="../dist/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
-  <script src="../dist/js/demo.js"></script>
-  <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+	<script src="../dist/js/demo.js"></script>
     <script>
   $(function () {
     //Initialize Select2 Elements
@@ -329,14 +371,6 @@ $branch=$_SESSION['branch'];
       showInputs: false
     });
   });
-  $(document).ready(function() {
-    $('#example').DataTable( {
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    } );
-} );
 </script>
   </body>
 </html>

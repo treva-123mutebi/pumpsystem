@@ -74,7 +74,7 @@ $branch=$_SESSION['branch'];
                   <h5><b><?php echo $row['branch_name'];?></b> </h5>  
                   <h6>Address: <?php echo $row['branch_address'];?></h6>
                   <h6>Contact #: <?php echo $row['branch_contact'];?></h6>
-				  <h5><b>Product Inventory as of today, <?php echo date("M d, Y h:i a");?></b></h5>
+				  <h5><b>Fuel Purchases  Report as of today, <?php echo date("M d, Y h:i a");?></b></h5>
                   
 				  <a class = "btn btn-success btn-print" href = "" onclick = "window.print()"><i class ="glyphicon glyphicon-print"></i> Print</a>
 							<a class = "btn btn-primary btn-print" href = "home.php"><i class ="glyphicon glyphicon-arrow-left"></i> Back to Homepage</a>   
@@ -85,48 +85,59 @@ $branch=$_SESSION['branch'];
                     <thead>
 					
                       <tr>
-					              <th>Product Code</th> 
-                        <th>Product Name</th>
+					              <th>Fuel</th> 
+                        <th>Tank</th>
                         
                         <th>Supplier</th>                        
-                        <th>Qty Left</th>
+                        <th>Litres In</th>
 						
-            						<th>Price</th>
+            						<th>Unit Price</th>
             						<th>Total</th>
-            						<th>Reorder</th>
+            						<th>Date</th>
                        
                       </tr>
                     </thead>
                     <tbody>
 <?php
 		$branch=$_SESSION['branch'];
-		$query=mysqli_query($con,"select * from productcode natural join pdsubcat natural join stproducts natural join supplier order by pc_id")or die(mysqli_error());
+		$query=mysqli_query($con,"select * from purchase natural join storageunits natural join stationproducts natural join supplier ORDER BY date ASC")or die(mysqli_error());
 		$grand=0;
+    $query1 = mysqli_query($con,"select SUM(litresin) as totallitresin from purchase natural join storageunits natural join stationproducts natural join supplier ORDER BY date ASC") or die(mysqli_error($con));
+		$row1=mysqli_fetch_array($query1);
 		while($row=mysqli_fetch_array($query)){
-			$total=$row['prod_price']*$row['prod_qty'];
+			$total=$row['litresin']*$row['unitprice'];
 			$grand+=$total;
 ?>
                       <tr>
-                        <td><?php echo $row['pc_code'];?></td>
-                        <td><?php echo $row['product_name'];?> <?php echo $row['sc_name'];?></td>
+                        <td><?php echo $row['stationprod_name'];?></td>
+                        <td><?php echo $row['storageunitname'];?> </td>
                         
                         <td><?php echo $row['supplier_name'];?></td>
-                        <td><?php echo $row['prod_qty'];?></td>
+                        <td><?php echo $row['litresin'];?></td>
 						
-						<td><?php echo $row['prod_price'];?></td>
-						<td><?php echo number_format($total,2);?></td>
-					<td class="text-center"><?php if ($row['prod_qty']<=$row['reorderlevel'])echo "<span class='badge bg-red'><i class='glyphicon glyphicon-refresh'></i>Reorder</span>";?></td>
+						<td><?php echo $row['unitprice'];?></td>
+            <td><?php echo $row['payment'];?></td>
+            <td><?php echo date("M d, Y",strtotime($row['date']));?></td>    
+				<!--	<td class="text-center"><?php if ($row['prod_qty']<=$row['reorderlevel'])echo "<span class='badge bg-red'><i class='glyphicon glyphicon-refresh'></i>Reorder</span>";?></td>
                        
-                      </tr>
+    --></tr>
 
 <?php }?>					  
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th colspan="5">Total Stock Available</th>
+                        <th colspan="5">Total purchases </th>
                         
 						
 						<th colspan="2">Ugx <?php echo number_format($grand,2);?></th>
+						
+                        
+                      </tr>	
+                      <tr>
+                        <th colspan="5">Total purchases </th>
+                        
+						
+						<th colspan="2">Litres <b><?php echo $row1['totallitresin'];?></b></th>
 						
                         
                       </tr>	

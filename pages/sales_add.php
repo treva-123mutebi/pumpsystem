@@ -15,12 +15,13 @@ include('../dist/includes/dbcon.php');
 	$total=$amount_due;
 	$date=$_REQUEST['date'];
 	$remark=$_REQUEST['remark'];
+	$cust_name=$_REQUEST['cust_name'];
 
 		//$tendered = $_POST['tendered'];
 		//$change = $_POST['change'];
 
-		mysqli_query($con,"INSERT INTO sales(shift_id,user_id,amount_due,total,date_added,modeofpayment,branch_id) 
-	VALUES('$cid','$id','$amount_due','$total','$date','$remark','$branch')")or die(mysqli_error($con));
+		mysqli_query($con,"INSERT INTO sales(shift_id,user_id,amount_due,total,date_added,modeofpayment,cust_name,branch_id) 
+	VALUES('$cid','$id','$amount_due','$total','$date','$remark','$cust_name','$branch')")or die(mysqli_error($con));
 		
 	$sales_id=mysqli_insert_id($con);
 	$_SESSION['sid']=$sales_id;
@@ -50,9 +51,9 @@ include('../dist/includes/dbcon.php');
 					$or=$or+1;
 				}
 
-				mysqli_query($con,"INSERT INTO payment(shift_id,user_id,payment,payment_date,branch_id,payment_for,due,status,sales_id,or_no) 
-	VALUES('$cid','$id','$total','$date','$branch','$date','$total','$remark','$sales_id','$or')")or die(mysqli_error($con));
-				echo "<script>document.location='receipt.php?cid=$cid'</script>";  	
+				mysqli_query($con,"INSERT INTO payment(shift_id,user_id,payment,payment_date,branch_id,payment_for,due,status,cust_name,sales_id,or_no) 
+	VALUES('$cid','$id','$total','$date','$branch','$date','$total','$remark','$cust_name','$sales_id','$or')")or die(mysqli_error($con));
+				echo "<script>document.location='receipt.php?cid=$cid&cust_name=$cust_name'</script>";  	
 		
 		$result=mysqli_query($con,"DELETE FROM reviewsales_details where branch_id='$branch'")	or die(mysqli_error($con));
 		//echo "<script>document.location='receipt.php?cid=$cid'</script>";  	

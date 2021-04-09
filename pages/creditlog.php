@@ -11,7 +11,7 @@ endif;
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Product Sale | <?php include('../dist/includes/title.php');?></title>
+    <title>Product | <?php include('../dist/includes/title.php');?></title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -30,9 +30,7 @@ endif;
   <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
   <body class="hold-transition skin-<?php echo $_SESSION['skin'];?> layout-top-nav">
     <div class="wrapper">
-      <?php include('../dist/includes/header.php');
-      include('../dist/includes/dbcon.php');
-      ?>
+      <?php include('../dist/includes/header.php');?>
       <!-- Full Width Column -->
       <div class="content-wrapper">
         <div class="container">
@@ -44,135 +42,127 @@ endif;
             </h1>
             <ol class="breadcrumb">
               <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-              <li class="active">Product Sale</li>
+              <li class="active">Product</li>
             </ol>
           </section>
 
           <!-- Main content -->
           <section class="content">
             <div class="row">
-             <!--<div class="col-md-8">
+	      <div class="col-md-4">
               <div class="box box-primary">
-                <!--<div class="box-header with-border">
-                  <h3 class="box-title">Add New Customer</h3>
-                </div>-->
-                <!--<div class="box-body">
-                   Date range -->
-                  <!--<form method="post" action="customer_add.php" enctype="multipart/form-data" class="form-horizontal">
-                    <!--<div class="col-md-6">
-                      <div class="form-group">
-                        <label for="date" class="col-sm-3 control-label">Last Name</label>
-                        <div class="input-group col-sm-8">
-                          <input type="text" class="form-control pull-right" id="date" name="last" placeholder="Customer Last Name" required>
-                        </div><!-- /.input group 
-                      </div><!-- /.form group 
-                    </div>-->
-                    
-                    <!--<div class="col-md-6">  
-                      <div class="form-group">
-                        <label for="date" class="col-sm-3 control-label">First Name</label>
-                        <div class="input-group col-md-8">
-                          <input type="text" class="form-control pull-right" id="date" name="first" placeholder="Customer First Name" required>
-                        </div><!-- /.input group 
-                      </div><!-- /.form group 
-                    </div>-->
-
-                    <!--<div class="col-md-6">
-                      <div class="form-group">
-                        <label for="date" class="col-sm-3 control-label">Contact #</label>
-                        <div class="input-group col-md-8">  
-                          <input type="text" class="form-control pull-right" id="date" name="contact" placeholder="Contact Number" required>
-                        </div>
-                      </div>  
-                    </div>-->
-                          
-                    <!--<div class="col-md-6">
-                      <div class="form-group">
-                        <label for="date" class="col-sm-3 control-label">Address</label>   
-                        <div class="input-group col-md-8">
-                          <textarea class="form-control pull-right" id="date" name="address" placeholder="Complete Address" required></textarea>
-                        </div>
-                      </div>
-                    </div>  -->   
-
-                    
-          
-                    <!--<div class="col-md-12">
-                       <div class="col-md-12">
-                        <button class="btn btn-lg btn-primary pull-right" id="daterange-btn" name="">Next</button>
-          </div>  
-                    </div>  
-          
-          </form> 
-
-                
-        
-                </div> /.box-body 
-              </div>/.box 
-            </div> -->
-            <div class="col-md-4">
-              <div class="box box-primary">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Record Product Sale</h3>
+                <div class="box-header">
+                  <h3 class="box-title">Stocking Products</h3>
                 </div>
                 <div class="box-body">
-                
-                <form method="post" action="productsaletransaction.php" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="date">Enter Customer name</label>
-                    <div class="input-group col-md-12">
-                    <input type="text" class="form-control pull-right" id="date" name="cust_name" placeholder="Customer Name" tabindex="2"  required>
-                    </div><!-- /.input group -->
-                  </div><!-- /.form group -->
-                <div class="form-group">
-                    <label for="date">Select Date</label>
-                    <div class="input-group col-md-12">
-                    <input type="date" class="form-control pull-right" id="date" name="date" placeholder="Date" tabindex="2"  required>
-                    </div><!-- /.input group -->
-                  </div><!-- /.form group -->
+                  <!-- Date range -->
+                  <form method="post" action="stockin_add.php" enctype="multipart/form-data">
   
                   <div class="form-group">
-                    <label for="date">Select Shift</label>
+                    <label for="date">Select Item</label>
                     <div class="input-group col-md-12">
-                      <select class="form-control select2" style="width: 100%;" name="cid" required>
-                      <?php
-                       include('../dist/includes/dbcon.php');
-                        $query2=mysqli_query($con,"select * from shifts ORDER BY shift_id ASC")or die(mysqli_error());
-                          while($row2=mysqli_fetch_array($query2)){
-                      ?>
-            <option value="<?php echo $row2['shift_id'];?>"><?php echo $row2['shift_details'];?></option>
-          <?php }?>
-                    </select>
-                    </div><!-- /.input group -->
-                  </div><!-- /.form group -->
-                  <div class="form-group">
-                    <label for="date">Transaction Type</label>
-                    <div class="input-group col-md-12">
-                    <select class="form-control select2" name="remark" tabindex="1" autofocus required>
-                            <option value="Cash">Cash</option>
-                            <option value="Credit">Credit</option>
-  
-                            </select>   
-                    </div><!-- /.input group -->
-                  </div><!-- /.form group -->
-      
+                    <select class="form-control select2" name="pc_code" tabindex="1" autofocus required>
+								<?php
+                  $branch=$_SESSION['branch'];
                   
+                 
+								  include('../dist/includes/dbcon.php');
+									 $query2=mysqli_query($con,"select * from productcode natural join pdsubcat natural join stproducts   order by pc_id")or die(mysqli_error());
+									    while($row=mysqli_fetch_array($query2)){
+								?>
+										<option style="font-size:12px;" value="<?php echo $row['pc_id'];?>"><?php echo $row['product_name']."(".$row['sc_name'].")"."(".$row['pc_code'].")";?></option>
+                      <?php }?>
+								</select>
+                    </div><!-- /.input group -->
+                  </div><!-- /.form group -->
+		  
                   <div class="form-group">
+                    <label for="date">Quantity</label>
                     <div class="input-group col-md-12">
-                      <button class="btn btn-lg btn-primary pull-right" id="daterange-btn" name="">
-                        Next
+                      <input type="number" step="any" class="form-control pull-right" id="date" name="qty" placeholder="Quantity" required>
+                    </div><!-- /.input group -->
+                  </div><!-- /.form group -->
+                  <div class="form-group">
+                    <label for="date">Date</label>
+                    <div class="input-group col-md-12">
+                      <input type="date" class="form-control pull-right" id="date" name="date" placeholder="Quantity" required>
+                    </div><!-- /.input group -->
+                  </div><!-- /.form group -->
+                 
+                
+                  <div class="form-group">
+                    <div class="input-group">
+                      <button class="btn btn-primary" id="daterange-btn" name="">
+                        Save
                       </button>
-           
+					  <div><br/></div><input type="reset" class="btn" id="daterange-btn" value="clear"/>
+                        
                     </div>
                   </div><!-- /.form group -->
-        </form> 
-        
+				</form>	
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col (right) -->
             
+            <div class="col-xs-8">
+              <div class="box box-primary">
+    
+                <div class="box-header">
+                  <h3 class="box-title">Product Stocking History</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Product Code</th>
+                        <th>Product</th>
+                        <th>Unit Price (UGX)</th>
+                        <th>Quantity</th>
+                        <th>Amount Paid (UGX)</th>
+				               <th>Supplier</th>
+				                <th>Date Delivered</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+<?php
+		$branch=$_SESSION['branch'];
+		$query=mysqli_query($con,"select * from stockin natural join productcode natural join pdsubcat natural join stproducts natural join supplier  order by date desc ")or die(mysqli_error());
+		while($row=mysqli_fetch_array($query)){
+      $id=$row['stockin_id'];
+      //$total= $row['qty']*$row['price'];
+      //$grand=$grand+$total;
+		
+?>
+                      <tr>
+                        <td><?php echo $row['pc_code'];?></td>
+                        <td><?php echo $row['product_name'];?> <?php echo $row['sc_name'];?></td>
+                        <td><?php echo $row['unitprice'];?></td>
+                        
+                       <td><?php echo $row['qty'];?></td>
+                       <td><?php echo $row['total'];?></td>
+            						<td><?php echo $row['supplier_name'];?></td>
+                        <td><?php echo date("M d, Y",strtotime($row['date']));?></td>
+                      
+                      </tr>
+                   
+<?php }?>					  
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Medicine Warehouse System</th>
+                        
+                        
+                      </tr>					  
+                    </tfoot>
+                  </table>
+                </div><!-- /.box-body -->
+ 
+            </div><!-- /.col -->
+			
+			
+          </div><!-- /.row -->
+	  
             
-
           </section><!-- /.content -->
         </div><!-- /.container -->
       </div><!-- /.content-wrapper -->

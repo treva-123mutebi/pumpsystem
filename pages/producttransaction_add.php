@@ -10,6 +10,7 @@ include('../dist/includes/dbcon.php');
 	$name = $_POST['pc_name'];
 	$qty = $_POST['qty'];
 	$remark = $_POST['remark'];
+	$cust_name = $_POST['cust_name'];
 		
 			
 		$query=mysqli_query($con,"select prod_price,pc_id from productcode where pc_id='$name'")or die(mysqli_error());
@@ -30,6 +31,6 @@ include('../dist/includes/dbcon.php');
 		}
 
 	
-		echo "<script>document.location='productsaletransaction.php?cid=$cid&date=$date&remark=$remark'</script>";  
+		echo "<script>document.location='productsaletransaction.php?cid=$cid&date=$date&remark=$remark&cust_name=$cust_name'</script>";  
 	
 ?>

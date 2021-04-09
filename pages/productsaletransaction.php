@@ -69,6 +69,7 @@ endif;
                   $cid=$_REQUEST['cid'];
                   $date = $_REQUEST['date'];
                   $remark = $_REQUEST['remark'];
+                  $cust_name = $_REQUEST['cust_name'];
 								  include('../dist/includes/dbcon.php');
 									 $query2=mysqli_query($con,"select * from productcode natural join pdsubcat natural join stproducts where   prod_qty >='1'  order by pc_id")or die(mysqli_error());
 									    while($row=mysqli_fetch_array($query2)){
@@ -78,7 +79,9 @@ endif;
 								</select>
 						    <input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>  
                             <input type="hidden" class="form-control" name="date" value="<?php echo $date;?>" required>   
-                            <input type="hidden" class="form-control" name="remark" value="<?php echo $remark;?>" required>   
+                            <input type="hidden" class="form-control" name="remark" value="<?php echo $remark;?>" required>  
+                            <input type="hidden" class="form-control" name="cust_name" value="<?php echo $cust_name;?>" required>   
+ 
 
 						  </div><!-- /.form group -->
 					</div>
@@ -254,6 +257,7 @@ $queryb=mysqli_query($con,"select balance from customer where cust_id='$cid'")or
 							<input type="hidden" class="form-control text-right" id="cid" name="cid" value="<?php echo $cid;?>">
               <input type="hidden" class="form-control text-right" id="cid" name="date" value="<?php echo $date;?>">
               <input type="hidden" class="form-control text-right" id="cid" name="remark" value="<?php echo $remark;?>">
+              <input type="hidden" class="form-control text-right" id="cid" name="cust_name" value="<?php echo $cust_name;?>">
 						  </div><!-- /.form group -->
 						  <div class="form-group">
 							<label for="date">Total Amount </label>
