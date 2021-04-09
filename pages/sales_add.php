@@ -13,13 +13,14 @@ include('../dist/includes/dbcon.php');
 	$branch=$_SESSION['branch'];
 	
 	$total=$amount_due;
-	$cid=$_REQUEST['cid'];
+	$date=$_REQUEST['date'];
+	$remark=$_REQUEST['remark'];
 
 		//$tendered = $_POST['tendered'];
 		//$change = $_POST['change'];
 
 		mysqli_query($con,"INSERT INTO sales(shift_id,user_id,amount_due,total,date_added,modeofpayment,branch_id) 
-	VALUES('$cid','$id','$amount_due','$total','$date','cash','$branch')")or die(mysqli_error($con));
+	VALUES('$cid','$id','$amount_due','$total','$date','$remark','$branch')")or die(mysqli_error($con));
 		
 	$sales_id=mysqli_insert_id($con);
 	$_SESSION['sid']=$sales_id;
@@ -35,7 +36,7 @@ include('../dist/includes/dbcon.php');
 			mysqli_query($con,"UPDATE productcode SET prod_qty=prod_qty-'$qty' where pc_id='$pid'") or die(mysqli_error($con)); 
 		}
 		
-		$query1=mysqli_query($con,"SELECT or_no FROM payment NATURAL JOIN sales WHERE modeofpayment =  'cash' ORDER BY payment_id DESC LIMIT 0 , 1")or die(mysqli_error($con));
+		$query1=mysqli_query($con,"SELECT or_no FROM payment NATURAL JOIN sales WHERE modeofpayment =  '$remark' ORDER BY payment_id DESC LIMIT 0 , 1")or die(mysqli_error($con));
 
 			$row1=mysqli_fetch_array($query1);
 				$or=$row1['or_no'];	
@@ -50,7 +51,7 @@ include('../dist/includes/dbcon.php');
 				}
 
 				mysqli_query($con,"INSERT INTO payment(shift_id,user_id,payment,payment_date,branch_id,payment_for,due,status,sales_id,or_no) 
-	VALUES('$cid','$id','$total','$date','$branch','$date','$total','paid','$sales_id','$or')")or die(mysqli_error($con));
+	VALUES('$cid','$id','$total','$date','$branch','$date','$total','$remark','$sales_id','$or')")or die(mysqli_error($con));
 				echo "<script>document.location='receipt.php?cid=$cid'</script>";  	
 		
 		$result=mysqli_query($con,"DELETE FROM reviewsales_details where branch_id='$branch'")	or die(mysqli_error($con));

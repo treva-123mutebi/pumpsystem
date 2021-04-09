@@ -30,6 +30,6 @@ include('../dist/includes/dbcon.php');
 		}
 
 	
-		echo "<script>document.location='productsaletransaction.php?cid=$cid&date=$date'</script>";  
+		echo "<script>document.location='productsaletransaction.php?cid=$cid&date=$date&remark=$remark'</script>";  
 	
 ?>

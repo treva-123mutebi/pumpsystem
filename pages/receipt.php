@@ -83,6 +83,8 @@ $branch=$_SESSION['branch'];
         //$grandtotal=$due-$discount;
         $tendered=$row['cash_tendered'];
         $change=$row['cash_change'];
+        $modeofpayment=$row['modeofpayment'];
+        $date_added=$row['date_added'];
 
         $query1=mysqli_query($con,"select * from payment where sales_id='$sales_id'")or die(mysqli_error($con));
       
@@ -112,8 +114,10 @@ $branch=$_SESSION['branch'];
                       <tr>
                         <th>Shift</th>
                         <th><u><?php echo $last;?></u></th>
-                        <th>Date</th>
-                        <th><u><?php echo date("M d, Y");?> Time <?php echo date("h:i A");?></u></th>
+                        <th>Mode of Payment</th>
+                        <th style="color:red;"><u><?php echo $modeofpayment;?></u></th>
+                        <th>Date of Payment:</th>
+                        <th><u><?php echo date("M d, Y",strtotime( $date_added));?> </u></th>
                       </tr>
                       <tr>
                        

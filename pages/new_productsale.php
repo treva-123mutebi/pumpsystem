@@ -139,6 +139,16 @@ endif;
                     </select>
                     </div><!-- /.input group -->
                   </div><!-- /.form group -->
+                  <div class="form-group">
+                    <label for="date">Transaction Type</label>
+                    <div class="input-group col-md-12">
+                    <select class="form-control select2" name="remark" tabindex="1" autofocus required>
+                            <option value="Cash">Cash</option>
+                            <option value="Credit">Credit</option>
+  
+                            </select>   
+                    </div><!-- /.input group -->
+                  </div><!-- /.form group -->
       
                   
                   <div class="form-group">

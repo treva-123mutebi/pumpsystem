@@ -8,7 +8,8 @@ include('../dist/includes/dbcon.php');
 	$amount_due = $_POST['amount_due'];
 	
 	date_default_timezone_set("Asia/Manila"); 
-	$date = date("Y-m-d H:i:s");
+	$date = $_REQUEST['date'];
+	$remark = $_POST['remark'];
 	$cid=$_REQUEST['cid'];
 	$branch=$_SESSION['branch'];
 	
@@ -20,7 +21,7 @@ include('../dist/includes/dbcon.php');
 		//$change = $_POST['change'];
 
 		mysqli_query($con,"INSERT INTO reviewsales(shift_id,user_id,amount_due,total,date_added,modeofpayment,branch_id,reviewstatus) 
-    VALUES('$cid','$id','$amount_due','$total','$date','cash','$branch','approved')")or die(mysqli_error($con));
+    VALUES('$cid','$id','$amount_due','$total','$date','$remark','$branch','approved')")or die(mysqli_error($con));
     
 	$reviewsales_id=mysqli_insert_id($con);
 	$_SESSION['sid']=$reviewsales_id;
@@ -30,14 +31,14 @@ include('../dist/includes/dbcon.php');
 			$pid=$row['pc_id'];	
  			$qty=$row['qty'];
 			$price=$row['price'];
-			$remark=$row['remark'];
+			//$remark=$row['remark'];
 			
 			
 			mysqli_query($con,"INSERT INTO reviewsales_details(pc_id,sales_qty,price,remark,reviewsales_id,branch_id) VALUES('$pid','$qty','$price','$remark','$reviewsales_id','$branch')")or die(mysqli_error($con));
 			//mysqli_query($con,"UPDATE product SET prod_qty=prod_qty-'$qty' where prod_id='$pid' and branch_id='$branch'") or die(mysqli_error($con)); 
 		}
 		
-		$query1=mysqli_query($con,"SELECT or_no FROM reviewpayment NATURAL JOIN reviewsales WHERE modeofpayment =  'cash' ORDER BY reviewpayment_id DESC LIMIT 0 , 1")or die(mysqli_error($con));
+		$query1=mysqli_query($con,"SELECT or_no FROM reviewpayment NATURAL JOIN reviewsales WHERE modeofpayment =  '$remark' ORDER BY reviewpayment_id DESC LIMIT 0 , 1")or die(mysqli_error($con));
 
 			$row1=mysqli_fetch_array($query1);
 				$or=$row1['or_no'];	
@@ -53,7 +54,7 @@ include('../dist/includes/dbcon.php');
 
 				mysqli_query($con,"INSERT INTO reviewpayment(shift_id,user_id,payment,payment_date,branch_id,payment_for,due,status,reviewsales_id,or_no) 
 	VALUES('$cid','$id','$total','$date','$branch','$date','$total','$remark','$reviewsales_id','$or')")or die(mysqli_error($con));
-				echo "<script>document.location='review.php?cid=$cid'</script>";	
+				echo "<script>document.location='review.php?cid=$cid&date=$date&remark=$remark'</script>";	
 		
 		$result=mysqli_query($con,"DELETE FROM temp_trans where branch_id='$branch'")	or die(mysqli_error($con));
 		//echo "<script>document.location='receipt.php?cid=$cid'</script>";  	

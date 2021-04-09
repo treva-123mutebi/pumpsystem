@@ -70,6 +70,8 @@ javascript:window.history.forward(1);
                   $branch=$_SESSION['branch'];
                   $cid=$_REQUEST['cid'];
                   $date = $_REQUEST['date'];
+                  $remark = $_REQUEST['remark'];
+                  
 								  include('../dist/includes/dbcon.php');
 									 $query2=mysqli_query($con,"select * from product natural join category where branch_id='$branch' and prod_qty >='1' and expirydate >='$date' order by prod_name")or die(mysqli_error());
 									    while($row=mysqli_fetch_array($query2)){
@@ -78,7 +80,8 @@ javascript:window.history.forward(1);
                       <?php }?>
 								</select>-->
 						    <input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>   
-                <input type="hidden" class="form-control" name="cid" value="<?php echo $date;?>" required>   
+                <input type="hidden" class="form-control" name="date" value="<?php echo $date;?>" required>   
+                <input type="hidden" class="form-control" name="remark" value="<?php echo $remark;?>" required>   
 						  </div><!-- /.form group -->
 					</div>
 					<div class=" col-md-2">
@@ -240,6 +243,8 @@ $queryb=mysqli_query($con,"select balance from customer where cust_id='$cid'")or
 							
 								<input type="text" class="form-control text-right" id="discount" name="discount" value="0" tabindex="6" placeholder="Discount Amount" onFocus="startCalc();" onBlur="stopCalc();">-->
 							<input type="hidden" class="form-control text-right" id="cid" name="cid" value="<?php echo $cid;?>">
+              <input type="hidden" class="form-control text-right" id="cid" name="remark" value="<?php echo $remark;?>">
+              <input type="hidden" class="form-control text-right" id="cid" name="date" value="<?php echo $date;?>">
 						  </div><!-- /.form group -->
 						  <div class="form-group">
 							<label for="date">Total Amount </label>
