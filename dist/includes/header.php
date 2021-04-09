@@ -158,7 +158,7 @@ $query=mysqli_query($con,"select * from branch where branch_id='$branch'")or die
                             </a>
                           </li><!-- end notification -->
 					    <li><!-- start notification -->
-                         <a href="itemreport.php">
+                         <a href="tankreadings.php">
                               <i class="glyphicon glyphicon-th-list text-redr"></i>Tank Reading Report
                             </a>
                           </li><!-- end notification -->
