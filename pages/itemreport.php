@@ -90,17 +90,27 @@ endif;
 				  <form method="post">
 					<div class="form-group col-md-6">
                     <div class="form-group">
-							<label for="date">Select Item</label>
-							 <select class="form-control select2" style="width: 100%;" name="category" required>
+							<label for="date">Select Product</label>
+							 <select class="form-control select2" style="width: 100%;" name="pc_name" required>
               
                 <?php
             
-              $queryc=mysqli_query($con,"select * from category order by cat_name")or die(mysqli_error());
+              $queryc=mysqli_query($con,"select * from productcode natural join pdsubcat natural join stproducts order by pc_id")or die(mysqli_error());
                 while($rowc=mysqli_fetch_array($queryc)){
                 ?>
-                  <option value="<?php echo $rowc['cat_id'];?>"><?php echo $rowc['cat_name'];?></option>
+                  <option value="<?php echo $rowc['pc_id'];?>"><?php echo $rowc['product_name'];?> <?php echo $rowc['sc_name'];?> <?php echo $rowc['pc_code'];?></option>
                 <?php }?>
               </select>
+								 
+						  </div>
+              <br/>
+              <div class="form-group">
+							<label for="date">Transaction Type</label>
+              <select class="form-control select2" name="remark" tabindex="1" autofocus required>
+                            <option value="Cash">Cash</option>
+                            <option value="Credit">Credit</option>
+  
+                            </select>   
 								 
 						  </div>
 
@@ -127,7 +137,8 @@ endif;
 		if (isset($_POST['display']))
 	{
 		$date=$_POST['date'];
-        $cat_id=$_POST['category'];
+    $pc_id=$_POST['pc_name'];
+    $remarks=$_POST['remark'];
 		$date=explode('-',$date);
 		$branch=$_SESSION['branch'];		
 			$start=date("Y/m/d",strtotime($date[0]));
@@ -148,7 +159,7 @@ $branch=$_SESSION['branch'];
                   <h6>Address: <?php echo $row['branch_address'];?></h6>
                   <h6>Contact #: <?php echo $row['branch_contact'];?></h6>
                   
-				  <h5><b>Item Stock-Out and Stock  Report as of <?php echo date("M d, Y",strtotime($start))." to ".date("M d, Y",strtotime($end));?></b></h5>
+				  <h5><b> <?php echo $remarks;?> Sales  Report for <?php echo $_POST['pc_name'];?> as of <?php echo date("M d, Y",strtotime($start))." to ".date("M d, Y",strtotime($end));?></b></h5>
                   
 				  <a class = "btn btn-success btn-print" href = "" onclick = "window.print()"><i class ="glyphicon glyphicon-print"></i> Print</a>
 							<a class = "btn btn-primary btn-print" href = "home.php"><i class ="glyphicon glyphicon-arrow-left"></i> Back to Homepage</a>   
@@ -158,22 +169,25 @@ $branch=$_SESSION['branch'];
                     <thead>
                       <tr>
                         
-                        <th>(TO) Receiving Department</th>
-                        <th>Item Code</th>
-                        <th>Item Description</th>
-                        <th>Batch Number</th>
-                        <th>Expiry Date</th>
-                        <th>Quantity Out</th>
+                        <th>Customer Name</th>
+                        <th>Product  Code</th>
+                        <th>Product</th>
+                        
+                        <th>Unit Price</th>
+                        <th>Quantity Sold</th>
+                        
             			<!--<th>Price</th>-->
                         <!--<th>Discount</th>-->
-                        <!--<th>Amount Paid</th>-->
-                        <th>Date of Stock Out </th>
+                        <th>Amount Paid</th>
+                        <th>Date of Sale </th>
                       </tr>
                     </thead>
                     <tbody>
 <?php
-	$query=mysqli_query($con,"select * from sales natural join sales_details natural join product natural join category natural join customer where date(date_added)>='$start' and date(date_added)<='$end' and branch_id='$branch' and modeofpayment='cash' and cat_id='$cat_id'")or die(mysqli_error($con));
+	$query=mysqli_query($con,"select * from sales natural join sales_details natural join productcode natural join stproducts natural join pdsubcat where date(date_added)>='$start' and date(date_added)<='$end'  and modeofpayment='$remarks' and pc_id='$pc_id'")or die(mysqli_error($con));
 		$qty=0;$grand=0;$discount=0;
+    $query1 = mysqli_query($con,"select SUM(sales_qty) as totalsales_qty from sales natural join sales_details natural join productcode natural join stproducts natural join pdsubcat where date(date_added)>='$start' and date(date_added)<='$end'  and modeofpayment='$remarks' and pc_id='$pc_id'") or die(mysqli_error($con));
+		$row1=mysqli_fetch_array($query1);
 								while($row=mysqli_fetch_array($query)){
                 $total=$row['sales_qty']*$row['price'];
 								$grand=$grand+$total-$row['discount'];
@@ -181,126 +195,25 @@ $branch=$_SESSION['branch'];
 ?>
             <tr>
             
-            <td><?php echo $row['cust_last'];?></td>
-            <td><?php echo $row['cat_code'];;?></td>
-            <td><?php echo $row['cat_name'];?></td>
-            <td><?php echo $row['prod_name'];?></td>
-            <td><?php echo $row['expirydate'];?></td>
+            <td><?php echo $row['cust_name'];?></td>
+            <td><?php echo $row['pc_code'];;?></td>
+            <td><?php echo $row['product_name'];?> <?php echo $row['sc_name'];?></td>
+            <td><?php echo $row['price'];?></td>
+           
             <td><?php echo $row['sales_qty'];?></td>
 						<!--<td><?php echo $row['price'];?></td>-->
             <!--<td><?php echo $row['discount'];?></td-->
-            <!--<td style="text-align:right"><?php echo number_format($row['total'],2);
-								?></td>-->
-            <td><?php echo date("M d, Y h:i a",strtotime($row['date_added']));?></td>    
+            <td style="text-align:right"><?php echo number_format($total,2);
+								?></td>
+            <td><?php echo date("M d, Y",strtotime($row['date_added']));?></td>    
 			
 		
  <?php }?>                       
                       </tr>
 		
                     </tbody>
-                    <thead>
-                      <tr>
-                        <th>(From) Supplier</th>
-                        <th>Item Code</th>
-                        
-                        <th>Item Description</th>
-                        <th>Batch Number</th>
-                        <th>Expiry Date</th>
-                        <th>Quantity In</th>
-                        <th>Quantity Available</th>
-            			<!--<th>Price</th>-->
-                        <!--<th>Discount</th>-->
-                        <!--<th>Amount Paid</th>-->
-                        <th>Date of Stock In </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-<?php
-	$query=mysqli_query($con,"select * from product natural join stockin natural join category natural join supplier where date(date)>='$start' and date(date)<='$end' and branch_id='$branch'  and cat_id='$cat_id'")or die(mysqli_error($con));
-		$qty=0;$grand=0;$discount=0;
-								while($row=mysqli_fetch_array($query)){
-                $total=$row['prod_qty']*$row['prod_price'];
-                $qtybal=$row['prod_qty'];
-								$grand=$grand+$total;
-                //$discount=$discount+$row['discount'];
-?>
-            <tr>
-
-            <td><?php echo $row['supplier_name'];?></td>
-            <td><?php echo $row['cat_code'];;?></td>
-            
-            <td><?php echo $row['cat_name'];?></td>
-            <td><?php echo $row['prod_name'];?></td>
-            <td><?php echo $row['expirydate'];?></td>
-            <td><?php echo $row['stockqty'];?></td>
-            <td><?php echo $row['prod_qty'];?></td>
-						<!--<td><?php echo $row['price'];?></td>-->
-            <!--<td><?php echo $row['discount'];?></td-->
-            <!--<td style="text-align:right"><?php echo number_format($row['total'],2);
-								?></td>-->
-            <td><?php echo date("M d, Y h:i a",strtotime($row['date']));?></td>    
-            </tr>
-		
- <?php }?>                       
+                   
                     
-                      
-                      
-                    </tbody>
-                    <thead>
-                      
-                        <th><h5><b>AC And MOH   Report as of <?php echo date("M d, Y",strtotime($start))." to ".date("M d, Y",strtotime($end));?></b></h5> </th>
-                      
-                    </thead>
-                    <thead>
-                      <tr>
-                        <!--<th></th>-->
-                        <th>Item Code</th>
-                        
-                        <th>Item Description</th>
-                        <th>Batch Number</th>
-                        <th>Expiry Date</th>
-                        <th>Stock At Hand (SAH)</th>
-                        <th>Average Consumption (AC)</th>
-            			     <th>Month of Stock (MOS) </th>
-                        <!--<th>Discount</th>-->
-                        <!--<th>Amount Paid</th>-->
-                        <!--<th>Date of Stock In </th>-->
-                      </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-	$query=mysqli_query($con,"select * from product natural join sales_details natural join sales natural join category natural join supplier where date(date_added)>='$start' and date(date_added)<='$end' and branch_id='$branch'  and cat_id='$cat_id'")or die(mysqli_error($con));
-		$qty=0;$grand=0;$discount=0;
-								while($row=mysqli_fetch_array($query)){
-                  $start_date = strtotime($start);
-                  $end_date = strtotime($end); 
-                  $days = ($end_date - $start_date)/60/60/24;
-                  $avc=($row['sales_qty']/$days)*30;
-                  $mos=$row['prod_qty']/$avc;
-                $qtybal=$row['prod_qty'];
-								$grand=$grand+$total;
-                //$discount=$discount+$row['discount'];
-?>
-<tr>
-
-
-<td><?php echo $row['cat_code'];;?></td>
-
-<td><?php echo $row['cat_name'];?></td>
-<td><?php echo $row['prod_name'];?></td>
-<td><?php echo $row['expirydate'];?></td>
-<td><?php echo $row['prod_qty'];?></td>
-<td><?php echo  number_format($avc,3);?></td>
-<!--<td><?php echo $row['price'];?></td>-->
-<!--<td><?php echo $row['discount'];?></td-->
-<!--<td style="text-align:right"><?php echo number_format($row['total'],2);?></td>-->
-<td><?php echo  number_format($mos,3);?></td>
-<!--<td><?php echo  number_format($days,3);?></td>-->    
-</tr>
-<?php }?>  
-
-
-                    </tbody>
 
                     
                      
@@ -308,13 +221,13 @@ $branch=$_SESSION['branch'];
                       
                   <tfoot>
           <tr>
-            <!--<th colspan="8">Quantity Balance</th>
-            <th style="text-align:right;"><h4><b><?php echo  number_format($qtybal,0);?></b></h4></th>-->
+            <th colspan="8">Total Quantity Sold</th>
+            <th style="text-align:right;"><h4><b><?php echo $row1['totalsales_qty'];?></b></h4></th>
           </tr>             
-					<!--<tr>
-            <th colspan="8">Less: Total Discount</th>
-            <th style="text-align:right;"><h4><b><?php echo  number_format($discount,2);?></b></h4></th>
-          </tr> -->  
+					<tr>
+            <th colspan="8">Total Sales(UGX)</th>
+            <th style="text-align:right;"><h4><b><?php echo  number_format($grand,2);?></b></h4></th>
+          </tr>   
           
           <tr>
             <th colspan="8"></th>
