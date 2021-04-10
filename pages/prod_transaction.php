@@ -57,7 +57,7 @@ javascript:window.history.forward(1);
                 </div>
                 <div class="box-body">
                   <!-- Date range -->
-                  <form method="post" action="transaction_add.php">
+                  <form method="post" action="prod_add.php">
 				  <div class="row" style="min-height:400px">
 					
 					 

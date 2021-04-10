@@ -6,60 +6,43 @@ $branch=$_SESSION['branch'];
 include('../dist/includes/dbcon.php');
 
 $date = $_POST['date'];
-$dippmorn = $_POST['dippmorn'];
-$openinvoice = $_POST['openinvoice'];
-$dippeven =$_POST['dippeven'];
-$closeinvoice = $_POST['closeinvoice'];
-
-$stunit_id = $_POST['stunit_id'];
-$cummdiff = ($dippeven)-($closeinvoice);
-$morndiff = ($dippmorn)-($openinvoice);
-$reorderlevel= ($dippeven)-(23600.00);
-
-$query=mysqli_query($con,"select cummdiff from lastclosinginvoice  where stunit_id='$stunit_id' ORDER BY stunit_id DESC LIMIT 1,1")or die(mysqli_error());
-$row=mysqli_fetch_array($query);
-//$price=$row['prod_price'];
-$lastcummdiff=$row['cummdiff'];
-
-if($lastcummdiff != 0){
-    $dailydiff = ($cummdiff) - ($lastcummdiff);
-}
-else {
-    $dailydiff = ($cummdiff) - ($lastcummdiff);;
-}
-
-	/* $shift_id = $_POST['shift_id'];
-    $nosalnumber = $_POST['nosalnumber'];
-    $pumpid = $_POST['pumpid'];
-    $prod_id=$_POST['prod_id'];
+	$shift_id = $_POST['shift_id'];
+    /* $nosalnumber = $_POST['nosalnumber']; */
+    $nosal_id = $_POST['nosal_id']; 
+    //$prod_id=$_POST['prod_id'];
     $openmeter =$_POST['openmeter'];
-    $closemeter =$_POST['closemeter']; */
+    $closemeter =$_POST['closemeter'];
     
-    /* $rtt =$_POST['rtt'];*/
-    /* if($closemeter>$openmeter){
-        $litressold = ($_POST['closemeter'])-($_POST['openmeter']);
+    $rtt =$_POST['rtt'];
+
+    if($closemeter>$openmeter){
+        $ls = ($_POST['closemeter'])-($_POST['openmeter']);
+        $litressold = ($ls) - ($rtt);
 
     }
     else{
         $litressold=0;
     }
-    */
 
-   /* $unitprice =$_POST['currentprice'];
-   $total = ($unitprice) * ($litressold); */
+
+    
+            $currentprice = $_POST['unitprice'];
+            $total = ($currentprice) * ($litressold);
     /*$pricechange=$_POST['pricechange'];*/
+
+    $query2=mysqli_query($con,"select prod_id from nosals  where nosal_id='$nosal_id' ")or die(mysqli_error());
+                                      $row2=mysqli_fetch_array($query2);
+                                      $prod_id = $row2['prod_id'];
 
 
     
 
-        mysqli_query($con,"INSERT INTO tankreadings(date,openinvoice,dippmorn,morndiff,closinginvoice,dippeven,cummdiff,dailydiff,reorderlevel,stunit_id) 
-            VALUES('$date','$openinvoice','$dippmorn','$morndiff','$closeinvoice','$dippeven','$cummdiff','$dailydiff','$reorderlevel','$stunit_id')")or die(mysqli_error($con));
-
-        mysqli_query($con,"INSERT INTO lastclosinginvoice(stunit_id,closinginvoice,cummdiff,lastdipp) 
-        VALUES('$stunit_id','$closeinvoice','$cummdiff','$dippeven')")or die(mysqli_error($con));      
+        mysqli_query($con,"INSERT INTO dailysales(date,shift_id,nosal_id,openmeter,closemeter,unitprice,rtt,litressold,total,prod_id) 
+            VALUES('$date','$shift_id','$nosal_id','$openmeter','$closemeter','$currentprice','$rtt','$litressold','$total','$prod_id')")or die(mysqli_error($con));
+            
+            mysqli_query($con,"INSERT INTO lastclosingmeter(nosal_id,closemeter) 
+            VALUES('$nosal_id','$closemeter')")or die(mysqli_error($con));         
 			
-			echo "<script>window.location='prod_transaction.php?stunit_id=$stunit_id&date=$date'</script>";   
-
-		
+			echo "<script>window.location='cash_transaction.php?shift_id=$shift_id&nosal_id=$nosal_id&date=$date'</script>";  
 	
 ?>
