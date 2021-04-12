@@ -4,18 +4,35 @@ header('Location:../index.php');
 endif;
 
 include('../dist/includes/dbcon.php');
-	$id = $_POST['id'];
-    $prod_qty =$_POST['prod_qty'];
-    $prod_name =$_POST['prod_name'];
-    $expirydate =$_POST['expirydate'];
-    $unitprice =$_POST['unitprice'];
-	$cid =$_POST['cid'];
+$id=$_POST['id'];
+$date = $_POST['date'];
+$dippmorn = $_POST['dippmorn'];
+$openinvoice = $_POST['openinvoice'];
+$dippeven =$_POST['dippeven'];
+$closeinvoice = $_POST['closeinvoice'];
+
+$stunit_id = $_POST['stunit_id'];
+$cummdiff = ($dippeven)-($closeinvoice);
+$morndiff = ($dippmorn)-($openinvoice);
+$reorderlevel= ($dippeven)-(23600.00);
+
+$query=mysqli_query($con,"select cummdiff from lastclosinginvoice  where stunit_id='$stunit_id' ORDER BY stunit_id DESC LIMIT 1,1")or die(mysqli_error());
+$row=mysqli_fetch_array($query);
+//$price=$row['prod_price'];
+$lastcummdiff=$row['cummdiff'];
+
+if($lastcummdiff != 0){
+    $dailydiff = ($cummdiff) - ($lastcummdiff);
+}
+else {
+    $dailydiff = ($cummdiff) - ($lastcummdiff);;
+}
 	
 	
-	mysqli_query($con,"UPDATE temp_deposit set prod_qty='$prod_qty',prod_name='$prod_name',expirydate='$expirydate',unitprice='$unitprice' where temp_deposit_id='$id'")or die(mysqli_error());
+	mysqli_query($con,"UPDATE tankreadings set dippeven='$dippeven' where tankreading_id='$id'")or die(mysqli_error());
 	
 	
-	echo "<script>document.location='prod_transaction.php?cid=$cid'</script>";  
+	echo "<script>document.location='prod_transaction.php?stunit_id=$stunit_id&date=$date'</script>";  
 
 	
 ?>

@@ -63,7 +63,7 @@ $query=mysqli_query($con,"select * from branch where branch_id='$branch'")or die
 			?>
                           <li><!-- start notification -->
                             <a href="#">
-                              <i class="glyphicon glyphicon-refresh text-red"></i> <?php echo $rowprod['product_name'];?>.<?php echo $rowprod['sc_name'];?> <?php echo $rowprod['product_code'];?>
+                              <i class="glyphicon glyphicon-refresh text-red"></i> <?php echo $rowprod['product_name'];?>.<?php echo $rowprod['sc_name'];?> <?php echo $rowprod['pc_code'];?>
                             </a>
                           </li><!-- end notification -->
                           <?php }?>

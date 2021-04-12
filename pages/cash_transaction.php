@@ -78,6 +78,8 @@ position: absolute;
                   $shift_id=$_REQUEST['shift_id'];
                   $nosal_id = $_REQUEST['nosal_id'];
                   $date = $_REQUEST['date'];
+                  $month = date("m",strtotime($_REQUEST['date']));
+                  $year = date("Y",strtotime($_REQUEST['date']));
                   //$date = date("Y-m-d H:i:s");
 								  
 								?>
@@ -170,15 +172,17 @@ position: absolute;
           
    
 					<div class="col-md-12">
-          <br/><b> Daily Fuel  Sale History</b>
+          <br/><b> Daily Fuel  Sale History for <?php echo date("M , Y",strtotime($date));?></b>
           <div class="line"></div><br/><br/>
           <br/>
-          <br/><strong> Morning Shift </strong>
+          <br/>
+          <br/>
 
                   <table class="table table-bordered table-striped">
                     <thead>
                       <tr>
                       <th>Date</th>
+                      <th>Shift</th>
                        <th>Pump Number</th>
                          <th>Nosal Number</th>
                          <th>Fuel type</th>
@@ -195,16 +199,17 @@ position: absolute;
                     <tbody>
 <?php
 		
-		$query=mysqli_query($con,"select * from dailysales natural join pumps natural join nosals  natural join stationproducts natural join shifts where shift_id='1'  ORDER BY date ASC")or die(mysqli_error());
+		$query=mysqli_query($con,"select * from dailysales natural join pumps natural join nosals  natural join stationproducts natural join shifts where Month(date) = '$month' and Year(date) = '$year'  ORDER BY  date asc ")or die(mysqli_error());
 			$grand=0;
 		while($row1=mysqli_fetch_array($query)){
 				$id=$row1['dailysales_id'];
 				//$total= $row['qty']*$row['price'];
-			//	$grand=$grand+$total;
+			  //$grand=$grand+$total;
 		
 ?>
                       <tr >
                       <td style="text-align:center; font-size:10px;"><?php echo date("M d, Y",strtotime($row1['date']));?></td> 
+                      <td><?php echo $row1['shift_details'];?></td>
                                             <td><?php echo $row1['pumpnumber'];?></td>
                                             <td><?php echo $row1['nosalnumber'];?></td>
                                             <td><?php echo $row1['stationprod_name'];?></td>
@@ -219,30 +224,55 @@ position: absolute;
                                             <td><?php echo $row1['total'];?></td>
                         <td>
 							
-							<a href="#updateordinance<?php echo $row['temp_trans_id'];?>" data-target="#updateordinance<?php echo $row['temp_trans_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-edit text-blue"></i></a>
+							<a href="#updateordinance<?php echo $row1['dailysales_id'];?>" data-target="#updateordinance<?php echo $row1['dailysales_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-edit text-blue"></i></a>
 
-              <a href="#delete<?php echo $row['temp_trans_id'];?>" data-target="#delete<?php echo $row['temp_trans_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-trash text-red"></i></a>
+              <!--<a href="#delete<?php echo $row['temp_trans_id'];?>" data-target="#delete<?php echo $row['temp_trans_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-trash text-red"></i></a>-->
               
 						</td>
                       </tr>
-					  <div id="updateordinance<?php echo $row['temp_trans_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+					  <div id="updateordinance<?php echo $row1['dailysales_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog">
 	  <div class="modal-content" style="height:auto">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Update Stock - Out Details</h4>
+                <h4 class="modal-title">Update Fuel Sale Details</h4>
               </div>
               <div class="modal-body">
 			  <form class="form-horizontal" method="post" action="transaction_update.php" enctype='multipart/form-data'>
-					<input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>  	
-					<input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row['temp_trans_id'];?>" required>  
+        <input type="hidden" class="form-control" name="shift_id" value="<?php echo $shift_id;?>" required>  	
+        <input type="hidden" class="form-control" name="nosal_id" value="<?php echo $nosal_id;?>" required> 
+                                
+        <input type="hidden" class="form-control" name="date" value="<?php echo $date;?>" required> 
+					<input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row1['dailysales_id'];?>" required>  
 				<div class="form-group">
-					<label class="control-label col-lg-3" for="price">Qty</label>
+					<label class="control-label col-lg-3" for="price">Open Meter:</label>
 					<div class="col-lg-9">
-					  <input type="text" class="form-control" id="price" name="qty" value="<?php echo $row['qty'];?>" required>  
+					  <input type="text" class="form-control" id="price" name="openmeter" value="<?php echo $row1['openmeter'];?>" readonly required>  
 					</div>
 				</div>
+        <br/><br/>
+        <div class="form-group">
+					<label class="control-label col-lg-3" for="price">Close Meter:</label>
+					<div class="col-lg-9">
+					  <input type="text" class="form-control" id="price" name="closemeter" value="<?php echo $row1['closemeter'];?>"  readonly required>  
+					</div>
+				</div>
+        <br/><br/>
+        <div class="form-group">
+					<label class="control-label col-lg-3" for="price">R.T.T:</label>
+					<div class="col-lg-9">
+					  <input type="text" class="form-control" id="price" name="rtt" value="<?php echo $row1['rtt'];?>" readonly required>  
+					</div>
+				</div>
+        <br/><br/>
+        <div class="form-group">
+					<label class="control-label col-lg-3" for="price">Current Price:</label>
+					<div class="col-lg-9">
+					  <input type="text" class="form-control" id="price" name="unitprice" value="<?php echo $row1['unitprice'];?>"  required>  
+					</div>
+				</div>
+        <br/><br/>
 				
               </div><br>
               <div class="modal-footer">
@@ -286,116 +316,7 @@ position: absolute;
                   </table>
                   <br/><br/>
 
-                  <strong> Night Shift </strong>
-                  <table class="table table-bordered table-striped">
-                  <thead>
-                      <tr>
-                      <th>Date</th>
-                       <th>Pump Number</th>
-                         <th>Nosal Number</th>
-                         <th>Fuel type</th>
-                         <th>Open Meter</th>
-                         <th>Close Meter</th>
-                         <th>R.T.T</th>
-                        <th>Litre Sold</th>
-                        <th>Unit Price</th>
-                                            
-                        <th>Payment</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-<?php
-		
-		$query=mysqli_query($con,"select * from dailysales natural join pumps natural join nosals  natural join stationproducts natural join shifts where shift_id='1'  ORDER BY date ASC")or die(mysqli_error());
-			$grand=0;
-		while($row1=mysqli_fetch_array($query)){
-				$id=$row1['dailysales_id'];
-				//$total= $row['qty']*$row['price'];
-			//	$grand=$grand+$total;
-		
-?>
-                      <tr >
-                      <td style="text-align:center; font-size:10px;"><?php echo date("M d, Y",strtotime($row1['date']));?></td> 
-                                            <td><?php echo $row1['pumpnumber'];?></td>
-                                            <td><?php echo $row1['nosalnumber'];?></td>
-                                            <td><?php echo $row1['stationprod_name'];?></td>
-                                            <td><?php echo $row1['openmeter'];?></td>
-                                            <td><?php echo $row1['closemeter'];?></td>
-                                           <td><?php echo $row1['rtt'];?></td>
-                                            <td><?php echo $row1['litressold'];?></td>
-                                            <td><?php echo $row1['unitprice'];?></td>
-                                            
-                                           
-
-                                            <td><?php echo $row1['total'];?></td>
-                        <td>
-							
-							<a href="#updateordinance<?php echo $row['temp_trans_id'];?>" data-target="#updateordinance<?php echo $row['temp_trans_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-edit text-blue"></i></a>
-
-              <a href="#delete<?php echo $row['temp_trans_id'];?>" data-target="#delete<?php echo $row['temp_trans_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-trash text-red"></i></a>
-              
-						</td>
-                      </tr>
-					  <div id="updateordinance<?php echo $row['temp_trans_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-	<div class="modal-dialog">
-	  <div class="modal-content" style="height:auto">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Update Stock - Out Details</h4>
-              </div>
-              <div class="modal-body">
-			  <form class="form-horizontal" method="post" action="transaction_update.php" enctype='multipart/form-data'>
-					<input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>  	
-					<input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row['temp_trans_id'];?>" required>  
-				<div class="form-group">
-					<label class="control-label col-lg-3" for="price">Qty</label>
-					<div class="col-lg-9">
-					  <input type="text" class="form-control" id="price" name="qty" value="<?php echo $row['qty'];?>" required>  
-					</div>
-				</div>
-				
-              </div><br>
-              <div class="modal-footer">
-		            <button type="submit" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-			  </form>
-            </div>
-			
-        </div><!--end of modal-dialog-->
- </div>
- <!--end of modal-->  
-<div id="delete<?php echo $row['temp_trans_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content" style="height:auto">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Delete Item</h4>
-              </div>
-              <div class="modal-body">
-        <form class="form-horizontal" method="post" action="transaction_del.php" enctype='multipart/form-data'>
-          <input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>   
-          <input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row['temp_trans_id'];?>" required>  
-        <p>Are you sure you want to remove <?php echo $row['prod_name'];?>?</p>
-        
-              </div><br>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Delete</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-        </form>
-            </div>
-      
-        </div><!--end of modal-dialog-->
- </div>
- <!--end of modal-->  
-<?php }?>					  
-                    </tbody>
-                    
-                  </table>
+                  
                 </div><!-- /.box-body -->
 
 				</div>	
@@ -459,7 +380,7 @@ position: absolute;
                         View Daily Fuel  Sale Reports
                       </button>-->
 					  <button class="btn btn-lg btn-block" id="daterange-btn" type="reset"  tabindex="8">
-                        <a  style="font-size:12px;"href="#">View Daily Fuel  Sale Reports</a>
+                        <a  style="font-size:12px;"href="sales.php"> View Daily Fuel  Sale Reports</a>
                       </button>
               
 				</form>	
