@@ -285,12 +285,24 @@ $queryb=mysqli_query($con,"select balance from customer where cust_id='$cid'")or
         <!--<button class="btn btn-lg btn-block" id="daterange-btn" type="reset"  tabindex="8">
                         <a href="review_add.php">Send to</a>
                       </button>-->
+                      <?php
+                      if($remark == 'Credit'){
+                        $Document = 'Invoice';
+
+                      }else if($remark == 'Cash'){
+                        $Document = 'Receipt';
+                      }else{
+                        $Document = 'Invalid';
+                      }
+                      
+                      ?>
                       <button class="btn btn-lg btn-block btn-primary" id="daterange-btn" name="cash" type="submit"  tabindex="7">
-                        Review Receipt
+                        Review <?php echo $Document?>
                       </button>
-					  <button class="btn btn-lg btn-block" id="daterange-btn" type="reset"  tabindex="8">
+					            <button class="btn btn-lg btn-block" id="daterange-btn" type="reset"  tabindex="8">
                         <a href="cancel.php">Cancel Sale</a>
                       </button>
+                      <?php ?>
               
 				</form>	
                 </div><!-- /.box-body -->

@@ -183,16 +183,16 @@ javascript:window.history.forward(1);
 					</form>	
 					</div>
 					<div class="col-md-12">
-          <br/><b> Daily Tank Reading History</b>
+          <br/><b> Daily Tank Reading History for the month of <?php echo date("M , Y",strtotime($date));?> </b>
           <div class="line"></div><br/><br/>
           <br/>
-          <br/><strong> Daily  Tank PMS  Readings history for the month of <?php echo date("M , Y",strtotime($date));?> </strong><br/>
+          <br/><br/>
 
                   <table class="table table-bordered table-striped">
                     <thead>
                       <tr>
                       <th>Date</th>
-                                            <th>tank</th>
+                                            <th>Tank</th>
                                             
                                             <th>Fuel type</th>
                                             <th>Open Invoice</th>
@@ -209,7 +209,7 @@ javascript:window.history.forward(1);
                     <tbody>
                     <?php
 		
-    $query=mysqli_query($con,"select * from tankreadings natural join storageunits natural join stationproducts where stunit_id='2' and Month(date) = '$month' and Year(date) = '$year' ORDER BY date ASC")or die(mysqli_error());
+    $query=mysqli_query($con,"select * from tankreadings natural join storageunits natural join stationproducts where stunit_id='$stunit_id' and Month(date) = '$month' and Year(date) = '$year' ORDER BY date ASC")or die(mysqli_error());
     $grand=0;
 		while($row1=mysqli_fetch_array($query)){
       $id=$row1['tankreading_id'];
@@ -319,273 +319,11 @@ javascript:window.history.forward(1);
                   </table>
                   <br/><b> </b>
           <div class="line"></div><br/><br/>
-          <br/>
-          <br/><strong> Daily  Tank BIK  Readings history for the month of <?php echo date("M , Y",strtotime($date));?>  </strong>
-
-                  <table class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                      <th>Date</th>
-                                            <th>tank</th>
-                                            
-                                            <th>Fuel type</th>
-                                            <th>Open Invoice</th>
-                                            <th>Dipp Morn</th>
-                                            <th>Diff</th>
-                                            <th>Dipp Evening</th>
-                                            <th>Closing Invoice</th>
-                                            <th>Cumm Diff</th>
-                                            <th>Daily Diff</th>
-                                            <th>Reorder Level</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-		
-    $query=mysqli_query($con,"select * from tankreadings natural join storageunits natural join stationproducts where stunit_id='3' and Month(date) = '$month' and Year(date) = '$year' ORDER BY date ASC")or die(mysqli_error());
-    $grand=0;
-		while($row1=mysqli_fetch_array($query)){
-      $id=$row1['tankreading_id'];
-		
-?>
-                      <tr >
-                      <td><?php echo date("M d, Y",strtotime($row1['date']));?></td> 
-                                            <td><?php echo $row1['storageunitname'];?></td>
-                                            <td><?php echo $row1['stationprod_name'];?></td>
-                                            <td><?php echo $row1['openinvoice'];?></td>
-                                            <td><?php echo $row1['dippmorn'];?></td>
-                                            <td><?php echo $row1['morndiff'];?></td>
-                                            <td><?php echo $row1['dippeven'];?></td>
-                                            <td><?php echo $row1['closinginvoice'];?></td>
-                                            <td><?php echo $row1['cummdiff'];?></td>
-                                            <td><?php echo $row1['dailydiff'];?></td>
-                                            <td><?php echo $row1['reorderlevel'];?></td>
-                        <td>
-							
-							<a href="#updateordinance<?php echo $row['temp_deposit_id'];?>" data-target="#updateordinance<?php echo $row['temp_deposit_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-edit text-blue"></i></a>
-
-              <!--<a href="#delete<?php echo $row['temp_deposit_id'];?>" data-target="#delete<?php echo $row['temp_deposit_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-trash text-red"></i></a>-->
-              
-						</td>
-                      </tr>
-                      <div id="updateordinance<?php echo $row1['tankreading_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-	<div class="modal-dialog">
-	  <div class="modal-content" style="height:auto">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Update Tank Reeading - In Details</h4>
-              </div>
-              <div class="modal-body">
-			  <form class="form-horizontal" method="post" action="prod_update.php" enctype='multipart/form-data'>
-        <input type="hidden" class="form-control" name="stunit_id" value="<?php echo $stunit_id;?>" required> 
-        <input type="hidden" class="form-control" name="date" value="<?php echo $date;?>" required>  	
-          <input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row1['tankreading_id'];?>" required>  
-        <div class="form-group">
-					<label class="control-label col-lg-3" for="price">Open Invoice</label>
-					<div class="col-lg-9">
-					  <input type="text" class="form-control" id="price" name="openinvoice" value="<?php echo $row1['openinvoice'];?>" readonly required>  
-					</div>
-        </div>
-        <br/><br/>
-        <div class="form-group">
-					<label class="control-label col-lg-3" for="price">Dipp Morn</label>
-					<div class="col-lg-9">
-					  <input type="date" class="form-control" id="price" name="dippmorn"  value="<?php echo $row1['dippmorn'];?>" readonly required>  
-					</div>
-        </div>
-        <br/><br/>
-        <div class="form-group">
-					<label class="control-label col-lg-3" for="price">Dipp Evening</label>
-					<div class="col-lg-9">
-					  <input type="text" class="form-control" id="price" name="dippeven" min="1" value="<?php echo $row1['dippeven'];?>" readonly required>  
-					</div>
-				</div>
-        <br/><br/>
-				<div class="form-group">
-					<label class="control-label col-lg-3" for="price">Closing Invoice</label>
-					<div class="col-lg-9">
-					  <input type="text" class="form-control" id="price" name="closinginvoice" min="1" value="<?php echo $row['closinginvoice'];?>" readonly required>  
-					</div>
-				</div>
-        <br/><br/>
-				
-              </div><br>
-              <div class="modal-footer">
-		            <button type="submit" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-			  </form>
-            </div>
-			
-        </div><!--end of modal-dialog-->
- </div>
- <!--end of modal-->  
-<div id="delete<?php echo $row['temp_deposit_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content" style="height:auto">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Delete Item</h4>
-              </div>
-              <div class="modal-body">
-        <form class="form-horizontal" method="post" action="prod_delete.php" enctype='multipart/form-data'>
-          <input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>   
-          <input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row['temp_deposit_id'];?>" required>  
-        <p>Are you sure you want to remove <?php echo $row['cat_name'];?>?</p>
-        
-              </div><br>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Delete</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-        </form>
-            </div>
-      
-        </div><!--end of modal-dialog-->
- </div>
- <!--end of modal-->  
-<?php }?>					  
-                    </tbody>
-                    
-                  </table>
+          
                   <br/><b> </b>
           <div class="line"></div><br/><br/>
           <br/>
-          <br/><strong> Daily  Tank AGO  Readings history for the month of <?php echo date("M , Y",strtotime($date));?>  </strong>
-
-                  <table class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                      <th>Date</th>
-                                            <th>tank</th>
-                                            
-                                            <th>Fuel type</th>
-                                            <th>Open Invoice</th>
-                                            <th>Dipp Morn</th>
-                                            <th>Diff</th>
-                                            <th>Dipp Evening</th>
-                                            <th>Closing Invoice</th>
-                                            <th>Cumm Diff</th>
-                                            <th>Daily Diff</th>
-                                            <th>Reorder Level</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-		
-    $query=mysqli_query($con,"select * from tankreadings natural join storageunits natural join stationproducts where stunit_id='4' and Month(date) = '$month' and Year(date) = '$year' ORDER BY date ASC")or die(mysqli_error());
-    $grand=0;
-		while($row1=mysqli_fetch_array($query)){
-      $id=$row1['tankreading_id'];
-		
-?>
-                      <tr >
-                      <td><?php echo date("M d, Y",strtotime($row1['date']));?></td> 
-                                            <td><?php echo $row1['storageunitname'];?></td>
-                                            <td><?php echo $row1['stationprod_name'];?></td>
-                                            <td><?php echo $row1['openinvoice'];?></td>
-                                            <td><?php echo $row1['dippmorn'];?></td>
-                                            <td><?php echo $row1['morndiff'];?></td>
-                                            <td><?php echo $row1['dippeven'];?></td>
-                                            <td><?php echo $row1['closinginvoice'];?></td>
-                                            <td><?php echo $row1['cummdiff'];?></td>
-                                            <td><?php echo $row1['dailydiff'];?></td>
-                                            <td><?php echo $row1['reorderlevel'];?></td>
-                                          
-                        <td>
-							
-							<a href="#updateordinance<?php echo $row['temp_deposit_id'];?>" data-target="#updateordinance<?php echo $row['temp_deposit_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-edit text-blue"></i></a>
-
-             <!-- <a href="#delete<?php echo $row['temp_deposit_id'];?>" data-target="#delete<?php echo $row['temp_deposit_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-trash text-red"></i></a>-->
-              
-						</td>
-                      </tr>
-                      <div id="updateordinance<?php echo $row1['tankreading_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-	<div class="modal-dialog">
-	  <div class="modal-content" style="height:auto">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Update Daily Tank Reading - In Details</h4>
-              </div>
-              <div class="modal-body">
-			  <form class="form-horizontal" method="post" action="prod_update.php" enctype='multipart/form-data'>
-        <input type="hidden" class="form-control" name="stunit_id" value="<?php echo $stunit_id;?>" required>  
-        <input type="hidden" class="form-control" name="date" value="<?php echo $date;?>" required> 	
-          <input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row1['tankreading_id'];?>" required>  
-        <div class="form-group">
-					<label class="control-label col-lg-3" for="price">Open Invoice</label>
-					<div class="col-lg-9">
-					  <input type="text" class="form-control" id="price" name="openinvoice" value="<?php echo $row1['openinvoice'];?>" readonly required>  
-					</div>
-        </div>
-        <br/><br/>
-        <div class="form-group">
-					<label class="control-label col-lg-3" for="price">Dipp Morn</label>
-					<div class="col-lg-9">
-					  <input type="date" class="form-control" id="price" name="dippmorn"  value="<?php echo $row1['dippmorn'];?>" readonly required>  
-					</div>
-        </div>
-        <br/><br/>
-        <div class="form-group">
-					<label class="control-label col-lg-3" for="price">Dipp Evening</label>
-					<div class="col-lg-9">
-					  <input type="text" class="form-control" id="price" name="dippeven" min="1" value="<?php echo $row1['dippeven'];?>" readonly required>  
-					</div>
-				</div>
-        <br/><br/>
-				<div class="form-group">
-					<label class="control-label col-lg-3" for="price">Closing Invoice</label>
-					<div class="col-lg-9">
-					  <input type="text" class="form-control" id="price" name="closinginvoice" min="1" value="<?php echo $row['closinginvoice'];?>" readonly required>  
-					</div>
-				</div>
-        <br/><br/>
-				
-              </div><br>
-              <div class="modal-footer">
-		            <button type="submit" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-			  </form>
-            </div>
-			
-        </div><!--end of modal-dialog-->
- </div>
- <!--end of modal-->  
-<div id="delete<?php echo $row['temp_deposit_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content" style="height:auto">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Delete Item</h4>
-              </div>
-              <div class="modal-body">
-        <form class="form-horizontal" method="post" action="prod_delete.php" enctype='multipart/form-data'>
-          <input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>   
-          <input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row['temp_deposit_id'];?>" required>  
-        <p>Are you sure you want to remove <?php echo $row['cat_name'];?>?</p>
-        
-              </div><br>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Delete</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-        </form>
-            </div>
-      
-        </div><!--end of modal-dialog-->
- </div>
- <!--end of modal-->  
-<?php }?>					  
-                    </tbody>
-                    
-                  </table>
+          
                 </div><!-- /.box-body -->
 
 				</div>	

@@ -349,7 +349,7 @@ position: absolute;
                         View Daily Fuel  Sale Reports
                       </button>-->
 					  <button class="btn btn-lg btn-block" id="daterange-btn" type="reset"  tabindex="8">
-                        <a  style="font-size:12px;"href="#">View Daily Fuel  Purchases Reports</a>
+                        <a  style="font-size:12px;"href="fuelpurchasesreport.php">View Daily Fuel  Purchases Reports</a>
                       </button>
               
 				</form>	

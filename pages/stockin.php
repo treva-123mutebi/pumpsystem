@@ -129,7 +129,7 @@ endif;
 		$query=mysqli_query($con,"select * from stockin natural join productcode natural join pdsubcat natural join stproducts natural join supplier  order by date desc ")or die(mysqli_error());
 		while($row=mysqli_fetch_array($query)){
       $id=$row['stockin_id'];
-      //$total= $row['qty']*$row['price'];
+      $total= $row['qty']*$row['unitprice'];
       //$grand=$grand+$total;
 		
 ?>
@@ -139,7 +139,7 @@ endif;
                         <td><?php echo $row['unitprice'];?></td>
                         
                        <td><?php echo $row['qty'];?></td>
-                       <td><?php echo $row['total'];?></td>
+                       <td><?php echo $total;?></td>
             						<td><?php echo $row['supplier_name'];?></td>
                         <td><?php echo date("M d, Y",strtotime($row['date']));?></td>
                       
@@ -149,7 +149,7 @@ endif;
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Medicine Warehouse System</th>
+                        <th></th>
                         
                         
                       </tr>					  

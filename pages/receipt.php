@@ -102,7 +102,20 @@ $branch=$_SESSION['branch'];
                       </tr>
                       <tr>
                         <th colspan="3"><h6><?php echo $rowb['branch_address'];?></h6></th>
-                        <th><span style="font-size: 16px;color: red">No. <?php echo $row1['or_no'];?></span></th>
+                        <?php 
+                        if($modeofpayment == 'Credit'){
+                          $documenttype = 'Invoice';
+                        }else if($modeofpayment == 'Cash'){
+                          $documenttype = 'Receipt';
+
+
+                        }
+                        else{
+                          $documenttype = 'Invalid';
+                        }
+                        ?>
+                        <th style="color:red;"><?php echo $documenttype;?>  <span style="font-size: 16px;color: red">No. <?php echo $row1['or_no'];?></span></th>
+                        <?php ?>
                       </tr>
                       <tr>
                         <th colspan="3"><h6>Contact : <?php echo $rowb['branch_contact'];?></h6></th>
@@ -114,9 +127,11 @@ $branch=$_SESSION['branch'];
 
                       <tr>
                         <th>Shift</th>
-                        <th><u><?php echo $last;?></u></th>
-                        <th>Mode of Payment</th>
-                        <th style="color:red;"><u><?php echo $modeofpayment;?></u></th>
+                        <th><?php echo $last;?></th>
+                        
+                        
+                        <th style="color:red;"><u></u></th>
+                        
                         <th>Date of Payment:</th>
                         <th><u><?php echo date("M d, Y",strtotime( $date_added));?> </u></th>
                       </tr>

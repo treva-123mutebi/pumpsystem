@@ -103,7 +103,7 @@ $branch=$_SESSION['branch'];
 		$query=mysqli_query($con,"select * from productcode natural join pdsubcat natural join stproducts natural join supplier order by pc_id")or die(mysqli_error());
 		$grand=0;
 		while($row=mysqli_fetch_array($query)){
-			$total=$row['prod_price']*$row['prod_qty'];
+			$total=$row['unitprice']*$row['prod_qty'];
 			$grand+=$total;
 ?>
                       <tr>
@@ -113,7 +113,7 @@ $branch=$_SESSION['branch'];
                         <td><?php echo $row['supplier_name'];?></td>
                         <td><?php echo $row['prod_qty'];?></td>
 						
-						<td><?php echo $row['prod_price'];?></td>
+						<td><?php echo $row['unitprice'];?></td>
 						<td><?php echo number_format($total,2);?></td>
 					<td class="text-center"><?php if ($row['prod_qty']<=$row['reorderlevel'])echo "<span class='badge bg-red'><i class='glyphicon glyphicon-refresh'></i>Reorder</span>";?></td>
                        

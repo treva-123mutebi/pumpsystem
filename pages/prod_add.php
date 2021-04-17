@@ -14,7 +14,7 @@ $closeinvoice = $_POST['closeinvoice'];
 $stunit_id = $_POST['stunit_id'];
 $cummdiff = ($dippeven)-($closeinvoice);
 $morndiff = ($dippmorn)-($openinvoice);
-$reorderlevel= ($dippeven)-(23600.00);
+$reorderlevel= (23600.00)-($dippeven);
 
 $query=mysqli_query($con,"select cummdiff from lastclosinginvoice  where stunit_id='$stunit_id' ORDER BY stunit_id DESC LIMIT 1,1")or die(mysqli_error());
 $row=mysqli_fetch_array($query);

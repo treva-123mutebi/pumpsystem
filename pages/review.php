@@ -43,7 +43,7 @@ javascript:window.history.forward(1);
             </h1>
             <ol class="breadcrumb">
               <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-              <li class="active">Product</li>
+              <li class="active">Product Sale</li>
             </ol>
           </section>
 
@@ -53,8 +53,21 @@ javascript:window.history.forward(1);
 	      <div class="col-md-9">
               <div class="box box-primary">
                 <div class="box-header">
-                  <h3 class="box-title">Receipt Items</h3><br/>
-                  <i>Confirm Receipt items</i>
+                <?php
+                 $remark = $_REQUEST['remark'];
+                      if($remark == 'Credit'){
+                        $Document = 'Invoice';
+
+                      }else if($remark == 'Cash'){
+                        $Document = 'Receipt';
+                      }else{
+                        $Document = 'Invalid';
+                      }
+                      
+                      ?>
+                  <h3 class="box-title"><?php echo $Document?> Items</h3><br/>
+                  <i>Confirm <?php echo $Document?> items</i>
+                  <?php ?>
                 </div>
                 <div class="box-body">
                   <!-- Date range -->
@@ -274,13 +287,25 @@ $queryb=mysqli_query($con,"select balance from customer where cust_id='$cid'")or
         <!--<button class="btn btn-lg btn-block" id="daterange-btn" type="reset"  tabindex="8">
                         <a href="review_add.php">Send to</a>
                       </button>-->
+                      <?php
+                // $remark = $_REQUEST['remark'];
+                      if($remark == 'Credit'){
+                        $Document = 'Invoice';
+
+                      }else if($remark == 'Cash'){
+                        $Document = 'Receipt';
+                      }else{
+                        $Document = 'Invalid';
+                      }
+                      
+                      ?>
                       <button class="btn btn-lg btn-block btn-primary" id="daterange-btn" name="cash" type="submit"  tabindex="7">
-                        Print Receipt 
+                        Print <?php echo $Document?>
                       </button>
 					  <!--<button class="btn btn-lg btn-block" id="daterange-btn" type="reset"  tabindex="8">
                         <a href="cancel.php">Cancel Stock-Out</a>
                       </button>-->
-              
+              <?php ?>
 				</form>	
                 </div><!-- /.box-body -->
               </div><!-- /.box -->

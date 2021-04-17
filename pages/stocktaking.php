@@ -42,7 +42,7 @@ endif;
             </h1>
             <ol class="breadcrumb">
               <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-              <li class="active">Product</li>
+              <li class="active">Stock Taking</li>
             </ol>
           </section>
 
@@ -149,7 +149,7 @@ endif;
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Medicine Warehouse System</th>
+                       
                         
                         
                       </tr>					  

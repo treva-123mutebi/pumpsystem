@@ -12,7 +12,7 @@ include('../dist/includes/dbcon.php');
 	$date1 = date("Y-m-d H:i:s");
 	$id=$_SESSION['id'];
 	
-	$query=mysqli_query($con,"select pc_code from productcode where pc_id='$name'")or die(mysqli_error());
+	$query=mysqli_query($con,"select pc_code,unitprice from productcode where pc_id='$name'")or die(mysqli_error());
   
         $row=mysqli_fetch_array($query);
 		$product=$row['pc_code'];

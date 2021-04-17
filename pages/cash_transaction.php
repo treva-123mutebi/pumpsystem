@@ -199,7 +199,7 @@ position: absolute;
                     <tbody>
 <?php
 		
-		$query=mysqli_query($con,"select * from dailysales natural join pumps natural join nosals  natural join stationproducts natural join shifts where Month(date) = '$month' and Year(date) = '$year'  ORDER BY  date asc ")or die(mysqli_error());
+		$query=mysqli_query($con,"select * from dailysales natural join pumps natural join nosals  natural join stationproducts natural join shifts where Month(date) = '$month' and Year(date) = '$year' and nosal_id='$nosal_id'  ORDER BY  date asc ")or die(mysqli_error());
 			$grand=0;
 		while($row1=mysqli_fetch_array($query)){
 				$id=$row1['dailysales_id'];

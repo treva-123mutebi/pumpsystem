@@ -69,7 +69,7 @@ $query=mysqli_query($con,"select * from branch where branch_id='$branch'")or die
                           <?php }?>
                         </ul>
                       </li>
-                      <li class="footer"><a href="stocking.php">Restock Items</a></li>
+                      <li class="footer"><a href="stockin.php">Restock Items</a></li>
                     </ul>
                   </li>
                   <!-- Tasks Menu -->
