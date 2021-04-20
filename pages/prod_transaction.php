@@ -209,7 +209,7 @@ javascript:window.history.forward(1);
                     <tbody>
                     <?php
 		
-    $query=mysqli_query($con,"select * from tankreadings natural join storageunits natural join stationproducts where stunit_id='$stunit_id' and Month(date) = '$month' and Year(date) = '$year' ORDER BY date ASC")or die(mysqli_error());
+    $query=mysqli_query($con,"select * from tankreadings natural join storageunits natural join stationproducts where stunit_id='$stunit_id' and Month(date) = '$month' and Year(date) = '$year' ORDER BY date desc")or die(mysqli_error());
     $grand=0;
 		while($row1=mysqli_fetch_array($query)){
       $id=$row1['tankreading_id'];

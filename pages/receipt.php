@@ -131,9 +131,22 @@ $branch=$_SESSION['branch'];
                         
                         
                         <th style="color:red;"><u></u></th>
+                        <?php 
+                        if($modeofpayment == 'Credit'){
+                          $dateofpayment = 'Prepared On';
+                        }else if($modeofpayment == 'Cash'){
+                          $dateofpayment = 'Date of Payement';
+
+
+                        }
+                        else{
+                          $dateofpayment = 'Invalid';
+                        }
+                        ?>
                         
-                        <th>Date of Payment:</th>
+                        <th><?php echo $dateofpayment;?>:</th>
                         <th><u><?php echo date("M d, Y",strtotime( $date_added));?> </u></th>
+                        <?php ?>
                       </tr>
                       <tr>
                        

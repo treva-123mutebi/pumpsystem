@@ -12,6 +12,30 @@
 						   <input type="hidden" name="pc_id" value="<?php echo $id;?>">
 								<label>Product Sub Code</label>
 									<input type="text" name = "pc_code" class="form-control" value = "<?php echo $row1['pc_code'];?>">
+									<br/>	
+                  <label>Unit Price</label>
+									<input type="text" name = "unitprice" class="form-control" value = "<?php echo $row1['unitprice'];?>">
+									<br/>	
+                  <label>Re order LeveL</label>
+									<input type="text" name = "reorderlevel" class="form-control" value = "<?php echo $row1['reorderlevel'];?>">
+									<br/>	
+                  <label>Product Quantity</label>
+									<input type="text" name = "prod_qty" class="form-control" value = "<?php echo $row1['prod_qty'];?>">
+									<br/>
+                  <label>Supplier</label>
+									<select name = "supplier_id" class = "form-control">
+										<option value = "<?php echo $row1['supplier_id'];?>"><?php echo $row1['supplier_name'];?></option>
+										<option></option>
+										<?php	
+											include 'dbcon.php';								
+										$query4=mysqli_query($con,"select * from supplier")or die(mysqli_error($con));
+										while ($row2=mysqli_fetch_array($query4)){
+											$id=$row2['supplier_id'];
+										?>
+										<option value = "<?php echo $row2['supplier_id'];?>"><?php echo $row2['supplier_name'];?></option>
+										<?php } ?>
+										
+									</select>
 									<br/>								
 								
 								
