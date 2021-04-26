@@ -257,14 +257,14 @@ javascript:window.history.forward(1);
         </div>
         <br/><br/>
         <div class="form-group">
-					<label class="control-label col-lg-3" for="price">Dipp Morn</label>
+					<!--<label class="control-label col-lg-3" for="price">Dipp Morn</label>-->
 					<div class="col-lg-9">
-					  <input type="text" class="form-control" id="price" name="dippmorn"  value="<?php echo $row1['dippmorn'];?>" readonly required>  
+					  <input type="hidden" class="form-control" id="price" name="dippmorn"  value="<?php echo $row1['dippmorn'];?>" readonly required>  
 					</div>
         </div>
         <br/><br/>
         <div class="form-group">
-					<label class="control-label col-lg-3" for="price">Dipp Evening</label>
+					<label class="control-label col-lg-3" for="price">Morning Dipp</label>
 					<div class="col-lg-9">
 					  <input type="text" class="form-control" id="price" name="dippeven" min="1" value="<?php echo $row1['dippeven'];?>" readonly required>  
 					</div>
