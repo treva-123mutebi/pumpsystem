@@ -122,7 +122,8 @@ javascript:window.history.forward(1);
               $query=mysqli_query($con,"select * from product where branch_id='$branch'")or die(mysqli_error($con));
               //while($row=mysqli_fetch_array($query)){
               ?>
-                <input value="<?php echo $lastdipp ?>" type="number" step="any" class="form-control pull-right" id="date" name="dippmorn"  tabindex="2"  min="1"   readonly required>
+                <!--<input value="<?php echo $lastdipp ?>" type="number" step="any" class="form-control pull-right" id="date" name="dippmorn"  tabindex="2"  min="1"   readonly required>-->
+                <input value="0" type="number" step="any" class="form-control pull-right" id="date" name="dippmorn"  tabindex="2"  min="1"    required>
               <?php ?>
 							</div><!-- /.input group -->
 						</div><!-- /.form group -->
