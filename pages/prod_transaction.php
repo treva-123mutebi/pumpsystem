@@ -116,21 +116,21 @@ javascript:window.history.forward(1);
            </div>
            <div class=" col-md-2">
 						<div class="form-group">
-							<label for="date">Dipp Morn</label>
+						<!--	<label for="date">Dipp Morn</label>-->
 							<div class="input-group">
               <?php
               $query=mysqli_query($con,"select * from product where branch_id='$branch'")or die(mysqli_error($con));
               //while($row=mysqli_fetch_array($query)){
               ?>
-                <!--<input value="<?php echo $lastdipp ?>" type="number" step="any" class="form-control pull-right" id="date" name="dippmorn"  tabindex="2"  min="1"   readonly required>-->
-                <input value="0" type="number" step="any" class="form-control pull-right" id="date" name="dippmorn"  tabindex="2"  min="1"    required>
+              <input value="<?php echo $lastdipp ?>" type="hidden" step="any" class="form-control pull-right" id="date" name="dippmorn"  tabindex="2"  min="1"   readonly required>
+                
               <?php ?>
 							</div><!-- /.input group -->
 						</div><!-- /.form group -->
            </div>
            <div class=" col-md-2">
 						<div class="form-group">
-							<label for="date">Dipp Evening</label>
+							<label for="date">Morning Dipp</label>
 							<div class="input-group">
               <?php
               $query=mysqli_query($con,"select * from product where branch_id='$branch'")or die(mysqli_error($con));
@@ -197,9 +197,9 @@ javascript:window.history.forward(1);
                                             
                                             <th>Fuel type</th>
                                             <th>Open Invoice</th>
-                                            <th>Dipp Morn</th>
-                                            <th>Diff</th>
-                                            <th>Dipp Evening</th>
+                                            <!--<th>Dipp Morn</th>-->
+                                            <!--<th>Diff</th>-->
+                                            <th>Dipp</th>
                                             <th>Closing Invoice</th>
                                             <th>Cumm Diff</th>
                                             <th>Daily Diff</th>
@@ -221,8 +221,8 @@ javascript:window.history.forward(1);
                                             <td><?php echo $row1['storageunitname'];?></td>
                                             <td><?php echo $row1['stationprod_name'];?></td>
                                             <td><?php echo $row1['openinvoice'];?></td>
-                                            <td><?php echo $row1['dippmorn'];?></td>
-                                            <td><?php echo $row1['morndiff'];?></td>
+                                            <!--<td><?php echo $row1['dippmorn'];?></td>-->
+                                            <!--<td><?php echo $row1['morndiff'];?></td>-->
                                             <td><?php echo $row1['dippeven'];?></td>
                                             <td><?php echo $row1['closinginvoice'];?></td>
                                             <td><?php echo $row1['cummdiff'];?></td>

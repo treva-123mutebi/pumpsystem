@@ -173,8 +173,11 @@ $queryb=mysqli_query($con,"select balance from customer where cust_id='$cid'")or
                 <h4 class="modal-title">Update Stock - Out Details</h4>
               </div>
               <div class="modal-body">
-			  <form class="form-horizontal" method="post" action="transaction_update.php" enctype='multipart/form-data'>
+			  <form class="form-horizontal" method="post" action="update_transaction.php" enctype='multipart/form-data'>
 					<input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>  	
+          <input type="hidden" class="form-control" name="date" value="<?php echo $date;?>" required>   
+          <input type="hidden" class="form-control" name="remark" value="<?php echo $remark;?>" required>  
+          <input type="hidden" class="form-control" name="cust_name" value="<?php echo $cust_name;?>" required>  
 					<input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row['temp_trans_id'];?>" required>  
 				<div class="form-group">
 					<label class="control-label col-lg-3" for="price">Qty</label>
@@ -205,8 +208,11 @@ $queryb=mysqli_query($con,"select balance from customer where cust_id='$cid'")or
               <div class="modal-body">
         <form class="form-horizontal" method="post" action="transaction_del.php" enctype='multipart/form-data'>
           <input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>   
-          <input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row['temp_trans_id'];?>" required>  
-        <p>Are you sure you want to remove <?php echo $row['prod_name'];?>?</p>
+          <input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row['temp_trans_id'];?>" required> 
+          <input type="hidden" class="form-control" name="date" value="<?php echo $date;?>" required>   
+          <input type="hidden" class="form-control" name="remark" value="<?php echo $remark;?>" required>  
+          <input type="hidden" class="form-control" name="cust_name" value="<?php echo $cust_name;?>" required>     
+        <p>Are you sure you want to remove <?php echo $row['product_name'];?> <?php echo $row['sc_name'];?> <?php echo $row['pc_code'];?>?</p>
         
               </div><br>
               <div class="modal-footer">
