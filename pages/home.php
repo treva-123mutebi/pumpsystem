@@ -144,6 +144,21 @@ endif;
                           </a>
                         </div>
                       </div><!-- ./col -->
+                      <div class="col-lg-4 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-purple">
+                          <div class="inner">
+                            <h1></h1>
+                            <strong>Register Expenses</strong>
+                          </div>
+                          <div class="icon" style="margin-top:0px">
+                            <i class="glyphicon glyphicon-share"></i>
+                          </div>
+                          <a href="expenses.php" class="small-box-footer">
+                            Go <i class="fa fa-arrow-circle-right"></i>
+                          </a>
+                        </div>
+                      </div><!-- ./col -->
 
                   </div><!--row-->
                   

@@ -51,7 +51,7 @@ position: absolute;
             </h1>
             <ol class="breadcrumb">
               <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-              <li class="active">Daily Fuel Sale</li>
+              <li class="active">Daily Expenses</li>
             </ol>
           </section>
 
@@ -61,11 +61,11 @@ position: absolute;
 	      <div class="col-md-9">
               <div class="box box-primary">
                 <div class="box-header">
-                  <h3 class="box-title">Register Daily Fuel  Purchases</h3>
+                  <h3 class="box-title">Register Expenses</h3>
                 </div>
                 <div class="box-body">
                   <!-- Date range -->
-                  <form method="post" action="purchasesadd.php">
+                  <form method="post" action="expensesadd.php">
 				  <div class="row" style="min-height:400px">
 					
 					 
@@ -85,67 +85,26 @@ position: absolute;
 						    <!--<input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>   -->
 						
 				
-           <div class=" col-md-2">
+           <div class=" col-md-4">
            <div class="form-group">
-                    <label for="date">Select Tank</label>
+                    <label for="date">Enter Expense Name</label>
                     <div class="input-group col-md-12">
-                    <select style="font-size:12px" class="form-control select2" name="stunit_id" tabindex="1" autofocus required>
-								<?php
-                  $branch=$_SESSION['branch'];
-                  
-                 
-								  include('../dist/includes/dbcon.php');
-									 $query2=mysqli_query($con,"select * from storageunits ORDER BY stunit_id ASC")or die(mysqli_error());
-									    while($row=mysqli_fetch_array($query2)){
-								?>
-										<option value="<?php echo $row['stunit_id'];?>"><?php echo $row['storageunitname'];?></option>
-                      <?php }?>
-								</select>
+                    <input type="text"  class="form-control pull-right" id="date" name="expense_name"  tabindex="2"   required>
                     </div><!-- /.input group -->
                   </div><!-- /.form group -->
 		  
            </div>
-           <div class=" col-md-2">
-           <div class="form-group">
-                    <label for="date">Select Supplier</label>
-                    <div class="input-group col-md-12">
-                    <select style="font-size:12px" class="form-control select2" name="supplier_id" tabindex="1" autofocus required>
-								<?php
-                  $branch=$_SESSION['branch'];
-                  
-                 
-								  include('../dist/includes/dbcon.php');
-									 $query2=mysqli_query($con,"select * from supplier ORDER BY supplier_id ASC")or die(mysqli_error());
-									    while($row=mysqli_fetch_array($query2)){
-								?>
-										<option value="<?php echo $row['supplier_id'];?>"><?php echo $row['supplier_name'];?></option>
-                      <?php }?>
-								</select>
-                    </div><!-- /.input group -->
-                  </div><!-- /.form group -->			
-           </div>
+           
+           
            <div class=" col-md-2">
 						<div class="form-group">
-							<label for="date">Unit Price</label>
+							<label for="date">Amount (UGX)</label>
 							<div class="input-group">
               <?php
               $query=mysqli_query($con,"select * from product where branch_id='$branch'")or die(mysqli_error($con));
               //while($row=mysqli_fetch_array($query)){
               ?>
-                <input type="number" step="any" class="form-control pull-right" id="date" name="unitprice"  tabindex="2"  min="1"   required>
-              <?php ?>
-							</div><!-- /.input group -->
-						</div><!-- /.form group -->
-           </div>
-           <div class=" col-md-2">
-						<div class="form-group">
-							<label for="date">Litres Bought in</label>
-							<div class="input-group">
-              <?php
-              $query=mysqli_query($con,"select * from product where branch_id='$branch'")or die(mysqli_error($con));
-              //while($row=mysqli_fetch_array($query)){
-              ?>
-                <input type="number" step="any" class="form-control pull-right" id="date" name="litresin"  tabindex="2"  min="1"   required>
+                <input type="number" step="any" class="form-control pull-right" id="date" name="amount"  tabindex="2"  min="1"   required>
               <?php ?>
 							</div><!-- /.input group -->
 						</div><!-- /.form group -->
@@ -180,32 +139,32 @@ position: absolute;
           <br/><b> </b>
           <div class="line"></div><br/><br/>
           <br/>
-          <br/><strong> Fuel Purchase History </strong>
+          <br/><strong> Expenses History </strong>
 
                   <table class="table table-bordered table-striped">
                     <thead>
                       <tr>
                       <th>Date</th>
-                                            <th>Supplier</th>
+                                            <th>Expense</th>
                                             <!--<th>Nosal Number</th>-->
-                                            <th>Tank</th>
+                                            <th>Amount (UGX)</th>
                                             <!--<th>Open Meter</th>
                                             <th>Close Meter</th>-->
                                             <!--<th>R.T.T</th>-->
-                                            <th>Litre In</th>
+                                            <!--<th>Litre In</th>
                                             <th>Unit Price</th>
                                             
-                                            <th>Payment</th>
+                                            <th>Payment</th>-->
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
 <?php
 		
-		$query=mysqli_query($con,"select * from purchase natural join storageunits natural join stationproducts natural join supplier ORDER BY date ASC")or die(mysqli_error());
+		$query=mysqli_query($con,"select * from expenses  ORDER BY date desc")or die(mysqli_error());
 			$grand=0;
 		while($row1=mysqli_fetch_array($query)){
-				$id=$row1['purchase_id'];
+				$id=$row1['expenses_id'];
 				//$total= $row['qty']*$row['price'];
 			//	$grand=$grand+$total;
 		
@@ -213,83 +172,47 @@ position: absolute;
                       <tr style="font-size: 10px;" >
                       <td style="text-align:center; font-size:10px;"><?php echo date("M d, Y",strtotime($row1['date']));?></td> 
                       
-                                            <td><?php echo $row1['supplier_name'];?></td>
-                                            <td><?php echo $row1['storageunitname'];?></td>
-                                            <td><?php echo $row1['litresin'];?></td>
+                                            <td><?php echo $row1['expense_name'];?></td>
+                                            <td><?php echo $row1['amount'];?></td>
+                                            <!--<td><?php echo $row1['litresin'];?></td>
                                             <td><?php echo $row1['unitprice'];?></td>
-                                            <td><?php echo $row1['payment'];?></td>
+                                            <td><?php echo $row1['payment'];?></td>-->
                         <td>
 							
-							<a href="#updateordinance<?php echo $row1['purchase_id'];?>" data-target="#updateordinance<?php echo $row1['purchase_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-edit text-blue"></i></a>
+							<a href="#updateordinance<?php echo $row1['expenses_id'];?>" data-target="#updateordinance<?php echo $row1['expenses_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-edit text-blue"></i></a>
 
-              <a href="#delete<?php echo $row1['purchase_id'];?>" data-target="#delete<?php echo $row1['purchase_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-trash text-red"></i></a>
+              <a href="#delete<?php echo $row1['expenses_id'];?>" data-target="#delete<?php echo $row1['expenses_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-trash text-red"></i></a>
               
 						</td>
                       </tr>
-					  <div id="updateordinance<?php echo $row1['purchase_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+					  <div id="updateordinance<?php echo $row1['expenses_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog">
 	  <div class="modal-content" style="height:auto">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Update Purchase Details</h4>
+                <h4 class="modal-title">Update Expense Details</h4>
               </div>
               <div class="modal-body">
-			  <form class="form-horizontal" method="post" action="purchase_update.php" enctype='multipart/form-data'>
+			  <form class="form-horizontal" method="post" action="expenses_update.php" enctype='multipart/form-data'>
 					<input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>  	
-					<input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row1['purchase_id'];?>" required>
-          <div class="form-group">
-					<label class="control-label col-lg-3" for="price">Select Supplier</label>
-					<div class="col-lg-9">
-          <select style="font-size:12px" class="form-control select2" name="supplier_id" tabindex="1" autofocus required>
-          <option value = "<?php echo $row1['supplier_id'];?>"><?php echo $row1['supplier_name'];?></option>
-          <option></option>
-								<?php
-                  $branch=$_SESSION['branch'];
-                  
-                 
-								  include('../dist/includes/dbcon.php');
-									 $query2=mysqli_query($con,"select * from supplier ORDER BY supplier_id ASC")or die(mysqli_error());
-									    while($row=mysqli_fetch_array($query2)){
-								?>
-										<option value="<?php echo $row['supplier_id'];?>"><?php echo $row['supplier_name'];?></option>
-                      <?php }?>
-								</select> 
-					</div>
+					<input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row1['expenses_id'];?>" required>
+          
+          
           <br/><br/>
-				</div>
-          <div class="form-group">
-					<label class="control-label col-lg-3" for="price">Select Tank</label>
-					<div class="col-lg-9">
-          <select style="font-size:12px" class="form-control select2" name="stunit_id" tabindex="1" autofocus required>
-          <option value="<?php echo $row1['stunit_id'];?>"><?php echo $row1['storageunitname'];?></option>
-          <option></option>
-								<?php
-                  $branch=$_SESSION['branch'];
-                  
-                 
-								  include('../dist/includes/dbcon.php');
-									 $query2=mysqli_query($con,"select * from storageunits ORDER BY stunit_id ASC")or die(mysqli_error());
-									    while($row=mysqli_fetch_array($query2)){
-								?>
-										<option value="<?php echo $row['stunit_id'];?>"><?php echo $row['storageunitname'];?></option>
-                      <?php }?>
-								</select>  
-					</div>
-          <br/><br/>
-				</div>  
+				
 				<div class="form-group">
-					<label class="control-label col-lg-3" for="price">Litres In</label>
+					<label class="control-label col-lg-3" for="price">Expense Name</label>
 					<div class="col-lg-9">
-					  <input type="text" class="form-control" id="price" name="litresin" value="<?php echo $row1['litresin'];?>" required>  
+					  <input type="text" class="form-control" id="price" name="expense_name" value="<?php echo $row1['expense_name'];?>" required>  
 					</div>
 				</div>
         <br/>
         <br/>
         <div class="form-group">
-					<label class="control-label col-lg-3" for="price">Unit Price</label>
+					<label class="control-label col-lg-3" for="price">Amount</label>
 					<div class="col-lg-9">
-					  <input type="text" class="form-control" id="price" name="unitprice" value="<?php echo $row1['unitprice'];?>" required>  
+					  <input type="text" class="form-control" id="price" name="amount" value="<?php echo $row1['amount'];?>" required>  
 					</div>
 				</div>
         <br/>
@@ -313,7 +236,7 @@ position: absolute;
         </div><!--end of modal-dialog-->
  </div>
  <!--end of modal-->  
-<div id="delete<?php echo $row1['purchase_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div id="delete<?php echo $row1['expenses_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
   <div class="modal-dialog">
     <div class="modal-content" style="height:auto">
               <div class="modal-header">
@@ -322,10 +245,10 @@ position: absolute;
                 <h4 class="modal-title">Delete Item</h4>
               </div>
               <div class="modal-body">
-        <form class="form-horizontal" method="post" action="purchase_del.php" enctype='multipart/form-data'>
+        <form class="form-horizontal" method="post" action="expense_del.php" enctype='multipart/form-data'>
           <input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>   
-          <input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row1['purchase_id'];?>" required>  
-        <p style="color:red"' >Are you sure you want to remove this purchase ?</p>
+          <input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row1['expenses_id'];?>" required>  
+        <p style="color:red"' >Are you sure you want to delete <?php echo $row1['expense_name'];?>  Expense for <?php echo date("M d, Y",strtotime($row1['date']));?> ?</p>
         
               </div><br>
               <div class="modal-footer">
@@ -406,7 +329,7 @@ position: absolute;
                         View Daily Fuel  Sale Reports
                       </button>-->
 					  <button class="btn btn-lg btn-block" id="daterange-btn" type="reset"  tabindex="8">
-                        <a  style="font-size:12px;"href="fuelpurchasesreport.php">View Daily Fuel  Purchases Reports</a>
+                        <a  style="font-size:12px;"href="expensesreport.php">View Expenses Reports</a>
                       </button>
               
 				</form>	
